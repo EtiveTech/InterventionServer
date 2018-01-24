@@ -4564,6 +4564,7 @@ function setNewSubject(){
  * DESCRIPTION : It retrieves all the resources available
  * METHOD : GET
  */
+
 function importChannels(){
 
     global $pdo;
@@ -4985,24 +4986,32 @@ function importUsers(){
 //TODO Change the $filepath to all the export method to reflect the onw that will be used on the database
 //region EXPORT METHODS
 
-function exportGeneric($table_name, $filepath){
+function exportGeneric($table_name, $filepath, $except = []){
     global $pdo;
 
     $result = FALSE;
     $query = "SELECT column_name FROM information_schema.columns WHERE table_schema='c4a_i_schema' AND table_name = '".$table_name."'";
     $query_results = $pdo->query($query);
     if ($query_results) {
+        $column_names = array();
         $fh = fopen($filepath, "w");
         while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-            $header_row[] = $table_row[0];
+            if (!in_array($table_row[0], $except)) {
+                $column_names[] = $table_row[0];
+            };
         }
-        fputcsv($fh, $header_row);
+        fputcsv($fh, $column_names);
 
         $query = "SELECT * FROM c4a_i_schema.".$table_name;
         $query_results = $pdo->query($query);
         if($query_results) {
-            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) { // Fetch an array
-                fputcsv($fh, $table_row);
+            $output = array();
+            while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
+                foreach($column_names as $column_name) {
+                    $output[] = $table_row[$column_name];
+                }
+                fputcsv($fh, $output);
+                unset($output);
             }
             $result = TRUE;
         }
