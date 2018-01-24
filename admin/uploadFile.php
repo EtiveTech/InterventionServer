@@ -19,6 +19,7 @@
 <?php
 
 //region Setting some useful data
+require_once("../api/configuration_local.php");
 
 // Declaring that no PHP error need to be printed
 error_reporting(0);
@@ -144,8 +145,7 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
 //region POST CALL
 
 // Define the URL to call, based on the value selected by the user
-$service_url = 'http://localhost/is/api/' . $method_to_call . ' ';
-//$service_url_local = 'http://localhost/c4a-DBmanager/' . $method_to_call . ' ';
+$service_url = API_URL . $method_to_call . ' ';
 
 // Initiate the curl method
 $curl = curl_init($service_url);

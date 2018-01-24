@@ -1,4 +1,5 @@
-sessionStorage.dbLink="http://localhost/is/api";
+// sessionStorage.dbLink="http://c4a.etive.org/is/api";
+sessionStorage.dbLink = _serverConfig.apiURL;
 
 var cur_caregiver={};
 
@@ -987,7 +988,7 @@ function editPrescription(pres_status){
 function setPrescriptionStatus(pres_status){
     $.ajax({
         method: "POST",
-        url: sessionStorage.dbLink + "/updatePrescriptionStatus",
+        url: sessionStorage.dbLink + "/updatePrescriptionStatus ",
         data: {
             prescription_id:sessionStorage.cur_pres,
             prescription_status: pres_status

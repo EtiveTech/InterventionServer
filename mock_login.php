@@ -2,8 +2,8 @@
 /*this is a mock function that give a very basic security access to the system
 you should write your own or integrate the system with your preferred user management system
 */
-$api_url="http://c4a.etive.org/is/api/checkUserPwd";
-$hash_password = false;
+require_once("api/configuration_local.php");
+$api_url = API_URL."checkUserPwd";
 
 if (checkPOST("username") && !empty($_POST['username'])) {
     $username = $_POST['username'];
@@ -20,7 +20,10 @@ if (checkPOST("password") && !empty($_POST['password'])) {
 
 $ch = curl_init();
 $username = curl_escape($ch, $username);
-$password = (hash_password ? hash('sha256', $password) : curl_escape($ch, $password));
+if (DB_HASH_PASSWORD) {
+    $password = hash('sha256', $password);
+}
+$password = curl_escape($ch, $password);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_URL, ''.$api_url.'/'.$username.'/'.$password.'');

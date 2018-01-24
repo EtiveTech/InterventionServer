@@ -1,5 +1,6 @@
 <?php
-$api_url="http://localhost/is/api/getAllProfiles";
+require_once("api/configuration_local.php");
+$api_url = API_URL."getAllProfiles";
 
 function checkPOST($field){
     return (isset($_POST[$field]));
@@ -22,12 +23,12 @@ if (checkPOST("user_id") && !empty($_POST['user_id'])) {
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"
 			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 			crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" href="css_login/demo.css" />
-		<link rel="stylesheet" type="text/css" href="css_login/component.css" />
-		<script src="js_login/css3-mediaqueries.js"></script>
-		<script src="js_login/ecma.js"></script>
-		<script src="js_login/eventShim.js"></script>
-		<script src="js_login/slice.js"></script>
+        <link rel="stylesheet" type="text/css" href="login/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="login/css/component.css" />
+		<script src="login/js/css3-mediaqueries.js"></script>
+		<script src="login/js/ecma.js"></script>
+		<script src="login/js/eventShim.js"></script>
+		<script src="login/js/slice.js"></script>
 		<script type="text/javascript">
             sessionStorage.currentProfile="";
             sessionStorage.clear();

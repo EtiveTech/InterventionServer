@@ -1105,7 +1105,7 @@ function getAllResources(){
                     echo $sjes->encode("Resources");
 
                 } else {
-                    generate404("There are no resources ");
+                    generate404("There are no resources");
                 } //end if-else to check if at least one resource exists
 
             } else {
@@ -1192,7 +1192,7 @@ function getAllResourcesOfIntervention($intervention_id = null){
                     echo $sjes->encode("Resources");
 
                 } else {
-                    generate404("There are no resources ");
+                    generate404("There are no resources");
                 } //end if-else to check if at least one resource exists
 
             } else {
@@ -1443,7 +1443,7 @@ function getAllTemplates(){
                 echo $sjes->encode("Templates");
 
             } else {
-                generate404("There are no templates ");
+                generate404("There are no templates");
             } //end if-else to check if at least one resource exists
 
         } else {
@@ -1531,7 +1531,7 @@ function getTemplatesForResource($resource_id = null){
                 echo $sjes->encode("Templates");
 
             } else {
-                generate404("There are no templates ");
+                generate404("There are no templates");
             } //end if-else to check if at least one resource exists
 
         } else {
@@ -2216,6 +2216,10 @@ function checkUserPwd($name = null, $user_pwd = null){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($name)) {
 			if(isset($user_pwd)){
+			    $ch = curl_init();
+                $name = curl_unescape($ch, $name);
+                $user_pwd = curl_unescape($ch, $user_pwd);
+
                 $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
                 $query_results = $pdo->query($query);
 
@@ -4476,7 +4480,7 @@ function getResourcesWithoutMessages(){
                 echo $sjes->encode("Resources");
 
             } else {
-                generate404("There are no resources ");
+                generate404("There are no resources");
             } //end if-else to check if at least one resource exists
 
         } else {

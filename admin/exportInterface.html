@@ -25,26 +25,26 @@
 <div class="modal-body row">
     <div class="col-md-8 ">
         <div class="menu-import">
-            <label for="selectType"> Select the type of your file: </label>
-            <select name="filetype" form ="typeform" class="form-control" id="selectType">
-                <option value="default" disabled="disabled" selected="selected">Please select an option</option>
-                <option value="channels">Channels</option>
-                <option value="hour_periods">Hour Periods</option>
-                <option value="messages">Messages</option>
-                <option value="prescriptions">Prescriptions</option>
-                <option value="profiles">Profiles</option>
-                <option value="profiles_communicative">Profiles - Communicative</option>
-                <option value="profiles_frailty">Profiles - FrailtyStatus</option>
-                <option value="profiles_economic">Profiles - SocioEconomic</option>
-                <option value="profiles_tech">Profiles - Technical</option>
-                <option value="resources">Resources</option>
-                <option value="template">Templates</option>
-                <option value="users">Users</option>
-            </select>
-
 
             <form action="downloadFile.php" method="post"
                   onsubmit="return validateForm(this);" enctype="multipart/form-data" id ="typeform">
+
+                <label for="selectType"> Select the type of your file: </label>
+                <select name="filetype" class="form-control" id="selectType">
+                    <option value="default" disabled="disabled" selected="selected">Please select an option</option>
+                    <option value="channels">Channels</option>
+                    <option value="hour_periods">Hour Periods</option>
+                    <option value="messages">Messages</option>
+                    <option value="prescriptions">Prescriptions</option>
+                    <option value="profiles">Profiles</option>
+                    <option value="profiles_communicative">Profiles - Communicative</option>
+                    <option value="profiles_frailty">Profiles - FrailtyStatus</option>
+                    <option value="profiles_economic">Profiles - SocioEconomic</option>
+                    <option value="profiles_tech">Profiles - Technical</option>
+                    <option value="resources">Resources</option>
+                    <option value="template">Templates</option>
+                    <option value="users">Users</option>
+                </select>
                 <br><br>
                 <input type="submit" name="submit" value="Download" class="btn btn-lg btn-info">
             </form>

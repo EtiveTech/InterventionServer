@@ -1,4 +1,5 @@
 <?php
+require_once("../api/configuration_local.php");
 
 //region Selection of the method to call to handle the export
 
@@ -68,7 +69,7 @@ else {
 
 // Define the URL to call, based on the value selected by the user
 //$service_url_local = 'http://localhost/c4a-DBmanager/' . $method_to_call . '';
-$service_url = 'http://localhost/is/api/' . $method_to_call . '';
+$service_url = API_URL . $method_to_call . '';
 
 // Initiate the curl method
 $curl = curl_init($service_url);
