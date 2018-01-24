@@ -1,0 +1,72 @@
+@media (min-width: 768px){
+    #page-wrapper{
+        margin: 0px;
+    }
+}
+
+.bottom-column
+{
+    float: none;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+#template-section{
+    display: none;
+}
+
+#template-resources-body input {
+    visibility:hidden;
+}
+
+#template-resources-body label {
+    cursor: pointer;
+}
+
+#template-resources-body input:checked + label {
+    background: ghostwhite;
+}
+
+#resources-body{
+    width:100%;
+}
+
+tr.clickableRow { cursor: pointer; } 
+
+.gantt_grid{
+    display: none !important;
+}
+
+.pres-info-detail{
+    cursor: pointer;
+}
+
+.pointer-cursor{
+    cursor: pointer;
+}
+
+.text-input-light{
+    background-color: transparent;
+    border: 0px;
+    border-bottom: 1px solid #999999;
+}
+
+a[data-name='Body']{
+    text-decoration: none;
+    color:black;
+}
+
+a[data-name='Channel']{
+    text-decoration: none;
+    color:black;
+}
+
+a[data-name='Date']{
+    text-decoration: none;
+    color:black;
+}
+
+a[data-name='Time']{
+    text-decoration: none;
+    color:black;
+}

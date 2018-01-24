@@ -1,0 +1,90 @@
+[
+ {
+   "User_ID": 0,
+   "Intervention_ID": 0,
+   "Resource_ID": 10,
+   "WrittenBy":"Anna Lobono",
+   "Date": "06/01/2016",
+   "Text": "L'anziana ha perso il suo telefono la scorsa settimana, motivo per cui non ha interagito ultimamente."
+ },
+ {
+   "User_ID": 0,
+   "Intervention_ID": 0,
+   "Resource_ID": 13,
+   "WrittenBy":"Giovanni Ricevuti",
+   "Date": "06/02/2016",
+   "Text": "La famiglia segnala un più alto senso di solitudine: verificare indicatore solitudine."
+ },
+ {
+   "User_ID": 0,
+   "Intervention_ID": 0,
+   "Resource_ID": 10,
+   "WrittenBy":"Giovanni Ricevuti",
+   "Date": "15/02/2016",
+   "Text": "Troppe fluttuazioni per gli indicatori del peso."
+ },
+ {
+   "User_ID": 0,
+   "Intervention_ID": 1,
+   "Resource_ID": 26,
+   "WrittenBy":"Giovanni Ricevuti",
+   "Date": "06/09/2016",
+   "Text": "Durante l'estate era in viaggio. Ricordatevi di aggiungere risorse post-viaggio"
+ },
+ {
+   "User_ID": 0,
+   "Intervention_ID": 1,
+   "Resource_ID": 26,
+   "WrittenBy":"Giovanni Ricevuti",
+   "Date": "28/10/2016",
+   "Text": "Gli indicatori non sono rassicuranti. Tenere sotto controllo per la prossima prescrizione. "
+ },
+ {
+   "User_ID": 1,
+   "Intervention_ID": 10,
+   "Resource_ID": 10,
+   "WrittenBy":"Anna Lobono",
+   "Date": "08/01/2016",
+   "Text": "L'anziano non è andato l'ultimo check-in con il suo medico."
+ },
+ {
+   "User_ID": 1,
+   "Intervention_ID": 10,
+   "Resource_ID": 10,
+   "WrittenBy":"Anna Lobono",
+   "Date": "25/01/2016",
+   "Text": "Problemi nella consegna dei messaggi, perché ha perso il suo caricabatterie."
+ },
+ {
+   "User_ID": 1,
+   "Intervention_ID": 10,
+   "Resource_ID": 10,
+   "WrittenBy":"Giovanni Ricevuti",
+   "Date": "10/02/2016",
+   "Text": "Feedback positivo sulle risorse di nutrizione dato durante l'ultimo questionario: continuare con questo tipo di risorse."
+ },
+ {
+   "User_ID": 1,
+   "Intervention_ID": 10,
+   "Resource_ID": 10,
+   "WrittenBy":"Anna Lobono",
+   "Date": "15/03/2016",
+   "Text": "La prossima settimana è il suo compleanno: ricordati di inviare un messaggio di auguri."
+ },
+ {
+   "User_ID": 1,
+   "Intervention_ID": 11,
+   "Resource_ID": 10,
+   "WrittenBy":"Anna Lobono",
+   "Date": "07/08/2016",
+   "Text": "Miglioramento per l'attività sportiva. "
+ },
+ {
+   "User_ID": 1,
+   "Intervention_ID": 11,
+   "Resource_ID": 10,
+   "WrittenBy":"Giovanni Ricevuti",
+   "Date": "28/10/2016",
+   "Text": "Gli indicatori non sono rassicuranti. Tenere sotto controllo per la prossima prescrizione. "
+ }
+]

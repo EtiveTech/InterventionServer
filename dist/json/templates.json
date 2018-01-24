@@ -1,0 +1,332 @@
+[
+ {
+   "ID": 0,
+   "Category": "Eventi",
+   "Name": "Invitare ad un evento che avrà luogo nell'immediato futuro",
+   "Description": "Breve periodo di intervento, per annunciare un evento che avrà luogo presto. Pochi reminders sono inviati, ma solo le informazioni essenziali vengono comunicate. ",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 1,
+   "Category": "Eventi",
+   "Name": "Invitare ad un evento per cui si dispone di molte informazioni da comunicare e che avrà luogo nel medio-lungo termine",
+   "Description": "Se c'è abbastanza tempo prima che l'evento e molte payoff da comunicare, questo template è adatto e permette anche di aumentare la frequenza dei messaggi nel corso del tempo. In questo modo anche si presta ad essere usato anche per le persone con disturbi della memoria, dato che con l'avvicinarsi dell'evento sono previsti più reminders.",
+   "Min messages": 6,
+   "Max messages": 6,
+   "Period": 2,
+   "Channel": ""
+ },
+ {
+   "ID": 2,
+   "Category": "Eventi",
+   "Name": "Invitare ad un evento programmato tra almeno qualche mese",
+   "Description": "Dato che l'evento non è imminente, la frequenza viene aumentata un po' per volta, in modo da convincere a poco a poco a prendervi parte. Adatto anche per le persone con disturbi di memoria, perché fornisce più messaggi poco prima che l'evento si svolga.",
+   "Min messages": 9,
+   "Max messages": 9,
+   "Period": null,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 3,
+   "Category": "Eventi",
+   "Name": "Inviare pro-memoria per eventi ricorrenti",
+   "Description": "Il template è pensato per ricordare un appuntamento periodico. Ogni volta vengono inviati solo uno o due messaggi, in modo che l'anziano aggiunga l'appuntamento in agenda. I messaggi possono anche avere una sfumatura di persuasione, per convincere gli anziani a partecipare ad ogni replica dell'evento. E 'possibile anche precisare per quanto tempo la periodicità durerà.",
+   "Min messages": 1,
+   "Max messages": 1,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 4,
+   "Category": "Eventi",
+   "Name": "Invitare ad un evento che si svolgeper cui è necessario riser vare in anticipo",
+   "Description": "Il periodo di intervento è piuttosto lungo. I messaggi vengono inviati con frequenza elevata all'inizio, prima che le prenotazioni vengano aperte. In seguito, vengono forniti ulteriori dettagli sull'evento in sè, ma ad un ritmo più lento. La durata finale può variare in base a quando l'evento si svolge.",
+   "Min messages": 9,
+   "Max messages": 9,
+   "Period": 5,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 5,
+   "Category": "Eventi",
+   "Name": "Proporre un evento, con la possibilità da parte dell'utente di accettare o meno di partecipare",
+   "Description": "Il modello permette una interazione con l'utente, dandogli la possibilità di non ricevere alcuni messaggi se non è interessato al contenuto fornito.",
+   "Min messages": 7,
+   "Max messages": 7,
+   "Period": 3,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 6,
+   "Category": "Educazione",
+   "Name": "Comunicare una risorsa il cui contenuto è difficile da comprendere",
+   "Description": "La risorsa ha un tempo di lettura piuttosto elevato. Di conseguenza, viene inviato un certo numero di messaggi vengono inviati per coprire tutti gli argomenti toccati dall'articolo. Il tono impiegato nella comunicazione è neutro.",
+   "Min messages": 6,
+   "Max messages": 6,
+   "Period": 3,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 7,
+   "Category": "Educazione",
+   "Name": "Comunicare una risorsa che contiene termini tecnici o scientifici piuttosto complessi",
+   "Description": "Per comprendere la risorsa è necessario avere delle conoscenze tecniche specifiche o conoscere il significato di termini piuttosto complicati. Insieme ai messaggi che riportano il contenuto della risorsa, possono essere fornite anche spiegazioni e link a wiki esterne. Il template copre un periodo medio-lungo, per dare il tempo di capire il contenuto in modo approfondito.",
+   "Min messages": 6,
+   "Max messages": 6,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 8,
+   "Category": "Educazione",
+   "Name": "Inviare un documento di facile e immediata comprensione",
+   "Description": "Il tempo di lettura dell'articolo è di circa 15-20 minuti. Il testo è di facile comprensione e direttamente collegabile con la vita di tutti i giorni. Il numero di messaggi è basso e la durata dell'intervento è contenuta. ",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 9,
+   "Category": "Educazione",
+   "Name": "Fornire il contenuto di una risorsa un po' alla volta nel tempo",
+   "Description": "Le risorsa è di media lunghezza e non è urgente da comunicare. Di conseguenza, il contenuto è suddiviso in un numero discretamente elevato di messaggi, in modo che si possano toccare tutti i punti salienti passo per passo. ",
+   "Min messages": 5,
+   "Max messages": 5,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 10,
+   "Category": "Educazione",
+   "Name": "Comunicare contenuti importanti",
+   "Description": "La risorsa permette di trasmettere delle conoscenze basilari, con un tono piuttosto neutrale e un linguaggio semplice. Si può utilizzare questo template per i nuovi partecipanti al programma, prima di passare a materiale più difficile. Il periodo di intervento è piuttosto breve.",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 11,
+   "Category": "Educazione",
+   "Name": "Inviare risorse specificatamente raccomandate dal geriatra",
+   "Description": "Si tratta di un template per far passare un messaggio che il geriatra ha definito come urgente, per contrastare il trend negativo di una delle aree di osservazione del comportamento.",
+   "Min messages": 4,
+   "Max messages": 4,
+   "Period": 2,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 12,
+   "Category": "Corsi di formazione/allenamento",
+   "Name": "Proporre una nuova opportunità di training a una persona motivata",
+   "Description": "Questo template si adatta a situazioni in cui si vuola  suggerire un nuovo corso di training. I messsaggi hanno un tono di incorggiamento, dato che la persona è già motivata ad allenarsi.",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 2,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 13,
+   "Category": "Corsi di formazione/allenamento",
+   "Name": "Proporre una nuova opportunità di training ad una persona poco attiva",
+   "Description": "Questo template si adatta a situazioni in cui si vuola  suggerire un nuovo corso di training. I messsaggi hanno devono essere persuasivi, dato che la persona non è propensa all'allenamento e all'attività fisica in generale",
+   "Min messages": 4,
+   "Max messages": 4,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 14,
+   "Category": "Corsi di formazione/allenamento",
+   "Name": "Inviare pro-memoria per gli appuntamenti periodici di un corso di training",
+   "Description": "Invia un messaggio ogni settimana /mese per ricordare di prendere parte all'appuntamento periodico di un corso di training. La lunghezza del periodo di intervento può essere adattato a seconda del corso di training.",
+   "Min messages": 1,
+   "Max messages": 1,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 15,
+   "Category": "Corsi di formazione/allenamento",
+   "Name": "Ricordare l'importanza di allenarsi con costanza (anche senza risorsa)",
+   "Description": "Questo template può essere usato per ricordare l'importanza di tenersi in forma e in allenamento e fornire suggerimenti per farlo. I messaggi hanno pertanto un contenuto abbastanza generale, e il template non richiede la presenza di una risorsa.  ",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 2,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 16,
+   "Category": "Corsi di formazione/allenamento",
+   "Name": "Far conoscere qualche forma di allenamento un po' fuori dal normale",
+   "Description": "Senza voler proporre una possibilità di training specifica, è possibile fornire esempi di come gli anziani in ogni parte del mondo trovano modi simpatici ed originali per stare in forma e socializzare. ",
+   "Min messages": 2,
+   "Max messages": 2,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 17,
+   "Category": "Corsi di formazione/allenamento",
+   "Name": "Fornire consigli su come allenarsi al meglio",
+   "Description": "I messaggi contenuti in questo template informano su come allenarsi al meglio, quali siano le best practices e fornisce anche il parere degli esperti. Il numero di messaggi può variare a seconda del numero di suggerimenti o informazioni che si vogliono comunicare.",
+   "Min messages": 1,
+   "Max messages": 1,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 18,
+   "Category": "Giochi e app",
+   "Name": "Inivitare a partecipare ad un gioco online",
+   "Description": "Il template è pensato per invitare le persone a partecipare a giochi on-line, soprattutto se richiedono la presenza di gareggiare in squadre. Una strategia multicanale viene utilizzata (FB, messaggero), in modo da invitare più persone allo stesso tempo e di fornire un accesso diretto alla piattaforma on-line.",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 19,
+   "Category": "Giochi e app",
+   "Name": "Proporre di scaricare e iniziare un nuovo gioco",
+   "Description": "Suggerisce un nuovao gioco o informare del lancio di una nuova applicazione. Nei messaggi sono inclusi anche alcuni dettagli o demo, ogni volta che sono disponibili, per stimolare ulteriormente la curiostià dell'anziano.",
+   "Min messages": 4,
+   "Max messages": 4,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 20,
+   "Category": "Giochi e app",
+   "Name": "Stimolare a giocare regolarmente",
+   "Description": "Il template include messaggi che \"infondano energia positiva\", solleciti per continuare a giocare e magari qualche sfida lanciata tra più persone. Il periodo di intervento è piuttosto lungo e la data di inizio e fine possono essere modificate.",
+   "Min messages": 1,
+   "Max messages": 1,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 21,
+   "Category": "News dal mondo",
+   "Name": "Aggiornare sui fatti più recenti",
+   "Description": "Sono previsti solo uno o due messaggi, a seconda della lunghezza dell'articolo, per comunicare una notizia recente. I messaggi sono concisi e diretto, come quelli di un giornale.",
+   "Min messages": 2,
+   "Max messages": 2,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 22,
+   "Category": "News dal mondo",
+   "Name": "Informare di un fatto non più recente, ma comunque rilevante",
+   "Description": "Si tratta di comunicare una notizia leggermente datata, ma comunque importante e di attualità. I messaggi possono anche essere programmati a lungo termine, motivo per cui il periodo di intervento è più lungo di quello per una notizia normale. ",
+   "Min messages": 2,
+   "Max messages": 2,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 23,
+   "Category": "News locali",
+   "Name": "Aggiornare sui fatti più recenti",
+   "Description": "Sono previsti solo uno o due messaggi, a seconda della lunghezza dell'articolo, per comunicare una notizia recente. I messaggi sono concisi e diretti, come quelli di un giornale. Dato il carattere di \"news\" è importante che vengano inviati nel breve periodo. ",
+   "Min messages": 2,
+   "Max messages": 2,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 24,
+   "Category": "News locali",
+   "Name": "Informare di un fatto non più recente, ma comunque rilevante",
+   "Description": "Si tratta di comunicare una notizia leggermente datata, ma comunque importante e di attualità. I messaggi possono anche essere programmati a lungo termine, motivo per cui il periodo di intervento è più lungo di quello per una notizia normale. ",
+   "Min messages": 2,
+   "Max messages": 2,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 25,
+   "Category": "News locali",
+   "Name": "Inviare il volantino con le offerte settimanali nei supermercati locali",
+   "Description": "Questo modello può essere utilizzato per comunicare le promozioni settimanali dei supermercati locali. E 'possibile combinare sia SMS che Messenger o la pagina FaceBook, se si vogliono inviarea anche contenuti multimediali. Il numero dei messaggi è personalizzabile in base al numero delle offerti che si è interessanti a comunicare.",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 26,
+   "Category": "News locali",
+   "Name": "Publicizzare un nuovo evento locale",
+   "Description": "Template atta a comunicare evento locale, o di attività. Essa è direttamente collegata al canale di pubblicazione (pagina di FB), di condividere l'invito a tutti nella comunità.",
+   "Min messages": 4,
+   "Max messages": 4,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 27,
+   "Category": "Informazioni di carattere generale",
+   "Name": "Comunicare con una certa urgenza qualche contenuto",
+   "Description": "L'obiettivo di questo modello è quello di comunicare informazioni in modo rapido ed efficiente. Pochi messaggi e concisi sono concentrati in un breve periodo di tempo data l'importanza del contenuto da trasmettere. Vi è anche la possibilità di utilizzare un tono aggressivo o persuasivo, se necessario.",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 1,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 28,
+   "Category": "Informazioni di carattere generale",
+   "Name": "Proporre risorse che stimolino la curiosità",
+   "Description": "Gli articoli forniti con questo modello spaziano su qualsiasi argomento e possono essere accompagnati da collegamenti a risorse esterne o video per stimolare ulteriormente la curiosità. Pertanto, è più adatto per le persone che possono essere raggiunte secondo una strategia di comunicazione multicanale.",
+   "Min messages": 6,
+   "Max messages": 6,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 29,
+   "Category": "Informazioni di carattere generale",
+   "Name": "Inviare una risorsa abbastanza lunga o complessa",
+   "Description": "Dato che la risorsa  in questione richiede un tempo di lettura più lungo, il template copre diverse settimane ed è composto di un numero elevato di messaggi.",
+   "Min messages": 5,
+   "Max messages": 5,
+   "Period": 3,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 30,
+   "Category": "Informazioni di carattere generale",
+   "Name": "Informare riguardo ad agevolazioni ed iniziative per anziani",
+   "Description": "La comunicazione è molto breve, costituita al massimo di due messaggi per informare su promozioni e sconti per gli anziani in luoghi culturali o simili e su come usarli. Non si tratta di sono informazioni urgenti o con una data limite per poterne usufruire (almeno in linea di massima). Inoltre, non richiedono un profilo di comunicazione specifico, ma sono adatti ad ogni tipo di persona.",
+   "Min messages": 2,
+   "Max messages": 2,
+   "Period": 2,
+   "Channel": "SMS OR  Messenger"
+ },
+ {
+   "ID": 31,
+   "Category": "Hobbies",
+   "Name": "Proporre di iniziare un nuovo hobby",
+   "Description": "I messaggi sono generalmente persuasivi, per convincere le persone a essere più attive e iniziare un nuovo hobby o per lo meno per essere più impegnate. E' anche prevista la possibilità di associare contenuti multimediali.",
+   "Min messages": 3,
+   "Max messages": 3,
+   "Period": 2,
+   "Channel": "SMS, Messenger, FB page"
+ },
+ {
+   "ID": 32,
+   "Category": "Hobbies",
+   "Name": "Approfondire le proprie conoscenza su un hobby che si pratica da qualche tempo",
+   "Description": "Vengono fornite risorse specifiche a temi come il giardinaggio, viaggi, cucito e altri hobbies delle persone del pilot, per approfondire le conoscenze in questi diversi ambiti. Questo template potrebbe richiedere un profilo multi-canale, nel caso in cui si vogliano fornire tutorial per spiegare o arricchire il contenuto delle  risorse.",
+   "Min messages": 2,
+   "Max messages": 2,
+   "Period": 1,
+   "Channel": "SMS, Messenger, FB page"
+ }
+]

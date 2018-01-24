@@ -1,0 +1,353 @@
+[
+ {
+   "ID": "0",
+   "Category": "Eventi",
+   "Resource": "Slowtango ",
+   "Subjects": "#ballo, #tango ",
+   "Description": "Evento di tre giorni, dedicato al tango, che alterna spettacoli di danza a momenti di coinvolgimento diretto del pubblico. Prevista anche la presentazione di un libro.",
+   "From date": "15/08/2016",
+   "To date": "22/09/2016"
+ },
+ {
+   "ID": "1",
+   "Category": "Educazione",
+   "Resource": "Emergenza estate",
+   "Subjects": "#caldo, #estate",
+   "Description": "Utile decalogo per gli anziani che spiega come far fronte all'aumento delle temperature estive, con consigli pratici e facilmente realizzabili da tutti.",
+   "From date": "01/06/2016",
+   "To date": "31/08/2016"
+ },
+ {
+   "ID": "2",
+   "Category": "Eventi",
+   "Resource": "Vacanze Romane al teatro Politeama",
+   "Subjects": "#teatro",
+   "Description": "L'8 novembre si apre la stagione del teatro Politeama con 'Vacanze Romane', spettacolo tratto dal celebre film degli anni '50 con Audrey Hepburn e Gregory Peck.",
+   "From date": "04/10/2016",
+   "To date": "08/11/2016"
+ },
+ {
+   "ID": "3",
+   "Category": "Educazione",
+   "Resource": "Dall'adolescenza alla menopausa, cosa dovrebbero mangiare le donne a seconda dell'età",
+   "Subjects": "#nutrizione",
+   "Description": "L'articolo fornisce importanti suggerimenti sulla dieta femminile più adatta a ogni periodo della vita, tenedo conto dei cambiamenti dell'organismo e dello stile di vita.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "4",
+   "Category": "Educazione",
+   "Resource": "Gli studi dimostrano la connessione tra TBI e morbo di Parkinson, ma non con con l'Alzheimer. ",
+   "Subjects": "#malattie degenerative",
+   "Description": "L'articolo descrive le ultime ricerche nel campo delle malattie degenerative, con particolare attenzione alla connessione tra trauma cranico e morbo di Parkinson.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "5",
+   "Category": "Educazione",
+   "Resource": "Le fibre alimentari potrebbero essere la chiave per invecchiare in salute",
+   "Subjects": "#nutrizione",
+   "Description": "L'articolo riporta i risultati di ricerche che dimostrano gli effetti positivi di una dieta ricca di fibre sulla salute, in particolare per evitare malattie associate all'invecchiamento.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "6",
+   "Category": "News dal mondo",
+   "Resource": "OMS: l'Italia è il secondo paese al mondo per la longevità",
+   "Subjects": "#notizie ",
+   "Description": "L'articolo illustra i risultati degli studi dell'Organizzazione Mondiale della Sanità, che vedono l'Italia al secondo posto nel mondo e al primo in Europa per numero di cittadini anziani rapportato alla popolazione.",
+   "From date": "01/01/2016",
+   "To date": "31/12/2016"
+ },
+ {
+   "ID": "7",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Smart Homes: come migliorare la vita delle persone anziane",
+   "Subjects": "#tecnologia per anziani ",
+   "Description": "L'articolo fornisce utili consigli per aumentare la sicurezza degli anziani nella vita di tutti i giorni, rendendo la propria casa 'a prova di anziano'.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "8",
+   "Category": "Eventi",
+   "Resource": "Genius: un film sulla vita di Max Perkins",
+   "Subjects": "#cinema ",
+   "Description": "Esce al cinema la nuova pellicola sulla vita di Max Perkins, l'editore che ha lanciato Fitzgerald, Wolfe e Hemingway, con Colin Firth, Jude Law e Nicole Kidman.",
+   "From date": "01/10/2016",
+   "To date": "10/11/2016"
+ },
+ {
+   "ID": "9",
+   "Category": "Corsi di formazione/allenamento",
+   "Resource": "La sfida dei 15.000 passi al giorno",
+   "Subjects": "#sfida, #camminare",
+   "Description": "L'articolo presenta la sfida dei 15.000 passi al giorno come un gioco di gruppo, per fare attività fisica in compagnia.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "10",
+   "Category": "News locali",
+   "Resource": "Due passi in centro: camminare con i tuoi amici a Lecce",
+   "Subjects": "#camminare",
+   "Description": "Un'iniziativa del comune di Lecce che si terrà il prossimo 10 maggio: una camminata in città che terminerà con un incontro con un cardiologo e uno pneumologo, per sottolineare come una vita attiva possa incidere positivamente sullo stato di salute.",
+   "From date": "15/03/206",
+   "To date": "10/05/2016"
+ },
+ {
+   "ID": "11",
+   "Category": "Hobbies",
+   "Resource": "Vincitore del Premio Campiello: Marzo Balzano - L'ultimo arrivato (emigrazione Sud Nord anni '50)",
+   "Subjects": "#leggere",
+   "Description": "L'articolo descrive l'opera di Marzo Balzano, L'ultimo arrivato, finalista al Premio Campello:   la storia di piccolo emigrante, Ninetto detto pelleossa, che abbandona la Sicilia e si reca a Milano a cercar fortuna.",
+   "From date": "15/09/2016",
+   "To date": "15/11/2016"
+ },
+ {
+   "ID": "12",
+   "Category": "Corsi di formazione/allenamento",
+   "Resource": "Attività fisica: quanto spesso?",
+   "Subjects": "#attività fisica",
+   "Description": "L'articolo riporta alcuni preziosi consigli su come ottenere i massimi benefici dall'esercizio fisico, senza esagerare con le quantità e tenendo conto della propria età.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "13",
+   "Category": "Educazione",
+   "Resource": "Il ballo aiuta il cervello a mantenersi giovane",
+   "Subjects": "#ballo, #restare giovani ",
+   "Description": "Il ballo non aiuta solo il cervello, ma migliora la capacità di invecchiare in salute e autonomia perché stimola la “competenza motoria”ed è un antidoto attivo e potente contro la solitudine.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "14",
+   "Category": "Giochi e app",
+   "Resource": "MindMate è una delle migliori applicazioni esistenti per le persone anziane affette da demenza senile",
+   "Subjects": "#giochi contro la demenza",
+   "Description": "App molto efficace per gli anziani affetti da demenza: propone attività che aiutano a stimolare la memoria, l'attenzione e il problem solving.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "15",
+   "Category": "Educazione",
+   "Resource": "Il legame tra Alzheimer e stile di vita",
+   "Subjects": "#Alzheimer, #genetica",
+   "Description": "L'articolo presente interessanti studi che dimostrano la correlazione tra l'insorgenza del morbo di Alzheimer e gli stili di vita: astress eccessivo, sedentarietà e cattiva alimentazione possono alterare l’attività dei neuroni.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "16",
+   "Category": "Educazione",
+   "Resource": "Una dieta più sana per mantenersi giovani",
+   "Subjects": "#nutrizione, #dieta",
+   "Description": "L'articolo illustra come ridurre la quantità di cibo o talvolta fare digiuno aiuti a rallentare l'invecchiamento: i due criteri fondamentali sono la quantità/qualità del cibo e le calorie correlate al dispendio.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "17",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Andare a messa riduce la depressione e il numero di suicidi",
+   "Subjects": "#religione ",
+   "Description": "L'articolo dimostra che la partecipazione ai servizi religiosi aumenta il sostegno sociale, diminuisce la depressione e contribuisce a sviluppare una prospettiva più ottimista nella vita.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "18",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Quando la demenza rivela un amore coltivato a lungo",
+   "Subjects": "#demenza senile ",
+   "Description": "L'Alzheimer è una malattia cerebrale degenerativa che cambia drasticamente la persona: l'articolo mostra come spesso però emerga nel malati un atteggiamento affettuoso che rivela il profondo amore vissuto.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "19",
+   "Category": "Educazione",
+   "Resource": "L'alimentazione delle persone anziane: alcune regole ",
+   "Subjects": "#alimentazione ",
+   "Description": "L'articolo fornisce alcune regole base da seguie nell'alimentazione degli anziani. Adatto a tutte le tipologie di persone.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "20",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "I consigli della Polizia contro le truffe agli anziani",
+   "Subjects": "#truffe",
+   "Description": "Cinque esempi di truffe ricorrenti ai danni degli anziani, con relativo vademecum delle azioni da prendere per evitare di rimanerne vittime. Adatto ad anziani più fragili, che dimostrano segni di diminuzione di autonomia.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "21",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Aumentano le truffe agli anziani, ecco le 5 più comuni e i consigli per evitarle",
+   "Subjects": "#truffe",
+   "Description": "Si leggono frequentemente problemi di truffe fatti agli anzia, estorsioni, furti, raggiri, firme rubate,matrimoni... La Polizia di Stato educa i cittadini alla prevenzione",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "22",
+   "Category": "Educazione",
+   "Resource": "Caldo estivo: una guida di sopravvivenza per le persone anziane",
+   "Subjects": "#estate",
+   "Description": "Un decalogo delle regole da seguire quando arriva il caldo estivo. Consigli generali, come bere molta acqua, evitare le ore più calde, adatte ad ogni persona e situazione.",
+   "From date": "01/06/2016",
+   "To date": "31/08/2016"
+ },
+ {
+   "ID": "23",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Anziani in viaggio: tanti consigli utili",
+   "Subjects": "#vacanze, #viaggi ",
+   "Description": "L'articolo fornisce una lista delle cose più importanti che si devono ricordare quando si parte per un viaggio, prima, durante e dopo, con la lista dei documenti da portare e consigli su come traspostare medicine, etc. Risorsa da inviare a ridosso di periodi di vacanza, a persone attive e con possibilità di muoversi o che hanno pianificato un viaggio.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "24",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Prevenzione alle truffe",
+   "Subjects": "#truffe",
+   "Description": "Alcuni degli esempi più comuni di truffe ai danni degli anziani, con i consigli della polizia su come difendersi. Risorsa adatta per persone piuttosto fragili, o che ne hanno subite ne l passato. Utile anche per  i famigliari, per poter riconoscere le situazioni di pericolo quando dovessero presentarsi.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "25",
+   "Category": "Educazione",
+   "Resource": "10 trucchi per vincere la battaglia contro le alte temperature",
+   "Subjects": "#caldo, #estate",
+   "Description": "Decalogo da seguire per difendersi dal caldo estivo. Adatto ad ogni tipo di persona, con esempi pratici e consigli.",
+   "From date": "01/06/2016",
+   "To date": "31/08/2016"
+ },
+ {
+   "ID": "26",
+   "Category": "Corsi di formazione/allenamento",
+   "Resource": "Over 60: giocare a calcio per prendersi cura del proprio cuore",
+   "Subjects": "#giocare, #allenamento ",
+   "Description": "La risorsa descrive quali siano i benefici che derivano dal praticare una regolare attività fisica, nello specifico il calcio, anche e soprattutto per gli over60. La risorsa è di facile comprensione e adatta principalmente per gli uomini.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "27",
+   "Category": "Educazione",
+   "Resource": "Over 75: la pressione massima dovrebbe restare al di sotto dei 116",
+   "Subjects": "#pressione sanguinea",
+   "Description": "Target della risorsa sono gli over75, che hanno problemi di pressione alta. Il testo fornisce informazioni su quali siano i valori limite e come evitare che insorgano problemi.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "28",
+   "Category": "Educazione",
+   "Resource": "Fare le scale e studiare aiuta il cervello a restare giovane",
+   "Subjects": "#allenamento cognitivo, #scale, #restare giovani ",
+   "Description": "Fare le scale e giocare sono due attività che stimolano il cervello e aiutano a mantenersi giovani. Adatta a coloro che mostrano i primi sintomi di demenza o che hanno qualche problema.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "29",
+   "Category": "Educazione",
+   "Resource": "Le attività che aiutano a tenere il cervello in allenamento",
+   "Subjects": "#allenamento cognitivo, #restare giovani ",
+   "Description": "Per la categoria hobbies, una lista su quelli che sono più o meno atti a stimolare l'anziano. Adatto a chi si annoia facilmente o chi non ha manifestato un hobby particolare, in modo da invogliarli a tenersi attivi.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "30",
+   "Category": "Giochi e app",
+   "Resource": "Giochi e test online: l'allenamento per un cervello sempre giovane",
+   "Subjects": "#allenamento cognitivo, #giocare",
+   "Description": "I giochi onlilne sono uno dei modi per divertirsi, sfidarsi e contemporaneamente mantenere il cervello giovane e attivo. Adatto a chi cerca nuovi stimoli o a chi soffre di problemi cognitivi, per darenuovi spunti di occupazione.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "31",
+   "Category": "News",
+   "Resource": "Anziani non autosufficienti",
+   "Subjects": "#anziani, #autosufficienza ",
+   "Description": "L'autosufficienza degli anziani è un problema in grande aumento. L'articolo descrive brevemente quali ne sono i motivi e come l'Italia si stia muovendo per affrontarlo, a livello di servizi e infrastrutture. Adatto più alle famiglie dei care-receiver, che non a loro stessi.",
+   "From date": "20/05/2016",
+   "To date": "31/12/2016"
+ },
+ {
+   "ID": "32",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Nei batteri intestinali dei centenari il segreto della longevità",
+   "Subjects": "#alimentazione, #salute",
+   "Description": "Risorsa educativa, dal contenuto anche piuttosto tecnico. Adatta a persone con un profilo di fragilità basso, curiose ed evenualmente che hanno avuto precedenti esperienze negative con malattie intestinali.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "33",
+   "Category": "Educazione",
+   "Resource": "La giusta aspettativa di vita? Per gli italiani almeno cento anni",
+   "Subjects": "#aspettativa di vita",
+   "Description": "Articolo informativo, che parla da un lato dell'invecchiamento della popolazione e dall'altra di come la dieta mediterranea e lo stile di vita faccia degli italiani una delle popolazioni più longeve al mondo. Adatto ad ogni tipo di anziano.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "34",
+   "Category": "Educazione",
+   "Resource": "Anziani: per migliorare la qualità della vita, giocare d'anticipo",
+   "Subjects": "#prevenzione ",
+   "Description": "L'articolo descrive i sintomi principali che potrebbero portare all'insorgere di patologie negli anziani. Particolarmente adatto a soggetti più giovani per prevenire futuri sintomi e alle famiglie con parenti in età compresa tra 60 e 70 anni.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "35",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Terza età: mangiare bene  con 2 euro al giorno si può.",
+   "Subjects": "#alimentazione, #risparmio ",
+   "Description": "Mangiare bene è caro, spesso e volentieri. Tuttavia è sempre possibile assumere tutti i nutrienti necessari, risparmiando qualcosa. Adatto a chi ha un profilo finanziario basso o percepisce poca pensione.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "36",
+   "Category": "Corsi di formazione/allenamento",
+   "Resource": "L'arte di invecchiare: fitness su ruote",
+   "Subjects": "#sport, #socializzazione ",
+   "Description": "Un esempio molto interessante e divertente di come un circolo di anziani possa introdurre il pattinaggio a rotelle tra gli sport proposti, per divertirsi e tenersi in forma. Da inviare a persone propositive o che frequentano con assiduità i centri per anziani per fornire nuove idee per future attività.",
+   "From date": "",
+   "To date": ""
+ },
+ {
+   "ID": "37",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Emergenza estate",
+   "Subjects": "#caldo, #estate",
+   "Description": "Molto interessante perché il problema caldo è rilevante per gli anziani e spesso non vengono data istruzioni precise e gli anziani vivono inn ambienti difficili",
+   "From date": "01/06/2016",
+   "To date": "31/08/2016"
+ },
+ {
+   "ID": "38",
+   "Category": "Informazioni di carattere generale",
+   "Resource": "Integratori vitaminici e multivitaminici: naturali e sintetici a confronto.",
+   "Subjects": "#alimentazione, #salute",
+   "Description": "L'articolo è piuttosto specifico e concerne coloro che fanno regolare consumo di vitamine. E' abbastanza tecnico, quindi non adatto alle persone che non amano risorse così specifiche.",
+   "From date": "",
+   "To date": ""
+ }
+]

@@ -1,0 +1,334 @@
+[
+{
+     "ID": 12,
+     "User_ID":1,
+     "State":"",
+     "Timestamp":"15/08/2016",
+     "Caregiver":"Anna Lobono",
+     "Title": "A dieta",
+     "From date": "20/07/2016",
+     "To date": "09/09/2016",
+     "Prescription_ID":14,
+     "Prescription":"L'anziano è al momento a dieta. Continuare con l'invio di messaggi sulla nutrizione, ma senza esagerare, per evitare la sovrapposizione con informazioni e suggerimenti già ricevuti. Piuttosto, focalizzarsi sull'attività fisica. Il tono è empatico. ",
+     "Resources":[
+       {
+       "Category":"Educazione",
+       "Resource":"Dall'adolescenza alla menopausa, cosa dovrebbero mangiare le donne a seconda dell’età",
+       "Subjects":"#nutrizione",
+       "Template":"Inviare risorse specificatamente raccomandate dal geriatra",
+       "From date":"15/06/2016",
+       "To date":"22/06/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"Il ballo aiuta il cervello a mantenersi giovane",
+        "Subjects":"#ballo, #restare giovani",
+        "Template":"Inviare un documento di facile e immediata comprensione",
+        "From date":"24/06/2016",
+        "To date":"30/06/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"Gli stessi geni ci rendono inclini alla felicità e alla depressione",
+        "Subjects":"#neuroscienze",
+        "Template":"Comunicare una risorsa che contiene termini tecnici o scientifici piuttosto complessi",
+        "From date":"28/06/2016",
+        "To date":"10/07/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"Fare le scale e studiare aiuta il cervello a restare giovane",
+        "Subjects":"#allenamento cognitivo, #scale, #restare giovani",
+        "Template":"Inviare un documento di facile e immediata comprensione",
+        "From date":"18/07/2016",
+        "To date":"24/07/2016"
+      }
+    ]
+ },
+{
+     "ID": 11,
+     "User_ID":1,
+     "State":"",
+     "Timestamp":"15/06/2016",
+     "Caregiver":"Anna Lobono",
+     "Title": "A dieta",
+     "From date": "15/06/2016",
+     "To date": "24/07/2016",
+     "Prescription_ID":14,
+     "Prescription":"L'anziano è al momento a dieta. Continuare con l'invio di messaggi sulla nutrizione, ma senza esagerare, per evitare la sovrapposizione con informazioni e suggerimenti già ricevuti. Piuttosto, focalizzarsi sull'attività fisica. Il tono è empatico. ",
+     "Resources":[
+       {
+       "Category":"Educazione",
+       "Resource":"Dall'adolescenza alla menopausa, cosa dovrebbero mangiare le donne a seconda dell’età",
+       "Subjects":"#nutrizione",
+       "Template":"Inviare risorse specificatamente raccomandate dal geriatra",
+       "From date":"15/06/2016",
+       "To date":"22/06/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"Il ballo aiuta il cervello a mantenersi giovane",
+        "Subjects":"#ballo, #restare giovani",
+        "Template":"Inviare un documento di facile e immediata comprensione",
+        "From date":"24/06/2016",
+        "To date":"30/06/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"Gli stessi geni ci rendono inclini alla felicità e alla depressione",
+        "Subjects":"#neuroscienze",
+        "Template":"Comunicare una risorsa che contiene termini tecnici o scientifici piuttosto complessi",
+        "From date":"28/06/2016",
+        "To date":"10/07/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"Fare le scale e studiare aiuta il cervello a restare giovane",
+        "Subjects":"#allenamento cognitivo, #scale, #restare giovani",
+        "Template":"Inviare un documento di facile e immediata comprensione",
+        "From date":"18/07/2016",
+        "To date":"24/07/2016"
+      }
+    ]
+ },
+ {
+     "ID": 10,
+     "User_ID":1,
+     "State":"",
+     "Timestamp":"10/01/2016",
+     "Caregiver":"Anna Lobono",
+     "Title": "Valori al di sotto della media",
+     "From date": "10/01/2016",
+     "To date": "19/02/2016",
+     "Prescription_ID":9,
+     "Prescription":"L'anziano registra valori al di sotto della media in quasi tutte le categorie rilevate.  Ampliare il campo di intervento delle risorse, stimolando la curiosità, anche con la proposta di giochi. La frequenza dei messaggi deve rimanere bassa.",
+     "Resources":[
+       {
+       "Category":"Informazioni generali",
+       "Resource":"Smart Homes: come migliorare la vita delle persone anziane",
+       "Subjects":"#tecnologia per anziani ",
+       "Template":"Proporre risorse che stimolino la curiosità",
+       "From date":"10/01/2016",
+       "To date":"23/01/2016"
+      },
+      {
+        "Category":"Giochi e app",
+        "Resource":"MindMate è una delle migliori applicazioni esistenti per le persone anziane affette da demenza senile",
+        "Subjects":"#giochi contro la demenza",
+        "Template":"Proporre di scaricare e iniziare un nuovo gioco",
+        "From date":"20/01/2016",
+        "To date":"30/01/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"'La macchina della vita' indaga le cause dell'invecchiamento",
+        "Subjects":"#invecchiamento",
+        "Template":"Comunicare una risorsa il cui contenuto è difficile da comprendere",
+        "From date":"25/01/2016",
+        "To date":"08/02/2016"
+      },
+      {
+        "Category":"Educazione",
+        "Resource":"Gli stessi geni ci rendono inclini alla felicità e alla depressione",
+        "Subjects":"#neuroscienze",
+        "Template":"Comunicare una risorsa che contiene termini tecnici o scientifici piuttosto complessi",
+        "From date":"06/02/2016",
+        "To date":"15/02/2016"
+      },
+      {
+        "Category":"News dal mondo",
+        "Resource":"Premio Nobel 2013: Alice Munro",
+        "Subjects":"#premio nobel 2013",
+        "Template":"Aggiornare sui fatti più recenti",
+        "From date":"13/02/2016",
+        "To date":"19/02/2016"
+      }
+    ]
+ },
+ {
+     "ID": 2,
+     "User_ID":0,
+     "State":"",
+     "Timestamp":"11/10/2016",
+     "Caregiver":"Anna Lobono",
+     "Title": "Mantenimento dello stato",
+     "From date": "15/10/2016",
+     "To date": "30/11/2016",
+     "Prescription_ID":24,
+     "Prescription":"Gli indicatori sono abbastanza stabili, ma in generale la situazione è positiva.  Puntare al mantenimento dello stato, suggerendo nuovi eventi e optando per uno stile di comunicazione più di supporto. Anche se l'attività fisica non è preoccupante, suggerire di praticarla con più regolarità.",
+     "Resources":[
+       {
+       "Resource_ID":36,  
+       "Category":"Training",
+       "Resource":"L'arte di invecchiare: fitness su ruote",
+       "Subjects":"#sport, #socializzazione ",
+       "Template":"Inviare un documento di facile e immediata comprensione",
+       "From date":"01/09/2016",
+       "To date":"08/09/2016"
+      },
+      {
+        "Resource_ID":9,
+        "Category":"Training",
+        "Resource":"La sfida dei 15.000 passi al giorno",
+        "Subjects":"#sfida, #camminare",
+        "Template":"Far conoscere qualche forma di allenamento un po' fuori dal normale",
+        "From date":"15/09/2016",
+        "To date":"22/09/2016"
+      },
+      {
+        "Resource_ID":26,
+        "Category":"Training",
+        "Resource":"Over 60: giocare a calcio per prendersi cura del proprio cuore",
+        "Subjects":"#giocare, #allenamento",
+        "Template":"Ricordare l'importanza di allenarsi con costanza (anche senza risorsa)",
+        "From date":"15/05/2016",
+        "To date":"26/05/2016"
+      },
+      {
+        "Resource_ID":2,
+        "Category":"Information",
+        "Resource":"Vacanze Romane al teatro Politeamae",
+        "Subjects":"#teatro",
+        "Template":"Informare riguardo ad agevolazioni ed iniziative per anziani",
+        "From date":"27/09/2016",
+        "To date":"05/10/2016"
+      },
+      {
+        "Resource_ID":11,
+        "Category":"Global news",
+        "Resource":"Vincitore del Premio Campiello: Marzo Balzano - L'ultimo arrivato (emigrazione Sud Nord anni '50)",
+        "Subjects":"#leggere",
+        "Template":"Aggiornare sui fatti più recenti",
+        "From date":"06/06/2016",
+        "To date":"13/10/2016"
+      },
+      {
+        "Resource_ID":12,
+        "Category":"Training",
+        "Resource":"Attività fisica: quanto spesso?",
+        "Subjects":"#attività fisica",
+        "Template":"Fornire consigli su come allenarsi al meglio",
+        "From date":"17/10/2016",
+        "To date":"23/10/2016"
+      }
+    ]
+ },
+ {
+     "ID": 1,
+     "User_ID":0,
+     "State":"",
+     "Timestamp":"31/08/2016",
+     "Caregiver":"Anna Lobono",
+     "Title": "Mantenimento dello stato",
+     "From date": "01/09/2016",
+     "To date": "23/10/2016",
+     "Prescription_ID":24,
+     "Prescription":"Gli indicatori sono abbastanza stabili, ma in generale la situazione è positiva.  Puntare al mantenimento dello stato, suggerendo nuovi eventi e optando per uno stile di comunicazione più di supporto. Anche se l'attività fisica non è preoccupante, suggerire di praticarla con più regolarità.",
+     "Resources":[
+       {
+       "Resource_ID":36,  
+       "Category":"Training",
+       "Resource":"L'arte di invecchiare: fitness su ruote",
+       "Subjects":"#sport, #socializzazione ",
+       "Template":"Inviare un documento di facile e immediata comprensione",
+       "From date":"01/09/2016",
+       "To date":"08/09/2016"
+      },
+      {
+        "Resource_ID":9,
+        "Category":"Training",
+        "Resource":"La sfida dei 15.000 passi al giorno",
+        "Subjects":"#sfida, #camminare",
+        "Template":"Far conoscere qualche forma di allenamento un po' fuori dal normale",
+        "From date":"15/09/2016",
+        "To date":"22/09/2016"
+      },
+      {
+        "Resource_ID":26,
+        "Category":"Training",
+        "Resource":"Over 60: giocare a calcio per prendersi cura del proprio cuore",
+        "Subjects":"#giocare, #allenamento",
+        "Template":"Ricordare l'importanza di allenarsi con costanza (anche senza risorsa)",
+        "From date":"15/05/2016",
+        "To date":"26/05/2016"
+      },
+      {
+        "Resource_ID":2,
+        "Category":"Information",
+        "Resource":"Vacanze Romane al teatro Politeamae",
+        "Subjects":"#teatro",
+        "Template":"Informare riguardo ad agevolazioni ed iniziative per anziani",
+        "From date":"27/09/2016",
+        "To date":"05/10/2016"
+      },
+      {
+        "Resource_ID":11,
+        "Category":"Global news",
+        "Resource":"Vincitore del Premio Campiello: Marzo Balzano - L'ultimo arrivato (emigrazione Sud Nord anni '50)",
+        "Subjects":"#leggere",
+        "Template":"Aggiornare sui fatti più recenti",
+        "From date":"06/06/2016",
+        "To date":"13/10/2016"
+      },
+      {
+        "Resource_ID":12,
+        "Category":"Training",
+        "Resource":"Attività fisica: quanto spesso?",
+        "Subjects":"#attività fisica",
+        "Template":"Fornire consigli su come allenarsi al meglio",
+        "From date":"17/10/2016",
+        "To date":"23/10/2016"
+      }
+    ]
+ },
+ {
+     "ID": 0,
+     "User_ID":0,
+     "State":"",
+     "Timestamp":"15/04/2016",
+     "Caregiver":"Anna Lobono",
+     "Title": "Aumentare le attività fisiche",
+     "From date": "20/04/2016",
+     "To date": "15/06/2016",
+     "Prescription_ID":28,
+     "Prescription":"Auspicabile aumentare le attività fisiche, visto lo stile di vita sedentario adottato ultimamente. L'incremento può essere incentivato con suggerimenti o anche proponendolo come sfida. La fragilità sembra essere sotto controllo, ma occorre evitare messaggi aggressivi per il momento. ",
+     "Resources":[
+       {
+       "Resource_ID":10,
+       "Category":"Local News",
+       "Resource":"Due passi in centro: camminare con i tuoi amici a Lecce",
+       "Subjects":"#camminare",
+       "Template":"Publicizzare un nuovo evento locale",
+       "From date":"20/04/2016",
+       "To date":"03/05/2016"
+      },
+      {
+        "Resource_ID":13,
+        "Category":"Education",
+        "Resource":"Il ballo aiuta il cervello a mantenersi giovane",
+        "Subjects":"#ballo, #restare giovani",
+        "Template":"Inviare risorse specificatamente raccomandate dal geriatra",
+        "From date":"25/04/2016",
+        "To date":"06/05/2016"
+      },
+      {
+        "Resource_ID":26,
+        "Category":"Training",
+        "Resource":"Over 60: giocare a calcio per prendersi cura del proprio cuore",
+        "Subjects":"#giocare, #allenamento",
+        "Template":"Ricordare l'importanza di allenarsi con costanza (anche senza risorsa)",
+        "From date":"15/05/2016",
+        "To date":"26/05/2016"
+      },
+      {
+        "Resource_ID":28,
+        "Category":"Education",
+        "Resource":"Fare le scale e studiare aiuta il cervello a restare giovane",
+        "Subjects":"#allenamento cognitivo, #scale, #restare giovani ",
+        "Template":"Inviare risorse specificatamente raccomandate dal geriatra",
+        "From date":"02/06/2016",
+        "To date":"15/06/2016"
+      }
+    ]
+ }
+]

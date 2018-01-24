@@ -1,0 +1,93 @@
+body {
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.inner {
+    display: inline-block;
+}
+
+div#homeButtons *{
+    display: inline;
+}
+
+.btn-xlarge {
+    padding: 18px 28px;
+    font-size: 55px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.containerButtons{
+    margin-top: 250px;
+}
+
+.divSuperiore {
+    background-color: #e1d5d5;
+    margin: 0;
+}
+
+.divSuperiore *{
+    display: inline;
+    margin-left: 25px;
+    margin-top: 5px;
+    margin-right: 25px;
+    margin-bottom: 5px;
+}
+
+.divSuperiore h2{
+    text-align: right;
+    vertical-align: middle;
+}
+
+#logoImage {
+    width: 115px;
+    height: 61px;
+}
+
+.menu-import{
+    padding-top: 50px;
+    padding-right: 40px;
+    padding-left: 15px;
+}
+
+.panel-personalized{
+    margin-top: 50px;
+    margin-right: 25px;
+}
+
+.instructionContent{
+    padding-top: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 5px;
+    text-align: justify;
+}
+
+.page-alerts {
+    margin-bottom: 20px;
+}
+
+.page-alerts .page-alert {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.goBack{
+    padding-left: 40px;
+}
+
+.buttonsDownload{
+    margin-right: 25px;
+}
+
+.uploadBackButtons{
+    padding-left: 50px;
+}
+
+.secondButton{
+    margin-left: 30px;
+}
