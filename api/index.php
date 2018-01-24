@@ -4986,32 +4986,49 @@ function importUsers(){
 //TODO Change the $filepath to all the export method to reflect the onw that will be used on the database
 //region EXPORT METHODS
 
-function exportGeneric($table_name, $except){
+function exportGeneric($table_name, $options){
     global $pdo;
 
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))) {
+        // *** Initialise ***
         $filepath = 'tmp/export_' . $table_name. '.csv';
         unlink($filepath);
+        $includes = (isset($options["include"]) ? $options["include"] : array());
+        $excludes = (isset($options["exclude"]) ? $options["exclude"] : array());
         $export_ready = FALSE;
+
+        // *** Establish the columns that will be output ***
         $query = "SELECT column_name FROM information_schema.columns WHERE table_schema='c4a_i_schema' AND table_name = '" . $table_name . "'";
         $query_results = $pdo->query($query);
         if ($query_results) {
             $column_names = array();
             $fh = fopen($filepath, "w");
             while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                if (!in_array($table_row[0], $except)) {
+                if (!in_array($table_row[0], $excludes)) {
                     $column_names[] = $table_row[0];
                 };
             }
-            fputcsv($fh, $column_names);
+            if (count($includes) > 0) {
+                $ordered_column_names = array();
+                foreach ($includes as $included_column) {
+                    if (in_array($included_column, $column_names)) {
+                        $ordered_column_names[] = $included_column;
+                    }
+                }
+            }
+            else {
+                $ordered_column_names = $column_names;
+            }
+            fputcsv($fh, $ordered_column_names);
 
+            // *** Output the columns ***
             $query = "SELECT * FROM c4a_i_schema." . $table_name;
             $query_results = $pdo->query($query);
             if ($query_results) {
                 $output = array();
                 while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-                    foreach ($column_names as $column_name) {
+                    foreach ($ordered_column_names as $column_name) {
                         $output[] = $table_row[$column_name];
                     }
                     fputcsv($fh, $output);
@@ -5021,6 +5038,7 @@ function exportGeneric($table_name, $except){
             }
             fclose($fh);
         }
+
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
         if($export_ready) {
@@ -5041,7 +5059,7 @@ function exportGeneric($table_name, $except){
  * METHOD : POST
  */
 function exportChannels(){
-    exportGeneric("channel", array("oid"));
+    exportGeneric("channel", ["exclude" => ["oid"]]);
 }
 
 /**
@@ -5049,7 +5067,7 @@ function exportChannels(){
  * METHOD : POST
  */
 function exportHourperiods(){
-    exportGeneric("hour_period", array("hour_period_id"));
+    exportGeneric("hour_period", ["exclude" => ["hour_period_id"]]);
 }
 
 /**
@@ -5156,7 +5174,7 @@ function exportPrescriptions(){
  * METHOD : POST
  */
 function exportProfiles(){
-    exportGeneric("profile", array("aged_id"));
+    exportGeneric("profile", ["exclude" => ["aged_id"]]);
 }
 
 /**
@@ -5210,7 +5228,7 @@ function exportProfilesCommunicative(){
  * METHOD : POST
  */
 function exportProfilesFrailty(){
-   exportGeneric("profile_frailty_status", array("aged_id", "aged_name"));
+   exportGeneric("profile_frailty_status", ["exclude" => ["aged_id", "aged_name"]]);
 }
 
 /**
@@ -5218,7 +5236,7 @@ function exportProfilesFrailty(){
  * METHOD : POST
  */
 function exportProfilesSocio(){
-    exportGeneric("profile_socioeconomic_details", array("aged_id"));
+    exportGeneric("profile_socioeconomic_details", ["exclude" => ["aged_id"]]);
 }
 
 /**
@@ -5226,7 +5244,7 @@ function exportProfilesSocio(){
  * METHOD : POST
  */
 function exportProfilesTechnical(){
-    exportGeneric("profile_technical_details", array("aged_id"));
+    exportGeneric("profile_technical_details", ["exclude" => ["aged_id"]]);
 }
 
 /**
@@ -5294,7 +5312,7 @@ function exportTemplates(){
  * METHOD : POST
  */
 function exportUsers(){
-    exportGeneric("user", array("user_id"));
+    exportGeneric("user", ["exclude" => ["user_id"]]);
 }
 
 //endregion
