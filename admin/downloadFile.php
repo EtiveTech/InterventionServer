@@ -82,7 +82,7 @@ curl_setopt($curl, CURLOPT_POST, true);
 $curl_response = curl_exec($curl);
 
 // In case the curl fails close the connection and print an error
-if ($curl_response === false) {
+if ($curl_response === FALSE) {
     $info = curl_getinfo($curl);
     curl_close($curl);
     echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">
@@ -110,36 +110,32 @@ echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50
                     '. $decoded[0] -> Message .'
                   </div>';
 
-$filename = $decoded[0] -> filepath;
+$filename = '../api/' . $decoded[0] -> filepath;
 
 //endregion
 
 //region Actual Download of the file
 if(!empty($filename)){
 
-    // Specify file path.
-    //$path_local = 'C:\xampp';
-    $path = getcwd(). "/../tmp";
-    $download_file =  $filename;
-
     // Check file is exists on given path.
-    if(file_exists($download_file))
+    if(file_exists($filename))
     {
         // Getting file extension.
-        $extension = explode('.',$filename);
+        $extension = explode('.', $name_of_file);
         $extension = $extension[count($extension)-1];
         // For Gecko browsers
         header('Content-Transfer-Encoding: binary');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)) . ' GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
         // Calculate File size
-        header('Content-Length: ' . filesize($download_file));
+        header('Content-Length: ' . filesize($filename));
         header('Content-Encoding: none');
         // Change the mime type if the file is not PDF
         header('Content-Type: application/'.$extension);
         // Make the browser display the Save As dialog
         header('Content-Disposition: attachment; filename=' . $name_of_file);
-        ob_clean(); flush();
-        readfile($download_file);
+        ob_clean();
+        flush();
+        readfile($filename);
         exit;
     }
     else

@@ -4985,26 +4985,48 @@ function importUsers(){
 //TODO Change the $filepath to all the export method to reflect the onw that will be used on the database
 //region EXPORT METHODS
 
+function exportGeneric($table_name, $filepath){
+    global $pdo;
+
+    $result = FALSE;
+    $query = "SELECT column_name FROM information_schema.columns WHERE table_schema='c4a_i_schema' AND table_name = '".$table_name."'";
+    $query_results = $pdo->query($query);
+    if ($query_results) {
+        $fh = fopen($filepath, "w");
+        while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
+            $header_row[] = $table_row[0];
+        }
+        fputcsv($fh, $header_row);
+
+        $query = "SELECT * FROM c4a_i_schema.".$table_name;
+        $query_results = $pdo->query($query);
+        if($query_results) {
+            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) { // Fetch an array
+                fputcsv($fh, $table_row);
+            }
+            $result = TRUE;
+        }
+        fclose($fh);
+    }
+    return $result;
+}
+
 /**
  * DESCRIPTION : It creates a CSV file of the Channel table
  * METHOD : POST
  */
 function exportChannels(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_channels.csv";
+        $filepath = "tmp/export_channels.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_channels('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("channel", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the channels file";
@@ -5022,21 +5044,17 @@ function exportChannels(){
  * METHOD : POST
  */
 function exportHourperiods(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_hourperiods.csv";
+        $filepath = "tmp/export_hourperiods.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_hourperiods('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("hour_period", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the hour_period file";
@@ -5054,21 +5072,17 @@ function exportHourperiods(){
  * METHOD : POST
  */
 function exportMessages(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_messages.csv";
+        $filepath = "tmp/export_messages.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_messages('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("message", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the messages file";
@@ -5086,21 +5100,17 @@ function exportMessages(){
  * METHOD : POST
  */
 function exportPrescriptions(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_prescriptions.csv";
+        $filepath = "tmp/export_prescriptions.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_prescriptions('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("prescription", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the prescriptions file";
@@ -5118,21 +5128,17 @@ function exportPrescriptions(){
  * METHOD : POST
  */
 function exportProfiles(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_profiles.csv";
+        $filepath = "tmp/export_profiles.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_profiles('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("profile", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the profile file";
@@ -5150,21 +5156,17 @@ function exportProfiles(){
  * METHOD : POST
  */
 function exportProfilesCommunicative(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_profiles_communicative.csv";
+        $filepath = "tmp/export_profiles_communicative.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_profiles_communicative('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("profile_communicative_details", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the profile_communicative file";
@@ -5182,21 +5184,17 @@ function exportProfilesCommunicative(){
  * METHOD : POST
  */
 function exportProfilesFrailty(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_profiles_frailty.csv";
+        $filepath = "tmp/export_profiles_frailty.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_profiles_frailty('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("profile_frailty_status", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the Profiles_frailty file";
@@ -5214,21 +5212,17 @@ function exportProfilesFrailty(){
  * METHOD : POST
  */
 function exportProfilesSocio(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_profiles_socioeconomic.csv";
+        $filepath = "tmp/export_profiles_socioeconomic.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_profiles_socioeconomic('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("profile_socioeconomic_details", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the Profiles_socioeconomic file";
@@ -5246,21 +5240,17 @@ function exportProfilesSocio(){
  * METHOD : POST
  */
 function exportProfilesTechnical(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_profiles_tech.csv";
+        $filepath = "tmp/export_profiles_tech.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_profiles_tech('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("profile_technical_details", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the Profiles_tech file";
@@ -5278,21 +5268,17 @@ function exportProfilesTechnical(){
  * METHOD : POST
  */
 function exportResources(){
-
-    global $pdo;
-
-    // Check if the method is POST
+   // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_resources.csv";
+        $filepath = "tmp/export_resources.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_resources('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("resource", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the resources file";
@@ -5310,21 +5296,17 @@ function exportResources(){
  * METHOD : POST
  */
 function exportTemplates(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_templates.csv";
+        $filepath = "tmp/export_templates.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_templates('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("template", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the template file";
@@ -5342,21 +5324,17 @@ function exportTemplates(){
  * METHOD : POST
  */
 function exportUsers(){
-
-    global $pdo;
-
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/export_users.csv";
+        $filepath = "tmp/export_users.csv";
         unlink($filepath);
 
-        $queryUpdate = "SELECT c4a_i_schema.export_users('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        $export_ready = exportGeneric("user", $filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($export_ready) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the Users file";
