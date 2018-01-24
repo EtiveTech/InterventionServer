@@ -4986,38 +4986,54 @@ function importUsers(){
 //TODO Change the $filepath to all the export method to reflect the onw that will be used on the database
 //region EXPORT METHODS
 
-function exportGeneric($table_name, $filepath, $except = []){
+function exportGeneric($table_name, $except){
     global $pdo;
 
-    $result = FALSE;
-    $query = "SELECT column_name FROM information_schema.columns WHERE table_schema='c4a_i_schema' AND table_name = '".$table_name."'";
-    $query_results = $pdo->query($query);
-    if ($query_results) {
-        $column_names = array();
-        $fh = fopen($filepath, "w");
-        while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-            if (!in_array($table_row[0], $except)) {
-                $column_names[] = $table_row[0];
-            };
-        }
-        fputcsv($fh, $column_names);
-
-        $query = "SELECT * FROM c4a_i_schema.".$table_name;
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))) {
+        $filepath = 'tmp/export_' . $table_name. '.csv';
+        unlink($filepath);
+        $export_ready = FALSE;
+        $query = "SELECT column_name FROM information_schema.columns WHERE table_schema='c4a_i_schema' AND table_name = '" . $table_name . "'";
         $query_results = $pdo->query($query);
-        if($query_results) {
-            $output = array();
-            while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-                foreach($column_names as $column_name) {
-                    $output[] = $table_row[$column_name];
-                }
-                fputcsv($fh, $output);
-                unset($output);
+        if ($query_results) {
+            $column_names = array();
+            $fh = fopen($filepath, "w");
+            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
+                if (!in_array($table_row[0], $except)) {
+                    $column_names[] = $table_row[0];
+                };
             }
-            $result = TRUE;
+            fputcsv($fh, $column_names);
+
+            $query = "SELECT * FROM c4a_i_schema." . $table_name;
+            $query_results = $pdo->query($query);
+            if ($query_results) {
+                $output = array();
+                while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($column_names as $column_name) {
+                        $output[] = $table_row[$column_name];
+                    }
+                    fputcsv($fh, $output);
+                    unset($output);
+                }
+                $export_ready = TRUE;
+            }
+            fclose($fh);
         }
-        fclose($fh);
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($export_ready) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = 'You  have just downloaded the ' . $table_name . ' file';
+            echo $sjes -> encode("filepath");
+        } else {
+            generate500("It has not been possible to create a file.");
+        }
+    } else {
+        generate400("The method is not a POST");
     }
-    return $result;
 }
 
 /**
@@ -5025,27 +5041,7 @@ function exportGeneric($table_name, $filepath, $except = []){
  * METHOD : POST
  */
 function exportChannels(){
-    // Check if the method is POST
-    if (in_array(REQUEST_METHOD, array("POST"))){
-
-        $filepath = "tmp/export_channels.csv";
-        unlink($filepath);
-
-        $export_ready = exportGeneric("channel", $filepath, array("oid"));
-
-        // Retrieve the new tuple to return the result
-        // Check if the query to update has been correctly executed
-        if($export_ready) {
-            $sjes = new Jecho($filepath);
-            $sjes -> server_code = 200;
-            $sjes -> message = "You  have just downloaded the channels file";
-            echo $sjes -> encode("filepath");
-        } else {
-            generate500("It has not been possible to create a file.");
-        }
-    } else {
-        generate400("The method is not a POST");
-    }
+    exportGeneric("channel", array("oid"));
 }
 
 /**
@@ -5053,27 +5049,7 @@ function exportChannels(){
  * METHOD : POST
  */
 function exportHourperiods(){
-    // Check if the method is POST
-    if (in_array(REQUEST_METHOD, array("POST"))){
-
-        $filepath = "tmp/export_hourperiods.csv";
-        unlink($filepath);
-
-        $export_ready = exportGeneric("hour_period", $filepath, array("hour_period_id"));
-
-        // Retrieve the new tuple to return the result
-        // Check if the query to update has been correctly executed
-        if($export_ready) {
-            $sjes = new Jecho($filepath);
-            $sjes -> server_code = 200;
-            $sjes -> message = "You  have just downloaded the hour_period file";
-            echo $sjes -> encode("filepath");
-        } else {
-            generate500("It has not been possible to create a file.");
-        }
-    } else {
-        generate400("The method is not a POST");
-    }
+    exportGeneric("hour_period", array("hour_period_id"));
 }
 
 /**
@@ -5081,7 +5057,7 @@ function exportHourperiods(){
  * METHOD : POST
  */
 function exportMessages(){
-    // TODO: This export should be a join with the resource table
+    global $pdo;
 
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
@@ -5089,7 +5065,29 @@ function exportMessages(){
         $filepath = "tmp/export_messages.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("message", $filepath);
+        $query =
+            "SELECT r.resource_id, r.category, r.resource_name, r.description, m.message_id, m.text, m.url, "
+                ."m.media, m.audio, m.video, c.channels, m.semantic_type, m.communication_style, m.is_compulsory "
+            ."FROM c4a_i_schema.message m "
+            ."JOIN c4a_i_schema.resource_has_messages rhm ON m.message_id = rhm.message_id "
+            ."JOIN c4a_i_schema.resource r ON rhm.resource_id = r.resource_id "
+            ."JOIN ( SELECT msg.message_id, string_agg(ch.channel_name, ', ') AS channels "
+                ."FROM c4a_i_schema.message msg "
+                ."JOIN c4a_i_schema.message_has_channel mhc ON msg.message_id = mhc.message_id "
+                ."JOIN c4a_i_schema.channel ch ON mhc.channel_id = ch.channel_id "
+                ."GROUP BY msg.message_id ) AS c ON m.message_id = c.message_id ";
+
+        $query_results = $pdo->query($query);
+        if ($query_results) {
+            $fh = fopen($filepath, "w");
+            fputcsv($fh, array("resource_id", "category", "resource_name", "description", "message_id", "text", "url",
+                "media", "audio", "video", "channels", "semantic_type", "communication_style", "is_compulsory"));
+            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
+                fputcsv($fh, $table_row);
+            }
+            $export_ready = TRUE;
+            fclose($fh);
+        }
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5111,7 +5109,7 @@ function exportMessages(){
  * METHOD : POST
  */
 function exportPrescriptions(){
-    // TODO: This should be a join with the profile and user tables
+    global $pdo;
 
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
@@ -5119,7 +5117,24 @@ function exportPrescriptions(){
         $filepath = "tmp/export_prescriptions.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("prescription", $filepath);
+        $query =
+            "SELECT pf.aged_id_pretty, p.valid_from, p.valid_to, p.text, p.prescription_id_pretty, p.urgency, "
+                ."u.user_id_pretty AS geriatrician_id_pretty, p.additional_notes, p.title, p.prescription_status "
+            ."FROM c4a_i_schema.prescription p "
+            ."JOIN c4a_i_schema.profile pf ON p.aged_id = pf.aged_id "
+            ."JOIN c4a_i_schema.user u ON p.geriatrician_id = u.user_id";
+
+        $query_results = $pdo->query($query);
+        if ($query_results) {
+            $fh = fopen($filepath, "w");
+            fputcsv($fh, array("aged_id_pretty", "valid_from", "valid_to", "text", "prescription_id_pretty", "urgency",
+                "geriatrician_id_pretty", "additional_notes", "title", "prescription_status"));
+            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
+                fputcsv($fh, $table_row);
+            }
+            $export_ready = TRUE;
+            fclose($fh);
+        }
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5141,27 +5156,7 @@ function exportPrescriptions(){
  * METHOD : POST
  */
 function exportProfiles(){
-    // Check if the method is POST
-    if (in_array(REQUEST_METHOD, array("POST"))){
-
-        $filepath = "tmp/export_profiles.csv";
-        unlink($filepath);
-
-        $export_ready = exportGeneric("profile", $filepath, array("aged_id"));
-
-        // Retrieve the new tuple to return the result
-        // Check if the query to update has been correctly executed
-        if($export_ready) {
-            $sjes = new Jecho($filepath);
-            $sjes -> server_code = 200;
-            $sjes -> message = "You  have just downloaded the profile file";
-            echo $sjes -> encode("filepath");
-        } else {
-            generate500("It has not been possible to create a file.");
-        }
-    } else {
-        generate400("The method is not a POST");
-    }
+    exportGeneric("profile", array("aged_id"));
 }
 
 /**
@@ -5169,7 +5164,7 @@ function exportProfiles(){
  * METHOD : POST
  */
 function exportProfilesCommunicative(){
-    // TODO: This should be a join with hour_period and profile_hour_preferences
+    global $pdo;
 
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
@@ -5177,7 +5172,23 @@ function exportProfilesCommunicative(){
         $filepath = "tmp/export_profiles_communicative.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("profile_communicative_details", $filepath);
+        $query =
+            "SELECT cd.aged_id_pretty, cd.communication_style, cd.message_frequency, cd.topics, "
+                ."cd.available_channels, hp.hour_period_name AS hour_preferences "
+            ."FROM c4a_i_schema.profile_communicative_details cd "
+            ."JOIN c4a_i_schema.profile_hour_preferences php ON cd.aged_id = php.aged_id "
+            ."JOIN c4a_i_schema.hour_period hp ON php.hour_period_id = hp.hour_period_id";
+
+        $query_results = $pdo->query($query);
+        if ($query_results) {
+            $fh = fopen($filepath, "w");
+            fputcsv($fh, array("aged_id_pretty", "communication_style", "message_frequency", "topics", "available_channels", "hour_preferences"));
+            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
+                fputcsv($fh, $table_row);
+            }
+            $export_ready = TRUE;
+            fclose($fh);
+        }
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5199,27 +5210,7 @@ function exportProfilesCommunicative(){
  * METHOD : POST
  */
 function exportProfilesFrailty(){
-    // Check if the method is POST
-    if (in_array(REQUEST_METHOD, array("POST"))){
-
-        $filepath = "tmp/export_profiles_frailty.csv";
-        unlink($filepath);
-
-        $export_ready = exportGeneric("profile_frailty_status", $filepath, array("aged_id", "aged_name"));
-
-        // Retrieve the new tuple to return the result
-        // Check if the query to update has been correctly executed
-        if($export_ready) {
-            $sjes = new Jecho($filepath);
-            $sjes -> server_code = 200;
-            $sjes -> message = "You  have just downloaded the Profiles_frailty file";
-            echo $sjes -> encode("filepath");
-        } else {
-            generate500("It has not been possible to create a file.");
-        }
-    } else {
-        generate400("The method is not a POST");
-    }
+   exportGeneric("profile_frailty_status", array("aged_id", "aged_name"));
 }
 
 /**
@@ -5227,27 +5218,7 @@ function exportProfilesFrailty(){
  * METHOD : POST
  */
 function exportProfilesSocio(){
-    // Check if the method is POST
-    if (in_array(REQUEST_METHOD, array("POST"))){
-
-        $filepath = "tmp/export_profiles_socioeconomic.csv";
-        unlink($filepath);
-
-        $export_ready = exportGeneric("profile_socioeconomic_details", $filepath, array("aged_id"));
-
-        // Retrieve the new tuple to return the result
-        // Check if the query to update has been correctly executed
-        if($export_ready) {
-            $sjes = new Jecho($filepath);
-            $sjes -> server_code = 200;
-            $sjes -> message = "You  have just downloaded the Profiles_socioeconomic file";
-            echo $sjes -> encode("filepath");
-        } else {
-            generate500("It has not been possible to create a file.");
-        }
-    } else {
-        generate400("The method is not a POST");
-    }
+    exportGeneric("profile_socioeconomic_details", array("aged_id"));
 }
 
 /**
@@ -5255,27 +5226,7 @@ function exportProfilesSocio(){
  * METHOD : POST
  */
 function exportProfilesTechnical(){
-    // Check if the method is POST
-    if (in_array(REQUEST_METHOD, array("POST"))){
-
-        $filepath = "tmp/export_profiles_tech.csv";
-        unlink($filepath);
-
-        $export_ready = exportGeneric("profile_technical_details", $filepath, array("aged_id"));
-
-        // Retrieve the new tuple to return the result
-        // Check if the query to update has been correctly executed
-        if($export_ready) {
-            $sjes = new Jecho($filepath);
-            $sjes -> server_code = 200;
-            $sjes -> message = "You  have just downloaded the Profiles_tech file";
-            echo $sjes -> encode("filepath");
-        } else {
-            generate500("It has not been possible to create a file.");
-        }
-    } else {
-        generate400("The method is not a POST");
-    }
+    exportGeneric("profile_technical_details", array("aged_id"));
 }
 
 /**
@@ -5291,7 +5242,7 @@ function exportResources(){
         $filepath = "tmp/export_resources.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("resource", $filepath);
+        $export_ready = exportGeneric("resource");
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5321,7 +5272,7 @@ function exportTemplates(){
         $filepath = "tmp/export_templates.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("template", $filepath);
+        $export_ready = exportGeneric("template");
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5343,27 +5294,7 @@ function exportTemplates(){
  * METHOD : POST
  */
 function exportUsers(){
-    // Check if the method is POST
-    if (in_array(REQUEST_METHOD, array("POST"))){
-
-        $filepath = "tmp/export_users.csv";
-        unlink($filepath);
-
-        $export_ready = exportGeneric("user", $filepath, array("user_id"));
-
-        // Retrieve the new tuple to return the result
-        // Check if the query to update has been correctly executed
-        if($export_ready) {
-            $sjes = new Jecho($filepath);
-            $sjes -> server_code = 200;
-            $sjes -> message = "You  have just downloaded the Users file";
-            echo $sjes -> encode("filepath");
-        } else {
-            generate500("It has not been possible to create a file.");
-        }
-    } else {
-        generate400("The method is not a POST");
-    }
+    exportGeneric("user", array("user_id"));
 }
 
 //endregion
