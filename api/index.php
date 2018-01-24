@@ -5031,7 +5031,7 @@ function exportChannels(){
         $filepath = "tmp/export_channels.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("channel", $filepath);
+        $export_ready = exportGeneric("channel", $filepath, array("oid"));
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5059,7 +5059,7 @@ function exportHourperiods(){
         $filepath = "tmp/export_hourperiods.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("hour_period", $filepath);
+        $export_ready = exportGeneric("hour_period", $filepath, array("hour_period_id"));
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5081,6 +5081,8 @@ function exportHourperiods(){
  * METHOD : POST
  */
 function exportMessages(){
+    // TODO: This export should be a join with the resource table
+
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
@@ -5109,6 +5111,8 @@ function exportMessages(){
  * METHOD : POST
  */
 function exportPrescriptions(){
+    // TODO: This should be a join with the profile and user tables
+
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
@@ -5143,7 +5147,7 @@ function exportProfiles(){
         $filepath = "tmp/export_profiles.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("profile", $filepath);
+        $export_ready = exportGeneric("profile", $filepath, array("aged_id"));
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5165,6 +5169,8 @@ function exportProfiles(){
  * METHOD : POST
  */
 function exportProfilesCommunicative(){
+    // TODO: This should be a join with hour_period and profile_hour_preferences
+
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
@@ -5199,7 +5205,7 @@ function exportProfilesFrailty(){
         $filepath = "tmp/export_profiles_frailty.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("profile_frailty_status", $filepath);
+        $export_ready = exportGeneric("profile_frailty_status", $filepath, array("aged_id", "aged_name"));
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5227,7 +5233,7 @@ function exportProfilesSocio(){
         $filepath = "tmp/export_profiles_socioeconomic.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("profile_socioeconomic_details", $filepath);
+        $export_ready = exportGeneric("profile_socioeconomic_details", $filepath, array("aged_id"));
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5255,7 +5261,7 @@ function exportProfilesTechnical(){
         $filepath = "tmp/export_profiles_tech.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("profile_technical_details", $filepath);
+        $export_ready = exportGeneric("profile_technical_details", $filepath, array("aged_id"));
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5277,6 +5283,8 @@ function exportProfilesTechnical(){
  * METHOD : POST
  */
 function exportResources(){
+    // TODO: This should be a join with subject and resource_has_subjects
+
    // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
@@ -5305,6 +5313,8 @@ function exportResources(){
  * METHOD : POST
  */
 function exportTemplates(){
+    // TODO: This should be a join with the channel and template_has_channel tables
+
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
@@ -5339,7 +5349,7 @@ function exportUsers(){
         $filepath = "tmp/export_users.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("user", $filepath);
+        $export_ready = exportGeneric("user", $filepath, array("user_id"));
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
