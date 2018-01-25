@@ -5257,7 +5257,7 @@ function exportProfilesTechnical(){
  * METHOD : POST
  */
 function exportResources(){
-    // TODO: This should be a join with subject and resource_has_subjects
+    global $pdo;
 
    // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
@@ -5265,7 +5265,28 @@ function exportResources(){
         $filepath = "tmp/export_resources.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("resource");
+        $query =
+            "SELECT r.resource_id, partner, language, category, resource_name, s.subjects, url, description, from_date, "
+                ."to_date, media, has_messages, translated, periodic, repeating_time, repeating_every, repeating_on_day "
+            ."FROM c4a_i_schema.resource r "
+            ."JOIN ( SELECT rhs.resource_id, string_agg(sub.subject_name, ', ') AS subjects "
+	                ."FROM c4a_i_schema.subject sub "
+	                ."JOIN c4a_i_schema.resource_has_subjects rhs ON sub.subject_id = rhs.subject_id "
+	                ."GROUP BY rhs.resource_id ) AS s ON r.resource_id = s.resource_id";
+
+        $query_results = $pdo->query($query);
+
+        if ($query_results) {
+            $fh = fopen($filepath, "w");
+            fputcsv($fh, array("resource_id", "partner", "language", "category", "resource_name", "subjects", "url",
+                "description", "from_date", "to_date", "media", "has_messages", "translated", "periodic",
+                "repeating_time", "repeating_every", "repeating_on_day"));
+            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
+                fputcsv($fh, $table_row);
+            }
+            $export_ready = TRUE;
+            fclose($fh);
+        }
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
@@ -5287,7 +5308,7 @@ function exportResources(){
  * METHOD : POST
  */
 function exportTemplates(){
-    // TODO: This should be a join with the channel and template_has_channel tables
+    global $pdo;
 
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
@@ -5295,7 +5316,25 @@ function exportTemplates(){
         $filepath = "tmp/export_templates.csv";
         unlink($filepath);
 
-        $export_ready = exportGeneric("template");
+        $query =
+            "SELECT t.template_id, category, title, description, min_number_messages, max_number_messages, period, c.channels "
+            ."FROM c4a_i_schema.template t "
+            ."JOIN ( SELECT ths.template_id, string_agg(chn.channel_name, ', ') AS channels "
+	                ."FROM c4a_i_schema.channel chn "
+	                ."JOIN c4a_i_schema.template_has_channel ths ON chn.channel_id = ths.channel_id "
+	                ."GROUP BY ths.template_id) AS c ON t.template_id = c.template_id";
+
+        $query_results = $pdo->query($query);
+
+        if ($query_results) {
+            $fh = fopen($filepath, "w");
+            fputcsv($fh, array("template_id", "category", "title", "description", "min_number_messages", "max_number_messages", "period", "channels"));
+            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
+                fputcsv($fh, $table_row);
+            }
+            $export_ready = TRUE;
+            fclose($fh);
+        }
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
