@@ -25,8 +25,7 @@ require_once("../api/configuration_local.php");
 error_reporting(0);
 
 // Set the directory
-$directory = "./tmp";
-//$directory_local = "C:/Users/Jacopo Magni/Desktop";
+$directory = "../api/tmp";
 
 // Set some useful data about the uploaded file
 $file_name = $_FILES["userfile"]["name"];
@@ -106,9 +105,7 @@ if ($size <= 0) {
 if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
 
     // Set the paths where upload the file
-    $endpath = $file_temp_name;
-    $upload_file = getcwd() . "/../tmp/import.csv";
-    //$upload_file_local = $directory . "/" . $file_name;
+    $upload_file = $directory . "/import.csv";
 
     // If the file cannot be moved then die and echo an alert
     if (!move_uploaded_file($file_temp_name, $upload_file)) {
@@ -126,11 +123,7 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
         $file_data = file_get_contents($upload_file);
         //$utf8_file_data = utf8_encode($file_data);
 		$utf8_file_data = mb_convert_encoding($file_data, 'UTF-8', 'UTF-8');
-        $new_file_name = $upload_file;
-        file_put_contents($new_file_name , $utf8_file_data );
-
-        // If it has been possible to move the file store in endpath the path to which the file has been moved
-        $endpath = $directory . "/" . $file_name;
+        file_put_contents($upload_file , $utf8_file_data );
     }
 } else {
     echo '<div class="alert alert-danger">
@@ -145,17 +138,10 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
 //region POST CALL
 
 // Define the URL to call, based on the value selected by the user
-$service_url = API_URL . $method_to_call . ' ';
+$service_url = API_URL . $method_to_call . '';
 
 // Initiate the curl method
 $curl = curl_init($service_url);
-
-/*
-//Create the array with the POST data. The data is the filepath of the file uploaded
-$curl_post_data = array(
-    'filepath' => '' . $endpath . ''
-);
-*/
 
 // Set the different option to the curl method
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -164,8 +150,10 @@ curl_setopt($curl, CURLOPT_POST, true);
 // Execute curl method
 $curl_response = curl_exec($curl);
 
+echo $curl_response;
+
 // In case the curl fails close the connection and print an error
-if ($curl_response === false) {
+if ($curl_response === FALSE) {
     $info = curl_getinfo($curl);
     curl_close($curl);
     echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">

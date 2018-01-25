@@ -14,7 +14,7 @@ include_once ("lib/db.php");
 include_once ("lib/request.php");
 include_once ("lib/echo.php");
 
-session_start(); // lunch the session
+session_start(); // launch the session
 
 // memorize the request method type and the uri
 define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
@@ -29,6 +29,10 @@ $args = parse_uri(REQUEST_URI); // explain the uri and identify the different pa
 //endregion
 
 //region Functions
+
+function logger($text) {
+    file_put_contents("tmp/log.txt",  $text . PHP_EOL, FILE_APPEND);
+}
 
 function checkPostDataUnquoted($postData = null){
     if (isset($postData)){
@@ -4560,26 +4564,71 @@ function setNewSubject(){
 //TODO Check methods on the database and save them in notepad++
 //region IMPORT METHODS
 
-/**
- * DESCRIPTION : It retrieves all the resources available
- * METHOD : GET
- */
-
-function importChannels(){
+function importGeneric($table_name){
 
     global $pdo;
 
     // Check if the method is POST
     if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = getcwd() . "/tmp/import.csv";;
+        $filepath = "tmp/import.csv";
 
-        $queryUpdate = "SELECT c4a_i_schema.import_channels('".$filepath."'); ";
-        $queryUpdate_results = $pdo -> query($queryUpdate);
+        // *** Establish the columns that will be output ***
+        $query =
+            "SELECT column_name, data_type FROM information_schema.columns "
+            ."WHERE table_schema='c4a_i_schema' AND table_name = '" . $table_name . "'";
+        $query_results = $pdo->query($query);
+        $all_good = FALSE;
+
+        if ($query_results) {
+            $column_types = array();
+            $fh = fopen($filepath, "r");
+            while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
+                $column_types[$table_row["column_name"]] = $table_row["data_type"];
+            }
+            $header_column_names = fgetcsv($fh);
+            $header_ok = TRUE;
+            $insert_statement = "INSERT INTO c4a_i_schema." . $table_name . " (";
+            for ($i = 0; $i < count($header_column_names); $i++) {
+                $header_ok = $header_ok && isset($column_types[$header_column_names[$i]]);
+                if (($i > 0) && (count($header_column_names) > 1)) $insert_statement .= ", ";
+                $insert_statement .= $header_column_names[$i];
+            }
+            if ($header_ok) {
+                // The header row contains column names that correspond with the table
+                $all_good = TRUE;
+                $insert_statement .= ") VALUES ";
+
+                //  Now read in the rest of the CSV file
+                while (($fields = fgetcsv($fh)) !== FALSE) {
+                    $values = "";
+                    for ($i = 0; $i < count($fields); $i++) {
+                        $field = $fields[$i];
+                        $type = $column_types[$header_column_names[$i]];
+                        if (($type == "character varying") || ($type == "USER-DEFINED") ||
+                            ($type == "date") || (substr($type, 0, 4) == "time")) {
+                            if (strlen($field) > 0) {
+                                // escape the string
+                                $field = str_replace("'", "''", $field);
+                                $field = "'" . $field . "'";
+                            }
+                        }
+                        if (($i > 0) && (count($fields) > 1)) $values .= ", ";
+                        $values .= $field;
+                    }
+                    $insert = $insert_statement . "(" . $values . ")";
+                    logger($insert);
+                    $all_good = $all_good && ($pdo->query($insert) == TRUE);
+                    logger("all_good = " . $all_good);
+                }
+            }
+            fclose($fh);
+        }
+        unlink($filepath);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($queryUpdate_results == TRUE) {
+        if($all_good) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "Updated DB - You have just imported the file";
@@ -4593,6 +4642,15 @@ function importChannels(){
     } else {
         generate400("The method is not a POST");
     }
+}
+
+/**
+ * DESCRIPTION : It retrieves all the resources available
+ * METHOD : GET
+ */
+
+function importChannels(){
+    importGeneric("channel");
 }
 
 /**
@@ -4983,7 +5041,8 @@ function importUsers(){
 
 //endregion
 
-//TODO Change the $filepath to all the export method to reflect the onw that will be used on the database
+//TODO: Change the $filepath to all the export method to reflect the onw that will be used on the database
+//TODO: All export functions should really be GET requests. Only import functions should be POST requests.
 //region EXPORT METHODS
 
 function exportGeneric($table_name, $options){
