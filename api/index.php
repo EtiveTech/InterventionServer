@@ -5059,7 +5059,7 @@ function exportGeneric($table_name, $options){
  * METHOD : POST
  */
 function exportChannels(){
-    exportGeneric("channel", ["exclude" => ["oid"]]);
+    exportGeneric("channel", ["include" => ["channel_id", "channel_name"]]);
 }
 
 /**
@@ -5067,7 +5067,7 @@ function exportChannels(){
  * METHOD : POST
  */
 function exportHourperiods(){
-    exportGeneric("hour_period", ["exclude" => ["hour_period_id"]]);
+    exportGeneric("hour_period", ["include" => ["hour_period_name", "hour_period_start", "hour_period_end"]]);
 }
 
 /**
@@ -5174,7 +5174,7 @@ function exportPrescriptions(){
  * METHOD : POST
  */
 function exportProfiles(){
-    exportGeneric("profile", ["exclude" => ["aged_id"]]);
+    exportGeneric("profile", ["include" => ["aged_id_pretty", "name", "surname", "date_of_birth", "profile_type", "age", "sex"]]);
 }
 
 /**
@@ -5228,7 +5228,10 @@ function exportProfilesCommunicative(){
  * METHOD : POST
  */
 function exportProfilesFrailty(){
-   exportGeneric("profile_frailty_status", ["exclude" => ["aged_id", "aged_name"]]);
+   exportGeneric("profile_frailty_status", ["include" => ["aged_id_pretty", "frailty_status_overall",
+					"frailty_status_lastperiod", "frailty_notice", "frailty_textline", "frailty_attention",
+					"last_detection_date", "last_intervention_date", "detection_status", "intervention_status",
+					"frailty_status_text", "frailty_status_number"]]);
 }
 
 /**
@@ -5236,7 +5239,8 @@ function exportProfilesFrailty(){
  * METHOD : POST
  */
 function exportProfilesSocio(){
-    exportGeneric("profile_socioeconomic_details", ["exclude" => ["aged_id"]]);
+    exportGeneric("profile_socioeconomic_details",
+        ["include" => ["aged_id_pretty, financial_situation, married, education_level, languages, personal_interests"]]);
 }
 
 /**
@@ -5244,7 +5248,8 @@ function exportProfilesSocio(){
  * METHOD : POST
  */
 function exportProfilesTechnical(){
-    exportGeneric("profile_technical_details", ["exclude" => ["aged_id"]]);
+    exportGeneric("profile_technical_details",
+        ["include" => ["aged_id_pretty", "address", "telephone_home_number", "mobile_phone_number", "email", "facebook_account", "telegram_account"]]);
 }
 
 /**
@@ -5312,7 +5317,8 @@ function exportTemplates(){
  * METHOD : POST
  */
 function exportUsers(){
-    exportGeneric("user", ["exclude" => ["user_id"]]);
+    exportGeneric("user",
+        ["include" => ["name", "surname", "password", "role", "permission_type", "email", "mobilephone_number", "user_id_pretty"]]);
 }
 
 //endregion
