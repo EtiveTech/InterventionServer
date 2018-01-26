@@ -4588,6 +4588,7 @@ function importGeneric($table_name, $key_name){
             ."WHERE table_schema='c4a_i_schema' AND table_name = '" . $table_name . "'";
         $query_results = $pdo->query($query);
         $all_good = FALSE;
+        $row_number = 0;
 
         if ($query_results) {
             $column_types = array();
@@ -4597,6 +4598,7 @@ function importGeneric($table_name, $key_name){
             }
             $header_ok = TRUE;
             $header_column_names = fgetcsv($fh);
+            $row_number += 1;
             for ($i = 0; $i < count($header_column_names); $i++) {
                 $header_ok = $header_ok && isset($column_types[$header_column_names[$i]]);
             }
@@ -4617,14 +4619,7 @@ function importGeneric($table_name, $key_name){
                 logger("options[AGED_NAME] = " . $options[AGED_NAME]);
 
                 // Need an Update statement as well as an Insert statement in case the key already exists
-                $insert_statement = "INSERT INTO c4a_i_schema." . $table_name . " (";
-                for ($i = 0; $i < count($header_column_names); $i++) {
-                    if (($i > 0) && (count($header_column_names) > 1)) $insert_statement .= ", ";
-                    $insert_statement .= $header_column_names[$i];
-                }
-                if ($options[AGED_ID]) $insert_statement .= ", " . AGED_ID;
-                if ($options[AGED_NAME]) $insert_statement .= ", " . AGED_NAME;
-                $insert_statement .= ") VALUES ";
+                $insert_statement = "INSERT INTO c4a_i_schema." . $table_name . " ";
                 $update_statement = "UPDATE c4a_i_schema." . $table_name . " SET ";
                 // Select statement only used if $options[AGED_ID] or $options[AGED_NAME] are set
                 $select_statement = "SELECT name, surname, aged_id FROM c4a_i_schema.profile WHERE " . AGED_ID_PRETTY . "=";
@@ -4637,6 +4632,8 @@ function importGeneric($table_name, $key_name){
 
                 //  Now read in the rest of the CSV file
                 while ($all_good && (($fields = fgetcsv($fh)) !== FALSE)) {
+                    $row_number += 1;
+                    $insert_names = "";
                     $insert_values = "";
                     $update_values = "";
 
@@ -4648,42 +4645,56 @@ function importGeneric($table_name, $key_name){
                             ($type == "date") || (substr($type, 0, 4) == "time")) {
                             if (strlen($field) > 0) $field = dbString($field);
                         }
-                        if (($i > 0) && (count($fields) > 1)) {
-                            $insert_values .= ", ";
-                            $update_values .= ", ";
+                        if (strlen($field) > 0) {
+                            $insert_names .= $header_column_names[$i] . ", ";
+                            $insert_values .= $field . ", ";
+                            $update_values .= $header_column_names[$i] . "=" . $field . ", ";
                         }
-                        $insert_values .= $field;
-                        $update_values .= $header_column_names[$i] . "=" . $field;
                         if ($i === $key_column_no) $key_value = $field;
                     }
 
                     // Add in the optional values if needed
                     if ($options[AGED_ID] || $options[AGED_NAME]) {
-                        $select = $select_statement . "'" . $fields[array_search(AGED_ID_PRETTY, $header_column_names)] . "'";
-                        logger($select);
-                        $query_results = $pdo->query($select);
-                        $aged_info = ($query_results) ? $query_results->fetch(PDO::FETCH_ASSOC) : array();
-                        if ($options[AGED_ID]) {
-                            $insert_values .= ", " . $aged_info['aged_id'];
-                            $update_values .= ", " . AGED_ID . "=" . $aged_info['aged_id'];
+                        $id_pretty = $fields[array_search(AGED_ID_PRETTY, $header_column_names)];
+                        if (strlen($id_pretty) > 0) {
+                            $select = $select_statement . "'" . $id_pretty . "'";
+                            logger($select);
+                            $query_results = $pdo->query($select);
+                            $aged_info = ($query_results) ? $query_results->fetch(PDO::FETCH_ASSOC) : array();
+                            if ($options[AGED_ID] && strlen($aged_info['aged_id']) > 0) {
+                                $insert_names .= AGED_ID . ", ";
+                                $insert_values .= $aged_info['aged_id'] . ", ";
+                                $update_values .= AGED_ID . "=" . $aged_info['aged_id'] . ", ";
 
-                        }
-                        if ($options[AGED_NAME]) {
-                            $aged_name = dbString( $aged_info['surname'] . " " . $aged_info['name']);
-                            $insert_values .= ", " . $aged_name;
-                            $update_values .= ", ". AGED_NAME . "=" . $aged_name; ;
+                            }
+                            $aged_name = $aged_info['surname'] . " " . $aged_info['name'];
+                            if ($options[AGED_NAME] && $aged_name != " ") {
+                                $aged_name = dbString( $aged_name);
+                                $insert_names .= AGED_NAME . ", ";
+                                $insert_values .= $aged_name . ", ";
+                                $update_values .= AGED_NAME . "=" . $aged_name . ", ";
+                            }
                         }
                     }
 
-                    $insert = $insert_statement . "(" . $insert_values . ")";
+                    $insert_names = substr($insert_names, 0, -2);
+                    $insert_values = substr($insert_values, 0, -2);
+                    $insert = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
+
+                    $update_values = substr($update_values, 0, -2);
                     $update = $update_statement . $update_values . " WHERE " . $key_name . "=" . $key_value;
                     logger($insert);
                     logger($update);
 
                     // Try and update an existing record, if that fails try and insert a record.
-                    if ($pdo->query($update) == FALSE) {
-                        logger("UPDATE failed");
-                        $all_good = $all_good && ($pdo->query($insert) == TRUE);
+                    if (strlen($key_value > 0)) {
+                        if ($pdo->query($update) == FALSE) {
+                            logger("trying insert");
+                            $all_good = ($pdo->query($insert) == TRUE);
+                        }
+                    }
+                    else {
+                        $all_good = FALSE;
                     }
                     logger("all_good = " . $all_good);
                 }
@@ -4707,7 +4718,7 @@ function importGeneric($table_name, $key_name){
             $errors = $pdo -> errorInfo();
             $sjes = new Jecho($errors);
             $sjes -> server_code = 500;
-            $sjes -> message = "WARNING! An ERROR has occurred";
+            $sjes -> message = "WARNING! An ERROR occurred on line " . $row_number;
             echo $sjes -> encode("Error");           }
     } else {
         generate400("The method is not a POST");
