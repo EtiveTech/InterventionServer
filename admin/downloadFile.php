@@ -4,7 +4,7 @@ require_once("../api/configuration_local.php");
 //region Selection of the method to call to handle the export
 
 // Setting a variable with the value of the selection that has been made from the user
-$filetype = $_POST["filetype"];
+$filetype = $_GET["filetype"];
 
 // Actual routing
 if (strcmp($filetype, "channels") == 0) {
@@ -76,7 +76,7 @@ $curl = curl_init($service_url);
 // Create the array with the POST data. The data is the filepath of the file uploaded
 // Set the different option to the curl method
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($curl, CURLOPT_POST, true);
+//curl_setopt($curl, CURLOPT_POST, true);
 // Execute curl method
 
 $curl_response = curl_exec($curl);
@@ -104,11 +104,11 @@ if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') 
 }
 
 //Print the message returned from the POST
-echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">
-                    <strong>WARNING! ERROR!</strong> 
-                    <br>
-                    '. $decoded[0] -> Message .'
-                  </div>';
+echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">'
+        .'<strong>WARNING! ERROR!</strong>'
+        .'<br>'
+        . $decoded[0] -> Message
+    .'</div>';
 
 $filename = '../api/' . $decoded[0] -> filepath;
 
@@ -116,7 +116,6 @@ $filename = '../api/' . $decoded[0] -> filepath;
 
 //region Actual Download of the file
 if(!empty($filename)){
-
     // Check file is exists on given path.
     if(file_exists($filename))
     {
@@ -140,10 +139,10 @@ if(!empty($filename)){
     }
     else
     {
-        echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">
-                    <strong>WARNING! ERROR!</strong> 
-                       File does not exists on given path
-                   </div>';
+        echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">'
+                .'<strong>WARNING! ERROR!</strong>'
+                .'File does not exists on given path'
+            .'</div>';
     }
 }
 
