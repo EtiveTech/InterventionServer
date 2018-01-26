@@ -4574,7 +4574,7 @@ function dbString($text) {
     return $text;
 }
 
-function importGeneric($table_name, $key_name, $options = null){
+function importGeneric($table_name, $key_name){
 
     global $pdo;
 
@@ -4582,13 +4582,9 @@ function importGeneric($table_name, $key_name, $options = null){
     if (REQUEST_METHOD == 'POST'){
 
         $filepath = "tmp/import.csv";
-        if (!isset($options)) $options = array();
-        if (!isset($options[AGED_ID])) $options[AGED_ID] = FALSE;
-        if (!isset($options[AGED_NAME])) $options[AGED_NAME] = FALSE;
 
         // *** Establish the columns that will be output ***
-        $query =
-            "SELECT column_name, data_type FROM information_schema.columns "
+        $query = "SELECT column_name, data_type FROM information_schema.columns "
             ."WHERE table_schema='c4a_i_schema' AND table_name = '" . $table_name . "'";
         $query_results = $pdo->query($query);
         $all_good = FALSE;
@@ -4600,34 +4596,38 @@ function importGeneric($table_name, $key_name, $options = null){
                 $column_types[$table_row["column_name"]] = $table_row["data_type"];
             }
             $header_ok = TRUE;
-
-            $insert_statement = "INSERT INTO c4a_i_schema." . $table_name . " (";
-            if ($options[AGED_ID]) {
-                $insert_statement .= AGED_ID;
-            }
-            if ($options[AGED_NAME]) {
-                if ($options[AGED_ID]) $insert_statement .= ", ";
-                $insert_statement .= AGED_NAME;
-            }
-            $update_statement = "UPDATE c4a_i_schema." . $table_name . " SET ";
             $header_column_names = fgetcsv($fh);
             for ($i = 0; $i < count($header_column_names); $i++) {
                 $header_ok = $header_ok && isset($column_types[$header_column_names[$i]]);
-                if (($i > 0) && (count($header_column_names) > 1)) $insert_statement .= ", ";
-                $insert_statement .= $header_column_names[$i];
             }
-            $insert_statement .= ") VALUES ";
-            $select_statement = "SELECT name, surname, aged_id FROM c4a_i_schema.profile WHERE " . AGED_ID_PRETTY . "=";
 
-            $options_ok = (($options[AGED_ID] || $options[AGED_NAME]) ? isset($column_types[AGED_ID_PRETTY]) : TRUE);
-
-            logger("options[AGED_ID] = " . $options[AGED_ID]);
-            logger("options[AGED_NAME] = " . $options[AGED_NAME]);
-            logger("options_ok = " . $options_ok);
             logger("header_ok = " . $header_ok);
-
-            if ($header_ok && $options_ok && isset($column_types[$key_name])) {
+            if ($header_ok && isset($column_types[$key_name])) {
                 // The header row contains column names that correspond with the table
+
+                $options = array();
+                // The aged_id and aged_names field are not exported so cannot be imported but are needed
+                // If we are not importing the profile table then we may have to get some data from the
+                // profile table to complete this import
+                $options[AGED_ID] = (($table_name != "profile") && isset($column_types[AGED_ID]) &&
+                    array_search(AGED_ID, $header_column_names) == FALSE);
+                $options[AGED_NAME] = (($table_name != "profile") && isset($column_types[AGED_NAME]) &&
+                    array_search(AGED_NAME, $header_column_names) == FALSE);
+                logger("options[AGED_ID] = " . $options[AGED_ID]);
+                logger("options[AGED_NAME] = " . $options[AGED_NAME]);
+
+                // Need an Update statement as well as an Insert statement in case the key already exists
+                $insert_statement = "INSERT INTO c4a_i_schema." . $table_name . " (";
+                for ($i = 0; $i < count($header_column_names); $i++) {
+                    if (($i > 0) && (count($header_column_names) > 1)) $insert_statement .= ", ";
+                    $insert_statement .= $header_column_names[$i];
+                }
+                if ($options[AGED_ID]) $insert_statement .= ", " . AGED_ID;
+                if ($options[AGED_NAME]) $insert_statement .= ", " . AGED_NAME;
+                $insert_statement .= ") VALUES ";
+                $update_statement = "UPDATE c4a_i_schema." . $table_name . " SET ";
+                // Select statement only used if $options[AGED_ID] or $options[AGED_NAME] are set
+                $select_statement = "SELECT name, surname, aged_id FROM c4a_i_schema.profile WHERE " . AGED_ID_PRETTY . "=";
 
                 // Find the column that holds the key
                 $key_column_no = array_search($key_name, $header_column_names);
@@ -4639,30 +4639,6 @@ function importGeneric($table_name, $key_name, $options = null){
                 while ($all_good && (($fields = fgetcsv($fh)) !== FALSE)) {
                     $insert_values = "";
                     $update_values = "";
-
-                    // Add in the optional values if needed
-                    if ($options[AGED_ID] || $options[AGED_NAME]) {
-                        $select = $select_statement . "'" . $fields[array_search(AGED_ID_PRETTY, $header_column_names)] . "'";
-                        logger($select);
-                        $query_results = $pdo->query($select);
-                        $aged_info = ($query_results) ? $query_results->fetch(PDO::FETCH_ASSOC) : array();
-                        if (count($aged_info) > 0) {
-                            if ($options[AGED_ID]) {
-                                $insert_values .= $aged_info['aged_id'];
-                                $update_values .= AGED_ID . "=" . $aged_info['aged_id'];
-
-                            }
-                            if ($options[AGED_NAME]) {
-                                if ($options[AGED_ID]) {
-                                    $insert_values .= ", ";
-                                    $update_values .= ", ";
-                                }
-                                $aged_name = dbString( $aged_info['surname'] . " " . $aged_info['name']);
-                                $insert_values .= $aged_name;
-                                $update_values .= AGED_NAME . "=" . $aged_name; ;
-                            }
-                        }
-                    }
 
                     // Now create the INSERT and UPDATE commands
                     for ($i = 0; $i < count($fields); $i++) {
@@ -4680,6 +4656,25 @@ function importGeneric($table_name, $key_name, $options = null){
                         $update_values .= $header_column_names[$i] . "=" . $field;
                         if ($i === $key_column_no) $key_value = $field;
                     }
+
+                    // Add in the optional values if needed
+                    if ($options[AGED_ID] || $options[AGED_NAME]) {
+                        $select = $select_statement . "'" . $fields[array_search(AGED_ID_PRETTY, $header_column_names)] . "'";
+                        logger($select);
+                        $query_results = $pdo->query($select);
+                        $aged_info = ($query_results) ? $query_results->fetch(PDO::FETCH_ASSOC) : array();
+                        if ($options[AGED_ID]) {
+                            $insert_values .= ", " . $aged_info['aged_id'];
+                            $update_values .= ", " . AGED_ID . "=" . $aged_info['aged_id'];
+
+                        }
+                        if ($options[AGED_NAME]) {
+                            $aged_name = dbString( $aged_info['surname'] . " " . $aged_info['name']);
+                            $insert_values .= ", " . $aged_name;
+                            $update_values .= ", ". AGED_NAME . "=" . $aged_name; ;
+                        }
+                    }
+
                     $insert = $insert_statement . "(" . $insert_values . ")";
                     $update = $update_statement . $update_values . " WHERE " . $key_name . "=" . $key_value;
                     logger($insert);
@@ -4853,7 +4848,7 @@ function importProfileCommunicative(){
  * METHOD : GET
  */
 function importProfileSocio(){
-    importGeneric("profile_socioeconomic_details", "aged_id_pretty", [AGED_ID => TRUE]);
+    importGeneric("profile_socioeconomic_details", "aged_id_pretty");
 }
 
 /**
@@ -4861,7 +4856,7 @@ function importProfileSocio(){
  * METHOD : GET
  */
 function importProfileFrailty(){
-    importGeneric("profile_frailty_status", "aged_id_pretty", [AGED_ID => TRUE, AGED_NAME => TRUE]);
+    importGeneric("profile_frailty_status", "aged_id_pretty");
 }
 
 /**
@@ -4869,7 +4864,7 @@ function importProfileFrailty(){
  * METHOD : GET
  */
 function importProfileTechnical(){
-    importGeneric("profile_technical_details", "aged_id_pretty", [AGED_ID => TRUE]);
+    importGeneric("profile_technical_details", "aged_id_pretty");
 }
 
 /**
@@ -5212,7 +5207,7 @@ function exportProfilesFrailty(){
  */
 function exportProfilesSocio(){
     exportGeneric("profile_socioeconomic_details",
-        ["include" => ["aged_id_pretty, financial_situation, married, education_level, languages, personal_interests"]]);
+        ["include" => ["aged_id_pretty", "financial_situation", "married", "education_level", "languages", "personal_interests"]]);
 }
 
 /**

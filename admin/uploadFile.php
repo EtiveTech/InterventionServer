@@ -76,11 +76,11 @@ elseif (strcmp($filetype, "users") == 0){
     $method_to_call = "importUsers";
 }
 else {
-    echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">
-                    <strong>WARNING! ERROR!</strong> 
-                    There is an error on the select. This message should never pop up.
-                    If this error pops up..Jump from the nearest bridge. It is the end of the world.
-                  </div>';
+    echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">'
+            .'<strong>WARNING! ERROR!</strong>'
+            .'There is an error on the select. This message should never pop up. '
+            .'If this error pops up... Jump from the nearest bridge. It is the end of the world.'
+        .'</div>';
 }
 
 //endregion
@@ -89,10 +89,10 @@ else {
 
 // If the file has a size equal to zero, it is not possible to perform the upload.
 if ($size <= 0) {
-    echo '<div class="alert alert-danger">
-                    <strong>WARNING! ERROR!</strong> 
-                    The file has size = ' . $size . ' and it is not possible to upload it.
-                  </div>';
+    echo '<div class="alert alert-danger">'
+            .'<strong>WARNING! ERROR!</strong>'
+            .'The file has size = ' . $size . ' and it is not possible to upload it.'
+        .'</div>';
     die();
 }
 
@@ -109,15 +109,14 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
 
     // If the file cannot be moved then die and echo an alert
     if (!move_uploaded_file($file_temp_name, $upload_file)) {
-        echo '<div class="alert alert-danger">
-                    <strong>WARNING! ERROR!</strong> 
-                    It seems that has not been possible to move the file to the server from the temporary location
-                  </div>';
+        echo '<div class="alert alert-danger">'
+                .'<strong>WARNING! ERROR!</strong>'
+                .'It seems that has not been possible to move the file to the server from the temporary location'
+            .'</div>';
         die();
     } else {
         // Assign the 777 permission in order to write on the server.
         chmod($upload_file, 0777);
-
         // Check if the data is in UTF-8 encode.
         // It gets the file, transform it to a string, encode the string in UTF-8 and re-create the file
         $file_data = file_get_contents($upload_file);
@@ -126,10 +125,10 @@ if (is_uploaded_file($_FILES["userfile"]["tmp_name"])) {
         file_put_contents($upload_file , $utf8_file_data );
     }
 } else {
-    echo '<div class="alert alert-danger">
-                    <strong>WARNING! ERROR!</strong> 
-                       It has not been possible to upload the file                  
-              </div>';
+    echo '<div class="alert alert-danger">'
+            .'<strong>WARNING! ERROR!</strong>'
+            .'It has not been possible to upload the file'
+        .'</div>';
     die();
 }
 
@@ -149,8 +148,6 @@ curl_setopt($curl, CURLOPT_POST, true);
 //curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
 // Execute curl method
 $curl_response = curl_exec($curl);
-
-echo $curl_response;
 
 // In case the curl fails close the connection and print an error
 if ($curl_response === FALSE) {

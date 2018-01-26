@@ -56,11 +56,11 @@ elseif (strcmp($filetype, "users") == 0){
     $name_of_file = "export_users.csv";
 }
 else {
-    echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">
-                    <strong>WARNING! ERROR!</strong> 
-                    There is an error on the select. This message should never pop up.
-                    If this error pops up..Jump from the nearest bridge. It is the end of the world.
-                  </div>';
+    echo '<div class="alert alert-danger" style="margin-left: 50px; margin-right: 50px;">'
+            .'<strong>WARNING! ERROR!</strong>'
+            .'There is an error on the select. This message should never pop up.'
+            .'If this error pops up..Jump from the nearest bridge. It is the end of the world.'
+        .'</div>';
 }
 
 //endregion
