@@ -4589,6 +4589,8 @@ function importGeneric($table_name, $key_name){
         $query_results = $pdo->query($query);
         $all_good = FALSE;
         $row_number = 0;
+        $command = "";
+        $message = "";
 
         if ($query_results) {
             $column_types = array();
@@ -4641,8 +4643,8 @@ function importGeneric($table_name, $key_name){
                     for ($i = 0; $i < count($fields); $i++) {
                         $field = $fields[$i];
                         $type = $column_types[$header_column_names[$i]];
-                        if (($type == "character varying") || ($type == "USER-DEFINED") ||
-                            ($type == "date") || (substr($type, 0, 4) == "time")) {
+                        if (($type == "character varying") || ($type == "USER-DEFINED") || ($type == "date") ||
+                            (substr($type, 0, 4) == "time") || ($type == "boolean")) {
                             if (strlen($field) > 0) $field = dbString($field);
                         }
                         if (strlen($field) > 0) {
@@ -4658,7 +4660,6 @@ function importGeneric($table_name, $key_name){
                         $id_pretty = $fields[array_search(AGED_ID_PRETTY, $header_column_names)];
                         if (strlen($id_pretty) > 0) {
                             $select = $select_statement . "'" . $id_pretty . "'";
-                            logger($select);
                             $query_results = $pdo->query($select);
                             $aged_info = ($query_results) ? $query_results->fetch(PDO::FETCH_ASSOC) : array();
                             if ($options[AGED_ID] && strlen($aged_info['aged_id']) > 0) {
@@ -4679,18 +4680,16 @@ function importGeneric($table_name, $key_name){
 
                     $insert_names = substr($insert_names, 0, -2);
                     $insert_values = substr($insert_values, 0, -2);
-                    $insert = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
-
                     $update_values = substr($update_values, 0, -2);
-                    $update = $update_statement . $update_values . " WHERE " . $key_name . "=" . $key_value;
-                    logger($insert);
-                    logger($update);
 
                     // Try and update an existing record, if that fails try and insert a record.
-                    if (strlen($key_value > 0)) {
-                        if ($pdo->query($update) == FALSE) {
-                            logger("trying insert");
-                            $all_good = ($pdo->query($insert) == TRUE);
+                    $command = $update_statement . $update_values . " WHERE " . $key_name . "=" . $key_value;
+                    logger($command);
+                    if (strlen($key_value) > 0) {
+                        if ($pdo->query($command) == FALSE) {
+                            $command = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
+                            logger($command);
+                            $all_good = ($pdo->query($command) == TRUE);
                         }
                     }
                     else {
@@ -4718,7 +4717,7 @@ function importGeneric($table_name, $key_name){
             $errors = $pdo -> errorInfo();
             $sjes = new Jecho($errors);
             $sjes -> server_code = 500;
-            $sjes -> message = "WARNING! An ERROR occurred on line " . $row_number;
+            $sjes -> message = "WARNING! An ERROR occurred on line " . $row_number . ($command != "" ? "<br>Failing command: " . $command : "");
             echo $sjes -> encode("Error");           }
     } else {
         generate400("The method is not a POST");
@@ -4955,7 +4954,7 @@ function importTemplates(){
  * METHOD : GET
  */
 function importUsers(){
-    importGeneric("user", "email");
+    importGeneric("user", "user_id_pretty");
 }
 
 //endregion
