@@ -2228,7 +2228,8 @@ function checkUserPwd($name = null, $user_pwd = null){
                 $name = curl_unescape($ch, $name);
                 $user_pwd = curl_unescape($ch, $user_pwd);
 
-                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
+//                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
+                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = crypt('$user_pwd', password)";
                 $query_results = $pdo->query($query);
 
                 // Check if the query has been correctly performed.
@@ -4617,8 +4618,6 @@ function importGeneric($table_name, $key_name){
                     array_search(AGED_ID, $header_column_names) == FALSE);
                 $options[AGED_NAME] = (($table_name != "profile") && isset($column_types[AGED_NAME]) &&
                     array_search(AGED_NAME, $header_column_names) == FALSE);
-                logger("options[AGED_ID] = " . $options[AGED_ID]);
-                logger("options[AGED_NAME] = " . $options[AGED_NAME]);
 
                 // Need an Update statement as well as an Insert statement in case the key already exists
                 $insert_statement = "INSERT INTO c4a_i_schema." . $table_name . " ";
@@ -4648,9 +4647,13 @@ function importGeneric($table_name, $key_name){
                             if (strlen($field) > 0) $field = dbString($field);
                         }
                         if (strlen($field) > 0) {
-                            $insert_names .= $header_column_names[$i] . ", ";
+                            $name = $header_column_names[$i];
+                            if ($name == "password") {
+                                $field = "crypt(" . $field . ", gen_salt('md5'))";
+                            }
+                            $insert_names .= $name . ", ";
                             $insert_values .= $field . ", ";
-                            $update_values .= $header_column_names[$i] . "=" . $field . ", ";
+                            $update_values .= $name . "=" . $field . ", ";
                         }
                         if ($i === $key_column_no) $key_value = $field;
                     }
