@@ -4606,7 +4606,7 @@ function importGeneric($table_name, $key_name){
         $query_results = $pdo->query($query);
         $all_good = FALSE;
         $row_number = 0;
-        $command = "";
+        $sql = "";
 
         if ($query_results) {
             $column_types = array();
@@ -4688,13 +4688,15 @@ function importGeneric($table_name, $key_name){
                     $update_values = substr($update_values, 0, -2);
 
                     // Try and update an existing record, if that fails try and insert a record.
-                    $command = $update_statement . $update_values . " WHERE " . $key_name . "=" . $kvp[$key_name];
-                    logger($command);
+                    $sql = $update_statement . $update_values . " WHERE " . $key_name . "=" . $kvp[$key_name];
+                    logger($sql);
                     if (strlen($kvp[$key_name]) > 0) {
-                        if ($pdo->query($command) == FALSE) {
-                            $command = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
-                            logger($command);
-                            $all_good = ($pdo->query($command) == TRUE);
+                        $rowCount = $pdo->exec($sql);
+                        if (!$rowCount) {
+                            $sql = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
+                            logger($sql);
+                            // Must have inserted one row
+                            $all_good = ($pdo->exec($sql) == 1);
                         }
                     }
                     else {
@@ -4722,7 +4724,7 @@ function importGeneric($table_name, $key_name){
             $errors = $pdo -> errorInfo();
             $sjes = new Jecho($errors);
             $sjes -> server_code = 500;
-            $sjes -> message = "WARNING! An ERROR occurred on line " . $row_number . ($command != "" ? "<br>Failing command: " . $command : "");
+            $sjes -> message = "WARNING! An ERROR occurred on line " . $row_number . ($sql != "" ? "<br>Failing sql: " . $sql : "");
             echo $sjes -> encode("Error");           }
     } else {
         generate400("The method is not a POST");
