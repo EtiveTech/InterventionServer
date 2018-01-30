@@ -2229,7 +2229,7 @@ function checkUserPwd($name = null, $user_pwd = null){
                 $user_pwd = curl_unescape($ch, $user_pwd);
 
 //                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
-                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = crypt('$user_pwd', password)";
+                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
                 $query_results = $pdo->query($query);
 
                 // Check if the query has been correctly performed.
@@ -4584,9 +4584,6 @@ function keyValuePairs($column_names, $column_types, $fields) {
             if (($type == "character varying") || ($type == "USER-DEFINED") || ($type == "date") ||
                 (substr($type, 0, 4) == "time") || ($type == "boolean")) {
                 if (strlen($field) > 0) $field = dbString($field);
-            }
-            if (($column_names[$i] == "password") && (strlen($field) > 0)) {
-                $field = "crypt(" . $field . ", gen_salt('md5'))";
             }
             $results[$column_names[$i]] = $field;
         }
