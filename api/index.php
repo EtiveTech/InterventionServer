@@ -4575,6 +4575,25 @@ function dbString($text) {
     return $text;
 }
 
+function keyValuePairs($column_names, $column_types, $fields) {
+    $results = array();
+    for ($i = 0; $i < count($fields); $i++) {
+        $field = $fields[$i];
+        if (isset($column_types[$column_names[$i]])) {
+            $type = $column_types[$column_names[$i]];
+            if (($type == "character varying") || ($type == "USER-DEFINED") || ($type == "date") ||
+                (substr($type, 0, 4) == "time") || ($type == "boolean")) {
+                if (strlen($field) > 0) $field = dbString($field);
+            }
+            if (($column_names[$i] == "password") && (strlen($field) > 0)) {
+                $field = "crypt(" . $field . ", gen_salt('md5'))";
+            }
+            $results[$column_names[$i]] = $field;
+        }
+    }
+    return $results;
+}
+
 function importGeneric($table_name, $key_name){
 
     global $pdo;
@@ -4591,7 +4610,6 @@ function importGeneric($table_name, $key_name){
         $all_good = FALSE;
         $row_number = 0;
         $command = "";
-        $message = "";
 
         if ($query_results) {
             $column_types = array();
@@ -4625,9 +4643,6 @@ function importGeneric($table_name, $key_name){
                 // Select statement only used if $options[AGED_ID] or $options[AGED_NAME] are set
                 $select_statement = "SELECT name, surname, aged_id FROM c4a_i_schema.profile WHERE " . AGED_ID_PRETTY . "=";
 
-                // Find the column that holds the key
-                $key_column_no = array_search($key_name, $header_column_names);
-
                 // Start a tramsaction block
                 $all_good = ($pdo->query("BEGIN") == TRUE);
 
@@ -4639,23 +4654,13 @@ function importGeneric($table_name, $key_name){
                     $update_values = "";
 
                     // Now create the INSERT and UPDATE commands
-                    for ($i = 0; $i < count($fields); $i++) {
-                        $field = $fields[$i];
-                        $type = $column_types[$header_column_names[$i]];
-                        if (($type == "character varying") || ($type == "USER-DEFINED") || ($type == "date") ||
-                            (substr($type, 0, 4) == "time") || ($type == "boolean")) {
-                            if (strlen($field) > 0) $field = dbString($field);
+                    $kvp = keyValuePairs($header_column_names, $column_types, $fields);
+                    foreach ($kvp as $key => $value) {
+                        if (strlen($value) > 0) {
+                            $insert_names .= $key . ", ";
+                            $insert_values .= $value . ", ";
+                            $update_values .= $key . "=" . $value . ", ";
                         }
-                        if (strlen($field) > 0) {
-                            $name = $header_column_names[$i];
-                            if ($name == "password") {
-                                $field = "crypt(" . $field . ", gen_salt('md5'))";
-                            }
-                            $insert_names .= $name . ", ";
-                            $insert_values .= $field . ", ";
-                            $update_values .= $name . "=" . $field . ", ";
-                        }
-                        if ($i === $key_column_no) $key_value = $field;
                     }
 
                     // Add in the optional values if needed
@@ -4686,9 +4691,9 @@ function importGeneric($table_name, $key_name){
                     $update_values = substr($update_values, 0, -2);
 
                     // Try and update an existing record, if that fails try and insert a record.
-                    $command = $update_statement . $update_values . " WHERE " . $key_name . "=" . $key_value;
+                    $command = $update_statement . $update_values . " WHERE " . $key_name . "=" . $kvp[$key_name];
                     logger($command);
-                    if (strlen($key_value) > 0) {
+                    if (strlen($kvp[$key_name]) > 0) {
                         if ($pdo->query($command) == FALSE) {
                             $command = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
                             logger($command);
