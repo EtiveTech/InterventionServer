@@ -23,6 +23,7 @@ define('REQUEST_URI', $_SERVER['REQUEST_URI']); //for example: http://localhost/
 define('AGED_ID', 'aged_id');
 define('AGED_NAME', 'aged_name');
 define('AGED_ID_PRETTY', 'aged_id_pretty');
+define('CSV_DELIMITER', ';');
 
 // instantiate the object for the connection to the database
 global $DB;
@@ -4615,7 +4616,7 @@ function importGeneric($table_name, $key_name){
                 $column_types[$table_row["column_name"]] = $table_row["data_type"];
             }
             $header_ok = TRUE;
-            $header_column_names = fgetcsv($fh);
+            $header_column_names = fgetcsv($fh, 0,CSV_DELIMITER);
             $row_number += 1;
             for ($i = 0; $i < count($header_column_names); $i++) {
                 $header_ok = $header_ok && isset($column_types[$header_column_names[$i]]);
@@ -4644,7 +4645,7 @@ function importGeneric($table_name, $key_name){
                 $all_good = ($pdo->query("BEGIN") == TRUE);
 
                 //  Now read in the rest of the CSV file
-                while ($all_good && (($fields = fgetcsv($fh)) !== FALSE)) {
+                while ($all_good && (($fields = fgetcsv($fh, 0, CSV_DELIMITER)) !== FALSE)) {
                     $row_number += 1;
                     $insert_names = "";
                     $insert_values = "";
@@ -5004,7 +5005,7 @@ function exportGeneric($table_name, $options){
             else {
                 $ordered_column_names = $column_names;
             }
-            fputcsv($fh, $ordered_column_names);
+            fputcsv($fh, $ordered_column_names, CSV_DELIMITER);
 
             // *** Output the columns ***
             $query = "SELECT * FROM c4a_i_schema." . $table_name;
@@ -5015,7 +5016,7 @@ function exportGeneric($table_name, $options){
                     foreach ($ordered_column_names as $column_name) {
                         $output[] = $table_row[$column_name];
                     }
-                    fputcsv($fh, $output);
+                    fputcsv($fh, $output, CSV_DELIMITER);
                     unset($output);
                 }
                 $export_ready = TRUE;
@@ -5083,9 +5084,9 @@ function exportMessages(){
         if ($query_results) {
             $fh = fopen($filepath, "w");
             fputcsv($fh, array("resource_id", "category", "resource_name", "description", "message_id", "text", "url",
-                "media", "audio", "video", "channels", "semantic_type", "communication_style", "is_compulsory"));
+                "media", "audio", "video", "channels", "semantic_type", "communication_style", "is_compulsory"), CSV_DELIMITER);
             while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row);
+                fputcsv($fh, $table_row, CSV_DELIMITER);
             }
             $export_ready = TRUE;
             fclose($fh);
@@ -5130,9 +5131,9 @@ function exportPrescriptions(){
         if ($query_results) {
             $fh = fopen($filepath, "w");
             fputcsv($fh, array("aged_id_pretty", "valid_from", "valid_to", "text", "prescription_id_pretty", "urgency",
-                "geriatrician_id_pretty", "additional_notes", "title", "prescription_status"));
+                "geriatrician_id_pretty", "additional_notes", "title", "prescription_status"), CSV_DELIMITER);
             while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row);
+                fputcsv($fh, $table_row, CSV_DELIMITER);
             }
             $export_ready = TRUE;
             fclose($fh);
@@ -5184,9 +5185,10 @@ function exportProfilesCommunicative(){
         $query_results = $pdo->query($query);
         if ($query_results) {
             $fh = fopen($filepath, "w");
-            fputcsv($fh, array("aged_id_pretty", "communication_style", "message_frequency", "topics", "available_channels", "hour_preferences"));
+            fputcsv($fh, array("aged_id_pretty", "communication_style", "message_frequency", "topics",
+                "available_channels", "hour_preferences"), CSV_DELIMITER);
             while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row);
+                fputcsv($fh, $table_row, CSV_DELIMITER);
             }
             $export_ready = TRUE;
             fclose($fh);
@@ -5264,9 +5266,9 @@ function exportResources(){
             $fh = fopen($filepath, "w");
             fputcsv($fh, array("resource_id", "partner", "language", "category", "resource_name", "subjects", "url",
                 "description", "from_date", "to_date", "media", "has_messages", "translated", "periodic",
-                "repeating_time", "repeating_every", "repeating_on_day"));
+                "repeating_time", "repeating_every", "repeating_on_day"), CSV_DELIMITER);
             while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row);
+                fputcsv($fh, $table_row, CSV_DELIMITER);
             }
             $export_ready = TRUE;
             fclose($fh);
@@ -5312,9 +5314,10 @@ function exportTemplates(){
 
         if ($query_results) {
             $fh = fopen($filepath, "w");
-            fputcsv($fh, array("template_id", "category", "title", "description", "min_number_messages", "max_number_messages", "period", "channels"));
+            fputcsv($fh, array("template_id", "category", "title", "description", "min_number_messages",
+                "max_number_messages", "period", "channels"), CSV_DELIMITER);
             while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row);
+                fputcsv($fh, $table_row, CSV_DELIMITER);
             }
             $export_ready = TRUE;
             fclose($fh);
