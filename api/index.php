@@ -13,8 +13,8 @@ include_once("configuration_local.php");
 include_once ("lib/db.php");
 include_once ("lib/request.php");
 include_once ("lib/echo.php");
-
-session_start(); // launch the session
+include_once ("lib/logger.php");
+include_once ("lib/login_token.php");
 
 // memorize the request method type and the uri
 define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
@@ -34,10 +34,6 @@ $args = parse_uri(REQUEST_URI); // explain the uri and identify the different pa
 //endregion
 
 //region Functions
-
-function logger($text) {
-    file_put_contents("tmp/log.txt",  $text . PHP_EOL, FILE_APPEND);
-}
 
 function checkPostDataUnquoted($postData = null){
     if (isset($postData)){
@@ -75,19 +71,28 @@ function checkPostDataQuoted($postData = null){
 if (isset($args)) {
 
     $object = $args[0];
+
+    session_start();
+    if (isset($_SESSION['login'])) {
+        // Doesn't matter what the user_id is.
+        // All users have the same privileges
+        $user_id = getId($_SESSION['login']);
+        if (!$user_id) {
+            generate401();
+        }
+    } else {
+        generate401();
+    }
+
+
     $subject_1 = null;
     $subject_2 = null;
     $subject_3 = null;
     $subject_4 = null;
-
-    if (isset($args[1]))
-        $subject_1 = $args[1];
-    if (isset($args[2]))
-        $subject_2 = $args[2];
-    if (isset($args[3]))
-        $subject_3 = $args[3];
-    if (isset($args[4]))
-        $subject_4 = $args[4];
+    if (isset($args[1])) $subject_1 = $args[1];
+    if (isset($args[2])) $subject_2 = $args[2];
+    if (isset($args[3])) $subject_3 = $args[3];
+    if (isset($args[4])) $subject_4 = $args[4];
 
     //---- GET METHODS ----//
     //PROFILE
@@ -2216,48 +2221,49 @@ function getUser($user_id = null){
  * @param null $name The name of the user that needs to be retrieved.
  * @param null $user_pwd The pwd of the user that needs to be retrieved.
  */
-function checkUserPwd($name = null, $user_pwd = null){
-
-    global $pdo;
-
-    // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
-        // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
-        if(isset($name)) {
-			if(isset($user_pwd)){
-			    $ch = curl_init();
-                $name = curl_unescape($ch, $name);
-                $user_pwd = curl_unescape($ch, $user_pwd);
-
-//                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
-                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
-                $query_results = $pdo->query($query);
-
-                // Check if the query has been correctly performed.
-                // If the variable is true it returns the data in JSON format
-                if (!$query_results) {
-                    generate500("Error performing the query" . $query);
-                } else {
-                    //if the query has retrieved at least a result
-                    if($query_results->rowCount() > 0) {
-                        //it fetches each single row and encode in JSON format the results
-                        while ($row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-                            $sjes = new Jecho($row);
-                            $sjes->message = "User retrieved";
-                            echo $sjes->encode("User");
-                        } // end if to set results into JSON
-                    } else {
-                        generate404("There is no user with the specified data");
-                    }
-                } // end if/else for the check of results
-            } else {
-                generate400("The password is not specified");
-            } //end if/else for verify if intervention_id is set
-        } else {
-            generate400("The user_id is not specified");
-        } //end if/else for verify if intervention_id is set
-    }
-}
+//function checkUserPwd($user_id = null, $user_pwd = null){
+//
+//    global $pdo;
+//
+//    // Check if the method is GET
+//    if (REQUEST_METHOD == 'GET'){
+//        // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
+//        if(isset($user_id)) {
+//			if(isset($user_pwd)){
+//			    $ch = curl_init();
+//                $user_id = curl_unescape($ch, $user_id);
+//                $user_pwd = curl_unescape($ch, $user_pwd);
+//
+////                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
+//                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$user_id') AND password = '$user_pwd'";
+//                $query_results = $pdo->query($query);
+//
+//                // Check if the query has been correctly performed.
+//                // If the variable is true it returns the data in JSON format
+//                if (!$query_results) {
+//                    generate500("Error performing the query" . $query);
+//                } else {
+//                    //if the query has retrieved at least a result
+//                    logger("Found the user");
+//                    if($query_results->rowCount() > 0) {
+//                        //it fetches each single row and encode in JSON format the results
+//                        while ($row = $query_results->fetch(PDO::FETCH_ASSOC)) {
+//                            $sjes = new Jecho($row);
+//                            $sjes->message = "User retrieved";
+//                            echo $sjes->encode("User");
+//                        } // end if to set results into JSON
+//                    } else {
+//                        generate404("There is no user with the specified data");
+//                    }
+//                } // end if/else for the check of results
+//            } else {
+//                generate400("The password is not specified");
+//            } //end if/else for verify if intervention_id is set
+//        } else {
+//            generate400("The user_id is not specified");
+//        } //end if/else for verify if intervention_id is set
+//    }
+//}
 
 /**
  * DESCRIPTION : It retrieves the details (user_id, name, surname, role) of all the users
@@ -4581,6 +4587,9 @@ function keyValuePairs($column_names, $column_types, $fields) {
     for ($i = 0; $i < count($fields); $i++) {
         $field = $fields[$i];
         if (isset($column_types[$column_names[$i]])) {
+            if (($column_names[$i] == "password" && DB_HASH_PASSWORD)) {
+                $field = password_hash($field, PASSWORD_BCRYPT);
+            }
             $type = $column_types[$column_names[$i]];
             if (($type == "character varying") || ($type == "USER-DEFINED") || ($type == "date") ||
                 (substr($type, 0, 4) == "time") || ($type == "boolean")) {

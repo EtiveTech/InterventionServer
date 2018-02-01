@@ -5,7 +5,7 @@
  * Time: 12:30
  */
 
-//DATABASE CONFIGIGURATION TEST
+//DATABASE CONFIGURATION TEST
 define('DB_USERNAME', 'c4aapidb');
 define('DB_PASSWORD', 'some_password');
 define('DB_HOST', 'localhost');
@@ -22,3 +22,4 @@ define('SITE_PATH', 'is');
 define('API_DIR', 'api');
 define('END_POINT', '/'.SITE_PATH.'/'.API_DIR.'/');
 define('API_URL', SITE_PROTOCOL.'://'.SITE_ADDRESS.END_POINT);
+

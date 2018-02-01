@@ -1,16 +1,17 @@
 <?php
 require_once("api/configuration_local.php");
+require_once("api/lib/login_token.php");
+
 $api_url = API_URL."getAllProfiles";
 
-function checkPOST($field){
-    return (isset($_POST[$field]));
-}
-
-if (checkPOST("user_id") && !empty($_POST['user_id'])) {
-    $user_id = $_POST['user_id'];
+session_start();
+if (isset($_SESSION['login'])) {
+    $user_id = getId($_SESSION['login']);
+    if (!$user_id) {
+        header("location:index.html");
+    }
 } else {
-    echo "Warning, no user_id";
-    die();
+    header("location:index.html");
 }
 ?>
 
