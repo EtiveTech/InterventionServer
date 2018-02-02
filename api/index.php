@@ -176,8 +176,6 @@ if (isset($args)) {
     //USER
     elseif ($object == "getUser")
         getUser($subject_1);
-	elseif ($object == "checkUserPwd")
-        checkUserPwd($subject_1, $subject_2);
     elseif ($object == "getAllUsers")
         getAllUsers();
     elseif ($object == "getUserOfIntervention")
@@ -2214,56 +2212,6 @@ function getUser($user_id = null){
         } //end if/else for verify if intervention_id is set
     }
 }
-
-/**
- * DESCRIPTION : check the password of the user with the specified ID
- * METHOD : GET
- * @param null $name The name of the user that needs to be retrieved.
- * @param null $user_pwd The pwd of the user that needs to be retrieved.
- */
-//function checkUserPwd($user_id = null, $user_pwd = null){
-//
-//    global $pdo;
-//
-//    // Check if the method is GET
-//    if (REQUEST_METHOD == 'GET'){
-//        // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
-//        if(isset($user_id)) {
-//			if(isset($user_pwd)){
-//			    $ch = curl_init();
-//                $user_id = curl_unescape($ch, $user_id);
-//                $user_pwd = curl_unescape($ch, $user_pwd);
-//
-////                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
-//                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$user_id') AND password = '$user_pwd'";
-//                $query_results = $pdo->query($query);
-//
-//                // Check if the query has been correctly performed.
-//                // If the variable is true it returns the data in JSON format
-//                if (!$query_results) {
-//                    generate500("Error performing the query" . $query);
-//                } else {
-//                    //if the query has retrieved at least a result
-//                    logger("Found the user");
-//                    if($query_results->rowCount() > 0) {
-//                        //it fetches each single row and encode in JSON format the results
-//                        while ($row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-//                            $sjes = new Jecho($row);
-//                            $sjes->message = "User retrieved";
-//                            echo $sjes->encode("User");
-//                        } // end if to set results into JSON
-//                    } else {
-//                        generate404("There is no user with the specified data");
-//                    }
-//                } // end if/else for the check of results
-//            } else {
-//                generate400("The password is not specified");
-//            } //end if/else for verify if intervention_id is set
-//        } else {
-//            generate400("The user_id is not specified");
-//        } //end if/else for verify if intervention_id is set
-//    }
-//}
 
 /**
  * DESCRIPTION : It retrieves the details (user_id, name, surname, role) of all the users

@@ -10,8 +10,6 @@ if ($referrer == "") {
     header('Location: ./');
 } ;
 
-$api_url = API_URL."checkUserPwd";
-
 session_start();
 
 if (isset($_POST["username"]) && !empty($_POST['username'])) {
