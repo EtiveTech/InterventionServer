@@ -1,8 +1,14 @@
 <?php
+require_once("api/configuration_local.php");
+require_once("api/lib/db.php");
+require_once("api/lib/login_token.php");
+include_once("api/lib/logger.php");
 
-include_once("api/configuration_local.php");
-include_once("api/lib/db.php");
-include_once("api/lib/login_token.php");
+$referrer = $_SERVER['HTTP_REFERER'];
+logger("Referrer: $referrer");
+if ($referrer == "") {
+    header('Location: ./');
+} ;
 
 $api_url = API_URL."checkUserPwd";
 
