@@ -41,7 +41,7 @@ if (!$query_results) {
         $row = $query_results->fetch(PDO::FETCH_ASSOC);
         $authenticated = (DB_HASH_PASSWORD ? password_verify($password, $row['password']) : $password == $row['password']);
         if ($authenticated) {
-            $_SESSION['login'] = getToken($username);
+            $_SESSION['login'] = getToken($row['user_id']);
             echo "OK";
         } else {
             echo "There is no user with the specified data";

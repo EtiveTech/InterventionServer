@@ -2184,9 +2184,7 @@ function getUser($user_id = null){
     if (REQUEST_METHOD == 'GET'){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($user_id)) {
-
             $query = "SELECT * FROM c4a_i_schema.user WHERE user_id = $user_id";
-
             $query_results = $pdo->query($query);
 
             // Check if the query has been correctly performed.
@@ -2194,15 +2192,13 @@ function getUser($user_id = null){
             if (!$query_results) {
                 generate500("Error performing the query");
             } else {
-
                 //if the query has retrieved at least a result
-                if($query_results->rowCount() > 0) {
-                    //it fetches each single row and encode in JSON format the results
-                    while ($row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-                        $sjes = new Jecho($row);
-                        $sjes->message = "User retrieved";
-                        echo $sjes->encode("User");
-                    } // end if to set results into JSON
+                if($query_results->rowCount() == 1) {
+                    // There can be only one user
+                    $row = $query_results->fetch(PDO::FETCH_ASSOC);
+                    $sjes = new Jecho($row);
+                    $sjes->message = "User retrieved";
+                    echo $sjes->encode("User");
                 } else {
                     generate404("There is no user with the specified id. user_id = ".$user_id);
                 }
