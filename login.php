@@ -2,13 +2,11 @@
 require_once("api/configuration_local.php");
 require_once("api/lib/db.php");
 require_once("api/lib/login_token.php");
-include_once("api/lib/logger.php");
 
 $referrer = $_SERVER['HTTP_REFERER'];
-logger("Referrer: $referrer");
 if ($referrer == "") {
     header('Location: ./');
-} ;
+};
 
 session_start();
 
