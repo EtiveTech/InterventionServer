@@ -85,7 +85,7 @@ if (isset($_SESSION['login'])) {
     </div>
     <div class="row goBack">
         <form>
-            <input type="button" value="Back to Homepage" onclick="window.location.href='/'"
+            <input type="button" value="Back to Homepage" onclick="window.location.href='./'"
                    class="btn btn-md btn-default" />
         </form>
     </div>
