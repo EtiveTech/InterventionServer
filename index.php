@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION) && isset($_SESSION['referrer'])) {
+    $nextPage = $_SESSION['referrer'];
+} else {
+    $nextPage = "users.php";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -20,14 +29,15 @@
 				var form = document.getElementById("poliform");
 				var FD  = new FormData(form);
 				var xmlhttp=new XMLHttpRequest();
-				xmlhttp.onreadystatechange=function() {
-					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                         var response = xmlhttp.responseText;
 						if (response === "OK" ) {
 							document.getElementById("submit_button").onclick="";
 							document.getElementById("submit_button").value="OK";
 							document.getElementById("submit_button").className="button_ok";
-                            location.href = "users.php";
+                            // location.href = "users.php";
+                            location.href = "<?php echo $nextPage;?>"
 						}
 						else {
 							document.getElementById("submit_button").src = "";
@@ -36,7 +46,7 @@
 							document.getElementById("debug").innerHTML = response;
 						}
 					}
-				}
+				};
                 xmlhttp.open("POST", "login.php");
                 xmlhttp.send(FD);
 			}
@@ -73,7 +83,7 @@
 		<div class="container">
 			<header class="clearfix">
 				<span class="poli-title">
-					<div>C4A LOGIN</div>
+					C4A LOGIN
 				</span>
 				<h1>City4Age Delivery System</h1>
 			</header>	
@@ -90,7 +100,7 @@
 							<div class="cbp-mc-form">
 								<label for="Istruzioni" style="text-align:center;">Registered users: please insert username and password and click LOGIN. </label>
 								<!--<label for="Istruzioni" style="text-align:center;">Not registered users: click on <b>REGISTER</b></label>-->
-								</br>
+								<br />
 								<label for="Istruzioni" style="text-align:center;">Utenti iscritti: inserite username e password e cliccate su LOGIN. </label>
 								<!--<label for="Istruzioni" style="text-align:center;">Utenti non iscritti: cliccate su <b>ISCRIVITI</b></label>-->
 								<div class="cbp-mc-column" id="prima_colonna"></div>
@@ -111,7 +121,7 @@
 				</div><!-- /content -->
 			</div><!-- /tabs -->
 			<p id="debug"></p>
-			<p class="info"><img id="logo-hoc"src="login/img/logo-hoc.png"></img></p>
+			<p class="info"><img id="logo-hoc" src="login/img/logo-hoc.png"></p>
 		</div>
 		
 		<script src="login/js/libs/jquery-1.10.2.js"></script>
@@ -119,7 +129,7 @@
 		<script>
 			new CBPFWTabs( document.getElementById( 'tabs' ) );
 			document.getElementById('password').onkeydown = function(event) {
-    			if (event.keyCode == 13) {
+    			if (event.keyCode === 13) {
         			login();
     			}
 			}

@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/login_token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    if (!getId($_SESSION['login'])) {
+        $_SESSION['referrer'] = "admin";
+        header("location:../");
+    }
+} else {
+    $_SESSION['referrer'] = "admin";
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
