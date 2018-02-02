@@ -2,6 +2,7 @@
 session_start();
 if (isset($_SESSION) && isset($_SESSION['referrer'])) {
     $nextPage = $_SESSION['referrer'];
+    unset($_SESSION['referrer']);
 } else {
     $nextPage = "users.php";
 }

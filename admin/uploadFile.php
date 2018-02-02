@@ -1,6 +1,23 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/login_token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    if (!getId($_SESSION['login'])) {
+        $_SESSION['referrer'] = "admin";
+        header("location:../");
+    }
+} else {
+    $_SESSION['referrer'] = "admin";
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
+<html>
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title> Upload results </title>
     <link rel="stylesheet" type="text/css" href="css/managerInterfaceStyle.css">
     <!-- Bootstrap core CSS -->
@@ -8,13 +25,12 @@
     <!-- Bootstrap theme -->
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 </head>
-
-
-<div class="divSuperiore row">
-    <img src="css/City4AgeLogo_noBackground.png" id="logoImage"/>
-    <h2>City4Age - Intervention Database Manager - Upload File </h2>
-</div>
-<br><br><br>
+<body>
+    <div class="divSuperiore row">
+        <img src="css/City4AgeLogo_noBackground.png" id="logoImage"/>
+        <h2>City4Age - Intervention Database Manager - Upload File </h2>
+    </div>
+    <br><br><br>
 
 <?php
 
@@ -207,19 +223,18 @@ if ($decoded[0] -> server_code === 200) {
 
 ?>
 
-<br><br><br><br>
-<div class="uploadBackButtons btn-toolbar">
-    <form>
-        <input type="button" value="Back to Homepage"
-               onclick="window.location.href='index.html'"
-               class="btn btn-md btn-default" />
-    </form>
-    <form>
-        <input type="button" value="Back to Import"
-               onclick="window.location.href='importInterface.html'"
-               class="btn btn-md btn-default secondButton" />
-    </form>
-</div>
-
+    <br><br><br><br>
+    <div class="uploadBackButtons btn-toolbar">
+        <form>
+            <input type="button" value="Back to Homepage"
+                   onclick="window.location.href='index.html'"
+                   class="btn btn-md btn-default" />
+        </form>
+        <form>
+            <input type="button" value="Back to Import"
+                   onclick="window.location.href='importInterface.html'"
+                   class="btn btn-md btn-default secondButton" />
+        </form>
+    </div>
 </body>
 </html>

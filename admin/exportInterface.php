@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/login_token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    if (!getId($_SESSION['login'])) {
+        $_SESSION['referrer'] = "admin";
+        header("location:../");
+    }
+} else {
+    $_SESSION['referrer'] = "admin";
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +85,7 @@
     </div>
     <div class="row goBack">
         <form>
-            <input type="button" value="Back to Homepage" onclick="window.location.href='index.html'"
+            <input type="button" value="Back to Homepage" onclick="window.location.href='/'"
                    class="btn btn-md btn-default" />
         </form>
     </div>

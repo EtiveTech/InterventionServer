@@ -8,10 +8,10 @@ session_start();
 if (isset($_SESSION['login'])) {
     $user_id = getId($_SESSION['login']);
     if (!$user_id) {
-        header("location:index.html");
+        header("location:./");
     }
 } else {
-    header("location:index.html");
+    header("location:./");
 }
 ?>
 
@@ -85,7 +85,7 @@ if (isset($_SESSION['login'])) {
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv2);
-                        var element = document.createElement("input");
+                        element = document.createElement("input");
                         //Assign different attributes to the element.
                         element.type = "BUTTON";
                         element.value = "INTERVENTION"; // Really? You want the default value to be the type string?

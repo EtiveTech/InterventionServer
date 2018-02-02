@@ -36,12 +36,12 @@ if (isset($_SESSION['login'])) {
     <div class="row text-center">
         <div class="col-md-offset-3 col-md-1 text-left" >
             <input type="button" value="Import Files"
-                   onclick="window.location.href='importInterface.html'"
+                   onclick="window.location.href='importInterface.php'"
                    class="btn btn-lg btn-success"/>
         </div>
         <div class="col-md-offset-3 col-md-1 text-right">
             <input type="button" value="Export Files"
-                   onclick="window.location.href='exportInterface.html'"
+                   onclick="window.location.href='exportInterface.php'"
                    class="btn btn-lg btn-success"/>
 
         </div>
