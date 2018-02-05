@@ -1,3 +1,20 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +68,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand" href="intervention_index.html"><span id="installation_text">City4Age - Installation: Lecce </span>|<strong id="user_role"> User role: GERIATRICIAN</strong> | <strong id="user_name">User name: GIOVANNI RICEVUTI</strong> </span>
+                <span class="navbar-brand" href="intervention-index.php"><span id="installation_text">City4Age - Installation: Lecce </span>|<strong id="user_role"> User role: GERIATRICIAN</strong> | <strong id="user_name">User name: GIOVANNI RICEVUTI</strong> </span>
             </div>
             <!-- /.navbar-header -->
             
@@ -61,7 +78,7 @@
                     <button id="all_annotations_btn" type="button" class="btn btn-outline btn-primary">
                         ALL ANNOTATIONS
                     </button>
-                    <button id="detection_btn" type="button" class="btn btn-outline btn-primary" onclick="window.open('http://www.francescoclasadonte.com/City4Age/pages/detection.html', 'Detection', 'location=yes,height=600,width=800,scrollbars=yes,status=yes');">
+                    <button id="detection_btn" type="button" class="btn btn-outline btn-primary" onclick="window.open('detection.php', 'Detection', 'location=yes,height=600,width=800,scrollbars=yes,status=yes');">
                         DETECTION
                     </button>
                 </form>

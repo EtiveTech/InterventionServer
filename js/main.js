@@ -65,8 +65,8 @@ function initBt2017() {
       tl.to(particles[i], 0.2, { opacity: 0, ease: Power3.easeOut }, '-=0.2');
     }
   setContent("0","0");
-	//window.open("pages/intervention_index.html?0", "_self");
-  //window.open("pages/intervention_index.html?0", "_self");
+	//window.open("pages/intervention-index.php?0", "_self");
+  //window.open("pages/intervention-index.php?0", "_self");
   });
 }
 
@@ -108,8 +108,8 @@ function initBt2017_I() {
       tl.to(particles[i], 0.2, { opacity: 0, ease: Power3.easeOut }, '-=0.2');
     }
   setContent("0","1");
-	//window.open("pages/intervention_index.html?0", "_self");
-  //window.open("pages/intervention_index.html?0", "_self");
+	//window.open("pages/intervention-index.php?0", "_self");
+  //window.open("pages/intervention-index.php?0", "_self");
   });
 }
 

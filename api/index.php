@@ -65,6 +65,8 @@ function checkPostDataQuoted($postData = null){
 
 //endregion
 
+// Check if the user is logged in
+// If not logged in they cannot use the API
 session_start();
 if (isset($_SESSION['login'])) {
     // Doesn't matter what the user_id is.
@@ -2954,19 +2956,23 @@ function updatePrescriptionStatus(){
 
     global $pdo;
 
+    logger("Called updatePrescriptionStatus()");
+
     if (REQUEST_METHOD == 'POST') {
 
         if (isset($_POST["prescription_id"])) { //Check if the prescription id has been set
             $prescription_id = $_POST["prescription_id"];
+            logger("Prescription id = $prescription_id");
 
             // Check for required data
             if (isset($_POST["prescription_status"])) {
 
                 $prescription_status = strtolower($_POST["prescription_status"]);
+                logger("Prescription status = '$prescription_status'");
 
                 //Query to UPDATE the prescription
                 $queryUpdate = "UPDATE c4a_i_schema.prescription 
-                                SET (prescription_status) = ('".$prescription_status."')
+                                SET prescription_status = '".$prescription_status."'
                                 WHERE prescription_id = ".$prescription_id."";
 
                 $queryUpdate_results = $pdo->query($queryUpdate);

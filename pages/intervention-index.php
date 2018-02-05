@@ -1,3 +1,20 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,10 +74,10 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="new-prescription.html"><i class="fa fa-dashboard fa-fw"></i> Prescription</a>
+                            <a href="new-prescription.php"><i class="fa fa-dashboard fa-fw"></i> Prescription</a>
                         </li>
                         <li>
-                            <a href="intervention.html"><i class="fa fa-bar-chart-o fa-fw"></i> Intervention</a>
+                            <a href="intervention.php"><i class="fa fa-bar-chart-o fa-fw"></i> Intervention</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-heart-o fa-fw"></i> Intervention for the care receiver</a>

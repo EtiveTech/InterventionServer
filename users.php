@@ -79,7 +79,7 @@ if (isset($_SESSION['login'])) {
                         element.onclick = function() { // Note this is a function
                             sessionStorage.profile_id=aged_id[i];
                             sessionStorage.user_id="<?php echo $user_id;?>";
-                            window.open("pages/new-prescription.html", "_self");
+                            window.open("pages/new-prescription.php", "_self");
                         };
  
                         innerDiv.appendChild(element);
@@ -97,7 +97,7 @@ if (isset($_SESSION['login'])) {
                         element.onclick = function() { // Note this is a function
                             sessionStorage.profile_id=aged_id[i];
                             sessionStorage.user_id="<?php echo $user_id;?>";
-                            window.open("pages/intervention.html", "_self");
+                            window.open("pages/intervention.php", "_self");
                         };
                         innerDiv2.appendChild(element);
                     }

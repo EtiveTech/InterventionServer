@@ -8,7 +8,7 @@
 
 require_once("db.php");
 include_once("logger.php");
-define ('ONE_MINUTE', 60);
+define('ONE_MINUTE', 60);
 define('TOKEN_EXPIRY', 30 * ONE_MINUTE);
 define('UPDATE_WINDOW', round(TOKEN_EXPIRY / 4));
 
