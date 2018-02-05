@@ -1,13 +1,16 @@
 <?php
 require_once("api/configuration_local.php");
-require_once("api/lib/login_token.php");
+require_once("api/lib/token.php");
 
 $api_url = API_URL."getAllProfiles";
 
 session_start();
 if (isset($_SESSION['login'])) {
-    $user_id = getId($_SESSION['login']);
-    if (!$user_id) {
+    $token = new Token($_SESSION['login']);
+    $user_id = $token->getUserId();
+    if ($user_id) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
         header("location:./");
     }
 } else {

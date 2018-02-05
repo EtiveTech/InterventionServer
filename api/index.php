@@ -14,7 +14,7 @@ include_once ("lib/db.php");
 include_once ("lib/request.php");
 include_once ("lib/echo.php");
 include_once ("lib/logger.php");
-include_once ("lib/login_token.php");
+include_once ("lib/token.php");
 
 // memorize the request method type and the uri
 define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
@@ -65,25 +65,26 @@ function checkPostDataQuoted($postData = null){
 
 //endregion
 
+session_start();
+if (isset($_SESSION['login'])) {
+    // Doesn't matter what the user_id is.
+    // All users have the same privileges
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
+        generate401();
+    }
+} else {
+    generate401();
+}
+
 //region Routing Operations
 
 // In this section occurs the routing of the operations.
 if (isset($args)) {
 
     $object = $args[0];
-
-    session_start();
-    if (isset($_SESSION['login'])) {
-        // Doesn't matter what the user_id is.
-        // All users have the same privileges
-        $user_id = getId($_SESSION['login']);
-        if (!$user_id) {
-            generate401();
-        }
-    } else {
-        generate401();
-    }
-
 
     $subject_1 = null;
     $subject_2 = null;

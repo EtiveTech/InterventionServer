@@ -1,10 +1,13 @@
 <?php
 require_once("../api/configuration_local.php");
-require_once("../api/lib/login_token.php");
+require_once("../api/lib/token.php");
 
 session_start();
 if (isset($_SESSION['login'])) {
-    if (!getId($_SESSION['login'])) {
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
         $_SESSION['referrer'] = "admin";
         header("location:../");
     }

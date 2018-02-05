@@ -1,7 +1,7 @@
 <?php
 require_once("api/configuration_local.php");
 require_once("api/lib/db.php");
-require_once("api/lib/login_token.php");
+require_once("api/lib/token.php");
 
 $referrer = $_SERVER['HTTP_REFERER'];
 if ($referrer == "") {
@@ -39,7 +39,8 @@ if (!$query_results) {
         $row = $query_results->fetch(PDO::FETCH_ASSOC);
         $authenticated = (DB_HASH_PASSWORD ? password_verify($password, $row['password']) : $password == $row['password']);
         if ($authenticated) {
-            $_SESSION['login'] = getToken($row['user_id']);
+            $token = new Token();
+            $_SESSION['login'] = $token->setToken($row['user_id']);
             echo "OK";
         } else {
             echo "There is no user with the specified data";
