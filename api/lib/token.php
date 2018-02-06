@@ -7,7 +7,6 @@
  */
 
 require_once("db.php");
-include_once("logger.php");
 define('ONE_MINUTE', 60);
 define('TOKEN_EXPIRY', 30 * ONE_MINUTE);
 define('UPDATE_WINDOW', round(TOKEN_EXPIRY / 4));
@@ -27,8 +26,6 @@ class Token {
             $this->user = self::getUser($token);
             if (isset($this->user['user_id'])) $this->userId = $this->user['user_id'];
         }
-
-        logger("Token constuctor called with token = ".($token ? "'$token'" : "NULL"));
     }
 
     private static function timeNow() {
@@ -81,7 +78,6 @@ class Token {
 
     function setToken($id = null) {
         $token = null;
-        logger("setToken() called with id = ".($id ? $id : "NULL"));
         if (!$this->userId) $this->userId = $id;
         $id = $this->userId;
         if ($id) {
@@ -93,7 +89,6 @@ class Token {
             $token = self::saveToken($id, $token);
             $this->token = $token;
         }
-        logger("setToken() returning '$token'");
         return $token;
     }
 
@@ -103,12 +98,10 @@ class Token {
     }
 
     function getUserId() {
-        logger("getUserId() returning $this->userId");
         return $this->userId;
     }
 
     function setUserId($id) {
-        logger("setUserId() called with id = $id");
         $this->userId = $id;
     }
 
@@ -119,7 +112,6 @@ class Token {
             $expiry = $this->user['token_expiry'];
             $result = (($now < $expiry) && ($now + UPDATE_WINDOW >= $expiry));
         }
-        logger("inUpdateWindow() returning ".($result ? "TRUE" : "FALSE"));
         return $result;
     }
 }
