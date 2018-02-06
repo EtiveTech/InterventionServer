@@ -1,5 +1,5 @@
 <?php
-require_once("../api/configuration_local.php");
+require_once("../api/configuration.php");
 require_once("../api/lib/token.php");
 
 session_start();

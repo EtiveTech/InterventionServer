@@ -1,5 +1,5 @@
 <?php
-require_once("../api/configuration_local.php");
+require_once("../api/configuration.php");
 require_once("../api/lib/token.php");
 
 session_start();
@@ -38,7 +38,7 @@ if (isset($_SESSION['login'])) {
 <?php
 
 //region Setting some useful data
-require_once("../api/configuration_local.php");
+require_once("../api/configuration.php");
 
 // Declaring that no PHP error need to be printed
 error_reporting(0);

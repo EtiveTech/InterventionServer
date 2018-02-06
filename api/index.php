@@ -9,7 +9,7 @@
 header('Content-Type: application/json; charset=utf-8'); // Apply the application contest JSON
 mb_internal_encoding("UTF-8");
 // include all the files needed
-include_once("configuration_local.php");
+include_once("configuration.php");
 include_once ("lib/db.php");
 include_once ("lib/request.php");
 include_once ("lib/echo.php");
