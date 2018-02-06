@@ -1,3 +1,20 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +65,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="menu.html">City4Age</a>
+                <a class="navbar-brand" href="menu.php">City4Age</a>
             </div>
             <!-- /.navbar-header -->
             <!-- /.navbar-top-links -->
@@ -71,10 +88,10 @@
                             <a href="new-prescription.php"><i class="fa fa-dashboard fa-fw"></i> New Prescription</a>
                         </li>
                         <li>
-                            <a href="select-resources.html"><i class="fa fa-bar-chart-o fa-fw"></i> Select Resources</a>
+                            <a href="select-resources.php"><i class="fa fa-bar-chart-o fa-fw"></i> Select Resources</a>
                         </li>
                         <li>
-                            <a href="intervention-template.html"><i class="fa fa-table fa-fw"></i> Select Templates</a>
+                            <a href="intervention-template.php"><i class="fa fa-table fa-fw"></i> Select Templates</a>
                         </li>
                     </ul>
                 </div>

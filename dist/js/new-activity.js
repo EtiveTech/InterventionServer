@@ -14,11 +14,11 @@ $('#datepickerFrom').datepicker();
 $('#datepickerTo').datepicker();
 
 $('#button-edit-resources').click(function(){
-    window.location.href="../pages/select-resources.html";
+    window.location.href="../../pages/select-resources.php";
 });
 
 $('#button-edit-templates').click(function(){
-    window.location.href="../pages/select-templates.html";
+    window.location.href="../../pages/select-templates.php";
 });
 
 $("input[name='resource']").click(function(){

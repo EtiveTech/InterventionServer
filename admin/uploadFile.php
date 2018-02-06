@@ -211,12 +211,12 @@ if ($decoded[0] -> server_code === 200) {
 <div class="uploadBackButtons btn-toolbar">
     <form>
         <input type="button" value="Back to Homepage"
-               onclick="window.location.href=\'index.html\'"
+               onclick="window.location.href=\'index.php\'"
                class="btn btn-md btn-default" />
     </form>
     <form>
         <input type="button" value="Back to Import"
-               onclick="window.location.href=\'importInterface.html\'"
+               onclick="window.location.href=\'importInterface.php\'"
                class="btn btn-md btn-default secondButton" />
     </form>
 </div>';
@@ -230,12 +230,12 @@ if ($decoded[0] -> server_code === 200) {
     <div class="uploadBackButtons btn-toolbar">
         <form>
             <input type="button" value="Back to Homepage"
-                   onclick="window.location.href='index.html'"
+                   onclick="window.location.href='index.php'"
                    class="btn btn-md btn-default" />
         </form>
         <form>
             <input type="button" value="Back to Import"
-                   onclick="window.location.href='importInterface.html'"
+                   onclick="window.location.href='importInterface.php'"
                    class="btn btn-md btn-default secondButton" />
         </form>
     </div>

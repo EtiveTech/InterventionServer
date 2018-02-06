@@ -38,7 +38,7 @@ $("#collapse-allresources").on("show.bs.collapse", function(){
 
 function getUser(userID){
     for(var i=0; i<all_users.length;i++){
-        if(userID==all_users[i].ID){
+        if(userID === all_users[i].ID){
             return all_users[i];
         }
     }
@@ -47,7 +47,7 @@ function getUser(userID){
 
 function getPrescription(prescriptionID){
     for(var i=0; i<all_prescriptions.length;i++){
-        if(prescriptionID==all_prescriptions[i].ID){
+        if(prescriptionID === all_prescriptions[i].ID){
             return all_prescriptions[i];
         }
     }
@@ -108,7 +108,7 @@ function prescriptionsPanel(){
         pres_items.push(all_prescriptions[i].Body);
         pres_items.push('</p>');
         pres_items.push('<button type="button" class="pres-history btn btn-default pull-right ');
-        if(cur_pres==all_prescriptions[i].ID){
+        if(cur_pres === all_prescriptions[i].ID){
             pres_items.push('disabled');
         }
         pres_items.push('" onClick="updateCurrentPrescription('+all_prescriptions[i].ID+')">Activate</button>');
@@ -333,7 +333,7 @@ $('.resource-item').click(function(){
 });
 
 $('#button-edit-resources').click(function(){
-    window.location.href="../pages/select-resources.html";
+    window.location.href="../../pages/select-resources.php";
 });
 
  $("input[name='resource']").click(function(){
@@ -495,7 +495,7 @@ function updateMessages(){
         }    
     }
     createMessagesTable(data3);  
-};
+}
 
 function updateTemplates(){
     console.log("Aggiorno tabella");
@@ -506,7 +506,7 @@ function updateTemplates(){
         console.log(all_templates[i]);
         if(res.Category==all_templates[i].Category){
             all_templates[i].selected=false;
-            if(all_templates[i].ID==selectedTemplates[cur_res])
+            if(all_templates[i].ID === selectedTemplates[cur_res])
                 {
                     all_templates[i].selected=true;
                 }
@@ -522,7 +522,7 @@ function updateTemplates(){
 function getResource(resourceID){
     for(var i=0; i<all_resources.length;i++)
         {
-            if(resourceID==all_resources[i].ID){
+            if(resourceID === all_resources[i].ID){
                 return all_resources[i];
             }
         }
@@ -532,7 +532,7 @@ function getResource(resourceID){
 function getTemplate(templateID){
     for(var i=0; i<all_templates.length;i++)
         {
-            if(templateID==all_templates[i].ID){
+            if(templateID === all_templates[i].ID){
                 return all_templates[i];
             }
         }
@@ -543,7 +543,7 @@ function updateTemplate_selected(templateID, selected){
     console.log("Update Template ID="+templateID + " value="+selected);
     for(var i=0; i<all_templates.length;i++)
         {
-            if(templateID==all_templates[i].ID){
+            if(templateID === all_templates[i].ID){
                 all_templates[i].selected=selected;
             }
         }
@@ -583,7 +583,7 @@ function createTemplatesTable(dataObject){
                         if (col === 'selected') {
                             for(var i=0; i<data.length;i++)
                             {
-                                if(i!=row){
+                                if(i !== row){
                                     dataObject[i].selected=false;
                                     updateTemplate_selected(data[i][1],false);
                                 }
@@ -614,7 +614,7 @@ function createTemplatesTable(dataObject){
         },
         {
             data: 'Category',
-            type: 'text',
+            type: 'text'
         },
         {
             data: 'Name',
@@ -623,11 +623,11 @@ function createTemplatesTable(dataObject){
         },
         {
             data: 'Adapted to',
-            type: 'text',
+            type: 'text'
         },
         {
             data: 'Number of messages',
-            type: 'text',
+            type: 'text'
         },
         {
             data: 'Period',
@@ -660,12 +660,12 @@ function createTemplatesTable(dataObject){
     allowRemoveColumn: false,
     allowRemoveRow: false,
     disableVisualSelection: 'area',
-    wordWrap: false,
+    wordWrap: false
     
 };
 
 hot = new Handsontable(hotElement, hotSettings);
-};
+}
 
 function createMessagesTable(dataObject){
     console.log("Dati messaggi: ");
@@ -677,7 +677,7 @@ function createMessagesTable(dataObject){
         columns: [
         {
             data: 'Category',
-            type: 'text',
+            type: 'text'
         },
         {
             data: 'Title',
@@ -691,11 +691,11 @@ function createMessagesTable(dataObject){
         },
         {
             data: 'Subject',
-            type: 'text',
+            type: 'text'
         },
         {
             data: 'Message content',
-            type: 'text',
+            type: 'text'
         },
         {
             data: 'Text',
@@ -744,10 +744,10 @@ function createMessagesTable(dataObject){
     allowRemoveColumn: false,
     allowRemoveRow: false,
     disableVisualSelection: 'area',
-    wordWrap: false,
+    wordWrap: false
     
 };
 
 hot_messages = new Handsontable(hotElement, hotSettings);
-};
+}
 

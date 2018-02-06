@@ -1,3 +1,20 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +70,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="menu.html">City4Age - [Lecce] Installation (Select Templates Interface)</a>
+                <a class="navbar-brand" href="menu.php">City4Age - [Lecce] Installation (Select Templates Interface)</a>
             </div>
             <!-- /.navbar-header -->
             

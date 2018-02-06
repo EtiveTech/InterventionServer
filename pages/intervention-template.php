@@ -1,3 +1,20 @@
+<?php
+require_once("../api/configuration_local.php");
+require_once("../api/lib/token.php");
+
+session_start();
+if (isset($_SESSION['login'])) {
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -129,6 +146,7 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
+                    <!-- /.panel .chat-panel -->
                     <div id="prescription-legend-panel" class="panel panel-info">
                         <div class="panel-heading">
                             <i class="fa fa-file-text-o fa-fw"></i> Prescriptions Legend
@@ -174,7 +192,6 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel .chat-panel -->
                 </div>
                 <div class="col-lg-9">
                     <div class="row">
@@ -201,7 +218,7 @@
                                         </div>
                                         <div class="panel"></div>
                                         <div class="row">
-                                           <div id="gantt_interventions">
+                                            <div id="gantt_interventions">
                                             </div>
                                         </div>
                                         <!-- /.row -->
@@ -211,60 +228,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="new-intervention_panel" class="panel panel-default">
-                                <div class="panel-heading">
-                                    <i class="fa fa-pencil fa-fw"></i> <span>Write an Intervention</span>
-                                    <div class="pull-right">
-                                        <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-write-intervention">
-                                            <i class="fa fa-angle-down fa-fw"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div id="collapse-write-intervention" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <form id="form_intervention" role="form">
-                                            <div class="row">
-                                                <div class="col-lg-9">
-                                                    <div class="row">
-                                                        <div class="col-lg-4">
-                                                            <div class="form-group">
-                                                                <label>Title:</label>
-                                                                <input id="pres_title" class="form-control" placeholder="Enter title here">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <label>From Date:</label>
-                                                                <div class='input-group date' id='datepickerFromInt'>
-                                                                    <input type='text' class="form-control" placeholder="From" />
-                                                                    <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group">
-                                                                <label>To Date:</label>
-                                                                <div class='input-group date' id='datepickerToInt'>
-                                                                    <input type='text' class="form-control" placeholder="To" />
-                                                                    <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>               
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- /.panel-body -->
-                                </div>      
-                            </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div id="sel-res" class="row">
@@ -280,53 +243,41 @@
                                     </div>
 
                                     <!-- /.panel-body -->
-                                    </div> 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <button id="button-save-templates" type="button" class="btn btn-success"> COMMIT</button>
+                                            <button id="button-suspend-templates" type="button" class="btn btn-info"> SUSPEND</button>
+                                            <button id="button-cancel-templates" type="button" class="btn btn-danger"> CANCEL</button>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="buttons_control" class="row">
-                                <div class="col-lg-12">
-                                    <button id="button-save-resources" type="button" class="btn btn-success" onClick="saveResourcesClick()"> APPLY</button>
-                                    <button id="button-suspend-resources" type="button" class="btn btn-info" onClick="suspendResourcesClick()"> SUSPEND</button>
-                                    <button id="button-cancel-resources" type="button" class="btn btn-danger" onClick="cancelResourcesClick()"> CANCEL</button>
-                                </div>      
                             </div>
                             <div class="panel"></div>
-                            <div id="all_resources_panel" class="panel panel-default">
-                                <div class="panel-heading">
-                                    <i class="fa fa-archive fa-fw"></i> Resources
-                                    <div class="pull-right">
-                                        <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-allresources">
-                                        <i class="fa fa-angle-down fa-fw"></i>
-                                    </button>
-                                    </div>
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div id="collapse-allresources" class="panel-collapse">
-                                    <div class="panel-body">
-                                    <div id="resources-body" class="row">
-                                        <div class="col-lg-12">
-                                        </div>
-                                    </div>
-                                    <!-- /.row -->
-                                </div>
-                                </div>
-                                    <!-- /.panel-body -->
-                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
+                            <div id="panel-info-template" class="panel panel-info">
+                                <div class="panel-heading">
+                                    Info
+                                </div>
+                                <div class="panel-body">
+                                    <h4>Select the resource you want to choose the template for</h4>
+                                </div>
+                            </div>
                             <div id="templates-panel" class="panel panel-default">
                                 <div class="panel-heading">
-                                    <i class="fa fa-folder-open-o fa-fw"></i> Templates
+                                    <i class="fa fa-folder-open-o fa-fw"></i> <span>Templates</span>
                                     <div class="pull-right">
-                                            <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-templates">
+                                            <!--<button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-templates">
                                                 <i class="fa fa-angle-down fa-fw"></i>
-                                            </button>
+                                            </button>-->
                                     </div>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <div id="collapse-templates" class="panel-collapse collapse">
+                                <div id="collapse-templates" class="panel-collapse">
                                     <div class="panel-body">
                                     
                                 </div>
@@ -381,7 +332,7 @@
     
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-    <script src="../dist/js/select-resources.js"></script>
+    <script src="../dist/js/intervention-template.js"></script>
     
     
     

@@ -113,9 +113,9 @@ function prescriptionsPanel(){
     pres_items=[];
     for(var i=0; i<all_prescriptions.length;i++){
         console.log(all_prescriptions[i].State);
-        if(all_prescriptions[i].State!="Suspended" && 
-           all_prescriptions[i].State!="To be done" &&
-           all_prescriptions[i].State!="Working on resources"
+        if(all_prescriptions[i].State !== "Suspended" &&
+           all_prescriptions[i].State !== "To be done" &&
+           all_prescriptions[i].State !== "Working on resources"
           ){
             pres_items.push('<ul class="chat"><li id="pres-history-item_'+all_prescriptions[i].ID+'" class="left clearfix"><span class="chat-img pull-left">');
         var imgCircleLink="http://placehold.it/50/";
@@ -133,11 +133,11 @@ function prescriptionsPanel(){
         pres_items.push('<p>');
         pres_items.push(all_prescriptions[i].Body);
         pres_items.push('</p>');
-        if(all_prescriptions[i].State!="Completed" &&
-           all_prescriptions[i].State!="Working on resources"
+        if(all_prescriptions[i].State !== "Completed" &&
+           all_prescriptions[i].State !== "Working on resources"
           ){
             pres_items.push('<button type="button" class="pres-history btn btn-default pull-right ');
-            if(sessionStorage.cur_pres==all_prescriptions[i].ID){
+            if(sessionStorage.cur_pres === all_prescriptions[i].ID){
                 pres_items.push('disabled');
             }
             pres_items.push('" onClick="updateCurrentPrescription('+all_prescriptions[i].ID+')">Activate</button>');
@@ -381,7 +381,7 @@ $("#collapse-allresources").on("show.bs.collapse", function(){
 function getTemplate(templateID){
     for(var i=0; i<all_templates.length;i++)
         {
-            if(templateID==all_templates[i].ID){
+            if(templateID === all_templates[i].ID){
                 return all_templates[i];
             }
         }
@@ -400,7 +400,7 @@ function templatesPanel(filteredTemplates){
             items.push("<tr>");
             items.push("<td>");
             items.push('<input type="radio" name="template_resource_selection" id=temp_opt_"'+mytemp.ID+'" value="'+mytemp.ID+'" onChange="templateOptionChange(this)" ');
-            if(selectedTemplates[cur_res]==mytemp.ID){
+            if(selectedTemplates[cur_res] === mytemp.ID){
                 items.push("checked");
             }
             items.push(">");
@@ -478,9 +478,9 @@ function updateTemplates(){
     var res=getResource(cur_res);
     for(var i=0; i<all_templates.length;i++)
     {
-        if(res.Category==all_templates[i].Category){
+        if(res.Category === all_templates[i].Category){
             all_templates[i].selected=false;
-            if(all_templates[i].ID==selectedTemplates[cur_res])
+            if(all_templates[i].ID === selectedTemplates[cur_res])
                 {
                     all_templates[i].selected=true;
                 }
@@ -501,12 +501,12 @@ $('#mainTable').bootstrapTable({
 $('#button-save-templates').addClass("disabled");
 
 $('#button-save-templates').click(function(){
-    window.location.href="../pages/select-templates.html?"+JSON.stringify(selectedResources);
+    window.location.href="../pages/select-templates.php?"+JSON.stringify(selectedResources);
 });
 
 $('#button-suspend-templates').click(function(){
     $.each(all_prescriptions,function(key,value){
-       if(value.ID==sessionStorage.cur_pres){
+       if(value.ID === sessionStorage.cur_pres){
            all_prescriptions[key].State="Working on templates";
        }   
     });
@@ -581,7 +581,7 @@ function openTemplateForResource(resID){
 function getResource(resourceID){
     for(var i=0; i<all_resources.length;i++)
         {
-            if(resourceID==all_resources[i].ID){
+            if(resourceID === all_resources[i].ID){
                 return all_resources[i];
             }
         }

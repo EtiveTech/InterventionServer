@@ -203,11 +203,11 @@ function closePage(){
 
     $('#myModal .modal-footer .btn-primary').click(function(){
         saveIntervention();
-        window.open("../index.html", "_self");
+        window.open("../index.php", "_self");
     });
 
     $('#myModal .modal-footer .btn-secondary').click(function(){
-        window.open("../index.html", "_self");
+        window.open("../index.php", "_self");
     });
 
     $('#myModal .modal-body').html(modal_body.join(''));
