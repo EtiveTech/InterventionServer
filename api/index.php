@@ -2424,7 +2424,7 @@ function setUserAttention() {
             $aged_id = $_POST["aged_id"];
 
             $queryUpdate = "UPDATE c4a_i_schema.profile_frailty_status 
-                            SET (frailty_attention) = ('".$frailty_attention."')
+                            SET frailty_attention = '".$frailty_attention."'
                             WHERE aged_id = ".$aged_id." ";
 
             echo $queryUpdate;
@@ -2471,7 +2471,7 @@ function setUserFrailtyStatus() {
                     $status_number = $_POST['status_number'];
                     //Query for updating both frailty_status_text and fraitly_status_number
                     $queryUpdate = "UPDATE c4a_i_schema.profile_frailty_status 
-                                    SET (frailty_status_text) = ('".$status_text."'), (frailty_status_number) = ('".$status_number."')
+                                    SET frailty_status_text = '".$status_text."', frailty_status_number = '".$status_number."'
                                     WHERE aged_id = ".$aged_id." ";
                     $queryUpdate_results = $pdo->query($queryUpdate);
 
@@ -2479,7 +2479,7 @@ function setUserFrailtyStatus() {
 
                     //Query for updating frailty_status_text
                     $queryUpdate = "UPDATE c4a_i_schema.profile_frailty_status 
-                                    SET (frailty_status_text) = ('".$status_text."')
+                                    SET frailty_status_text = '".$status_text."'
                                     WHERE aged_id = ".$aged_id." ";
                     $queryUpdate_results = $pdo->query($queryUpdate);
                 }
@@ -2489,7 +2489,7 @@ function setUserFrailtyStatus() {
 
                 //Query for updating frailty_status_number
                 $queryUpdate = "UPDATE c4a_i_schema.profile_frailty_status 
-                                    SET (frailty_status_number) = ('".$status_number."')
+                                    SET frailty_status_number = '".$status_number."'
                                     WHERE aged_id = ".$aged_id."";
                 $queryUpdate_results = $pdo->query($queryUpdate);
             } else {
@@ -2532,7 +2532,7 @@ function setUserFrailtyStatusOverall(){
 
             //Query to UPDATE the prescription
             $queryUpdate = "UPDATE c4a_i_schema.profile_frailty_status 
-                            SET (frailty_status_overall) = ('".$status_overall."')
+                            SET frailty_status_overall = '".$status_overall."'
                             WHERE aged_id = $aged_id";
 
             $queryUpdate_results = $pdo->query($queryUpdate);
@@ -2571,7 +2571,7 @@ function setUserFrailtyStatusLastperiod(){
 
             //Query to UPDATE the prescription
             $queryUpdate = "UPDATE c4a_i_schema.profile_frailty_status 
-                            SET (frailty_status_overall) = ('".$status_lastperiod."')
+                            SET frailty_status_overall = '".$status_lastperiod."'
                             WHERE aged_id = $aged_id";
 
             $queryUpdate_results = $pdo->query($queryUpdate);
@@ -2666,9 +2666,9 @@ function updateSocioEconomicProfile(){
             $queryCheck_results = $pdo->query($queryCheck);
             //Query to UPDATE the socioeconomic profile
             $queryUpdate = "UPDATE c4a_i_schema.profile_socioeconomic_details 
-                            SET (financial_sitation) = ('".$financial."'), (married) = ('".$married."'),
-                            (education_level) = ('".$education."'), (languages) = ('".$languages."')
-                            (personal_interests) = ('".$interests."')
+                            SET financial_sitation = '".$financial."', married = '".$married."',
+                            education_level = '".$education."', languages = '".$languages."'
+                            personal_interests = '".$interests."'
                             WHERE aged_id = $aged_id";
             // Query to INSERT the socioeconomic profile
             $queryInsert = "INSERT INTO c4a_i_schema.profile_socioeconomic_details 
@@ -2919,11 +2919,11 @@ function editPrescription(){
             //endregion
 
             //Query to UPDATE the prescription WITH additional notes
-            $queryUpdate = "UPDATE c4a_i_schema.prescription SET (aged_id) = (".$aged_id."), 
-                      (geriatrician_id) = (".$geriatrician_id."), text = (".$prescription_text."), 
-                      (urgency) = (".$prescription_urgency."), (prescription_status) = (".$prescription_status."),
-                      (valid_from) = (".$valid_from."), (valid_to) = (".$valid_to."), 
-                      (additional_notes) = (".$additional_notes."), (title) = (".$prescription_title.")
+            $queryUpdate = "UPDATE c4a_i_schema.prescription SET aged_id = ".$aged_id.", 
+                      geriatrician_id = ".$geriatrician_id.", text = ".$prescription_text.", 
+                      urgency = ".$prescription_urgency.", prescription_status = ".$prescription_status.",
+                      valid_from = ".$valid_from.", valid_to = ".$valid_to.", 
+                      additional_notes = ".$additional_notes.", title = ".$prescription_title."
                       WHERE prescription_id = ".$prescription_id." ";
 
             $queryUpdate_results = $pdo->query($queryUpdate);
@@ -3017,7 +3017,7 @@ function updatePrescriptionUrgency(){
 
                 //Query to UPDATE the prescription
                 $queryUpdate = "UPDATE c4a_i_schema.prescription 
-                                SET (urgency) = ('".$prescription_urgency."')
+                                SET urgency = '".$prescription_urgency."'
                                 WHERE prescription_id = ".$prescription_id." ";
 
                 $queryUpdate_results = $pdo->query($queryUpdate);
@@ -3135,10 +3135,10 @@ function setIntervention(){
                 VALUES (" . $aged_id . ", " . $status . ", " . $prescription . ", " . $title . ", " . $from_date . ", " . $to_date . ")";
 
             // Query for updating the intervention
-            $queryUpdate = "UPDATE c4a_i_schema.intervention_session SET (title) = (" . $title . "), 
-                    (prescription_id) = (" . $prescription . "), 
-                    (aged_id) = (" . $aged_id . "), (intervention_status) = (" . $status . "),
-                    (from_date) = (" . $from_date . "), (to_date) = (" . $to_date . ")
+            $queryUpdate = "UPDATE c4a_i_schema.intervention_session SET title = " . $title . ", 
+                    prescription_id = " . $prescription . ", 
+                    aged_id = " . $aged_id . ", intervention_status = " . $status . ",
+                    from_date = " . $from_date . ", to_date = " . $to_date . "
                     WHERE intervention_session_id = " . $intervention_id . " ";
 
             $queryCheck_results = $pdo->query($queryCheck);
@@ -3334,9 +3334,9 @@ function setTemporaryIntervention() {
                            WHERE intervention_temporary_id = $intervention_id";
 
             //Query to update the intervention_session_temporary table if a record already exists
-            $queryUpdate = "UPDATE c4a_i_schema.intervention_session_temporary SET (temporary_resources) = (".$temp_resources."), 
-                      (temporary_template) = (".$temp_template."), 
-                      (temporary_dates) = (".$temp_dates.")
+            $queryUpdate = "UPDATE c4a_i_schema.intervention_session_temporary SET temporary_resources = ".$temp_resources.", 
+                      temporary_template = ".$temp_template.", 
+                      temporary_dates = ".$temp_dates."
                       WHERE intervention_temporary_id = ".$intervention_id." ";
 
             //Query to insert a new record into the intervention_session_temporary table
@@ -3393,7 +3393,7 @@ function updateInterventionStatus() {
 
                 //Query to UPDATE the prescription
                 $queryUpdate = "UPDATE c4a_i_schema.intervention_session 
-                                SET (intervention_status) = ('".$intervention_status."')
+                                SET intervention_status = '".$intervention_status."'
                                 WHERE intervention_session_id = ".$intervention_id."";
 
                 $queryUpdate_results = $pdo->query($queryUpdate);
@@ -3438,7 +3438,7 @@ function updateInterventionConfirmedCaregiver() {
 
                 //Query to UPDATE the prescription
                 $queryUpdate = "UPDATE c4a_i_schema.intervention_session 
-                                SET (confirmed_caregiver_id) = (".$confirmed_caregiver_id.")
+                                SET confirmed_caregiver_id = ".$confirmed_caregiver_id."
                                 WHERE intervention_session_id = ".$intervention_id."";
 
                 $queryUpdate_results = $pdo->query($queryUpdate);
@@ -3532,7 +3532,7 @@ function updateInterventionDates(){
 
                     //Query for updating both from_date and to_date
                     $queryUpdate = "UPDATE c4a_i_schema.intervention_session 
-                                    SET (from_date) = ('".$from_date."'), (to_date) = ('".$to_date."')
+                                    SET from_date = '".$from_date."', to_date = '".$to_date."'
                                     WHERE intervention_session_id = ".$intervention_id."";
                     $queryUpdate_results = $pdo->query($queryUpdate);
 
@@ -3540,7 +3540,7 @@ function updateInterventionDates(){
 
                     //Query for updating from_date
                     $queryUpdate = "UPDATE c4a_i_schema.intervention_session 
-                                    SET (from_date) = ('".$from_date."')
+                                    SET from_date = '".$from_date."'
                                     WHERE intervention_session_id = ".$intervention_id."";
                     $queryUpdate_results = $pdo->query($queryUpdate);
                 }
@@ -3550,7 +3550,7 @@ function updateInterventionDates(){
 
                 //Query for updating frailty_status_number
                 $queryUpdate = "UPDATE c4a_i_schema.intervention_session 
-                                    SET (to_date) = ('".$to_date."')
+                                    SET to_date = '".$to_date."'
                                     WHERE intervention_session_id = ".$intervention_id."";
                 $queryUpdate_results = $pdo->query($queryUpdate);
             } else {
@@ -3633,10 +3633,10 @@ function setNewMiniplanGenerated()
 
                 //If a miniplan has already been generated the generated miniplan will be overwritten
                 $queryUpdate = "UPDATE c4a_i_schema.miniplan_generated
-                               SET (generation_date) = ('".$generation_date."'), (from_date) = ('".$from_date."'), 
-                               (to_date) = ('".$to_date."'), (generated_miniplan_body) = ('".$miniplan_body."'), 
-                               (intervention_session_id) = (".$intervention_id."), (generated_resource_id) = ('".$resource_id."'), 
-                               (generated_template_id) = ('".$template_id."'), (aged_id) = (".$aged_id.")
+                               SET generation_date = '".$generation_date."', from_date = '".$from_date."', 
+                               to_date = '".$to_date."', generated_miniplan_body = '".$miniplan_body."', 
+                               intervention_session_id = ".$intervention_id.", generated_resource_id = '".$resource_id."', 
+                               generated_template_id = '".$template_id."', aged_id = ".$aged_id."
                                 WHERE miniplan_generated_id = ".$miniplan_id." ";
 
                 $queryUpdate_results = $pdo->query($queryUpdate);
