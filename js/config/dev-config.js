@@ -3,7 +3,7 @@ var _serverConfig = {
     address: "localhost",
     path: "is",
     apiDir: "api",
-    engineDir: "engine"
+    engineDir: "engines"
 }
 
 var _serverConfigBaseURL = _serverConfig.protocol + "://" + _serverConfig.address + "/" + _serverConfig.path + "/";

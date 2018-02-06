@@ -2,8 +2,8 @@
 // sessionStorage.eng1Link="http://c4a.etive.org/is/engines/engine_one";
 // sessionStorage.eng3Link="http://c4a.etive.org/is/engines/engine_three";
 sessionStorage.dbLink = _serverConfig.apiURL;
-sessionStorage.eng1Link = _serverConfig.engineURL + "engine_one";
-sessionStorage.eng3Link = _serverConfig.engineURL + "engine_three";
+sessionStorage.eng1Link = _serverConfig.engineURL + "/engine_one";
+sessionStorage.eng3Link = _serverConfig.engineURL + "/engine_three";
 
 var cur_caregiver={};
 

@@ -4,7 +4,6 @@
  * User: Jacopo Magni
  */
 
-
 //region Settings and Variables definition
 header('Content-Type: application/json; charset=utf-8'); // Apply the application contest JSON
 mb_internal_encoding("UTF-8");
@@ -65,21 +64,26 @@ function checkPostDataQuoted($postData = null){
 
 //endregion
 
-// Check if the user is logged in
-// If not logged in they cannot use the API
-session_start();
-if (isset($_SESSION['login'])) {
-    // Doesn't matter what the user_id is.
-    // All users have the same privileges
-    $token = new Token($_SESSION['login']);
-    if ($token->getUserId()) {
-        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+// Do not check for a token if the request is coming from localhost
+// This allows the Python WSGI scripts to access the API without authenticating
+if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']) {
+    // Check if the user is logged in
+    // If not logged in they cannot use the API
+    session_start();
+    if (isset($_SESSION['login'])) {
+        // Doesn't matter what the user_id is.
+        // All users have the same privileges
+        $token = new Token($_SESSION['login']);
+        if ($token->getUserId()) {
+            if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+        } else {
+            generate401();
+        }
     } else {
         generate401();
     }
-} else {
-    generate401();
 }
+
 
 //region Routing Operations
 
