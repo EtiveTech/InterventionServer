@@ -5,6 +5,8 @@
  * Date: 01/02/2018
  * Time: 08:57
  */
+include_once ("../configuration_local.php");
+
 function logger($text) {
-    file_put_contents("C:/Users/phil/Development/_logs/is_log.txt",  $text . PHP_EOL, FILE_APPEND);
+    file_put_contents(LOG_DIR,  $text . PHP_EOL, FILE_APPEND);
 }

@@ -70,7 +70,7 @@ function initBt2017() {
   //setContent("0","0");
     sessionStorage.profile_id="2";
     sessionStorage.user_id="2";  
-    window.open("pages/new-prescription.html", "_self");
+    window.open("pages/new-prescription.php", "_self");
 	//window.open("pages/intervention-index.php?0", "_self");
   //window.open("pages/intervention-index.php?0", "_self");
   });
@@ -116,7 +116,7 @@ function initBt2017_I() {
   //setContent("0","1");
     sessionStorage.profile_id="2";
     sessionStorage.user_id="4";
-   window.open("pages/intervention.html", "_self");
+   window.open("pages/intervention.php", "_self");
 	//window.open("pages/intervention-index.php?0", "_self");
   //window.open("pages/intervention-index.php?0", "_self");
   });
@@ -162,7 +162,7 @@ function initBt2016() {
   //setContent("1","0");
     sessionStorage.profile_id="3";
       sessionStorage.user_id="2";
-    window.open("pages/new-prescription.html", "_self");
+    window.open("pages/new-prescription.php", "_self");
 	//window.open("pages/intervention-index.php?0", "_self");
   //window.open("pages/intervention-index.php?0", "_self");
   });
@@ -208,7 +208,7 @@ function initBt2016_I() {
   //setContent("1","1");
     sessionStorage.profile_id="3";
       sessionStorage.user_id="4";
-    window.open("pages/intervention.html", "_self");
+    window.open("pages/intervention.php", "_self");
   });
 }
 
@@ -253,7 +253,7 @@ function initBt2015() {
   //setContent("2","0");
     sessionStorage.profile_id="4";
       sessionStorage.user_id="2";
-    window.open("pages/new-prescription.html", "_self");
+    window.open("pages/new-prescription.php", "_self");
   });
 }
 
@@ -298,7 +298,7 @@ function initBt2015_I() {
   //setContent("2","1");
     sessionStorage.profile_id="4";
       sessionStorage.user_id="4";
-    window.open("pages/intervention.html", "_self");
+    window.open("pages/intervention.php", "_self");
   });
 }
 
@@ -343,7 +343,7 @@ function initBt2015w() {
   //setContent("3","0");
     sessionStorage.profile_id="5";
       sessionStorage.user_id="2";
-    window.open("pages/new-prescription.html", "_self");
+    window.open("pages/new-prescription.php", "_self");
   });
 }
 
@@ -388,6 +388,6 @@ function initBt2015w_I() {
   //setContent("3","1");
     sessionStorage.profile_id="5";
       sessionStorage.user_id="4";
-    window.open("pages/intervention.html", "_self");
+    window.open("pages/intervention.php", "_self");
   });
 }
