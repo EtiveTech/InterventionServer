@@ -64,30 +64,32 @@ function checkPostDataQuoted($postData = null){
 
 //endregion
 
-// Do not check for a token if the request is coming from localhost
-// This allows the Python WSGI scripts to access the API without authenticating
-if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']) {
-    // Check if the user is logged in
-    // If not logged in they cannot use the API
-    session_start();
-    if (isset($_SESSION['login'])) {
-        // Doesn't matter what the user_id is.
-        // All users have the same privileges
-        $token = new Token($_SESSION['login']);
-        if ($token->getUserId()) {
-            if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
-        } else {
-            generate401();
-        }
+// Check if the user is logged in
+// If not logged in they cannot use the API UNLESS they are running on the same server as this code
+session_start();
+if (isset($_SESSION['login'])) {
+    // Doesn't matter what the user_id is
+    // All users have the same privileges
+    $token = new Token($_SESSION['login']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
     } else {
+        generate401();
+    }
+} else {
+    if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']) {
+        // Do not require a token if the request is coming from localhost
+        // This allows the Python WSGI scripts to access the API without authenticating
         generate401();
     }
 }
 
-
 //region Routing Operations
 
 // In this section occurs the routing of the operations.
+// TODO: This should be split into multiple smaller APIs in line with Bob Martin's Interface Segregaton Principle (SOLID)
+// TODO: The API should be split along the resource boundaries (they are clearly commemnted). Could probably be RESTful.
+
 if (isset($args)) {
 
     $object = $args[0];
