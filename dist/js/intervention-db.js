@@ -1278,29 +1278,26 @@ $('#button-save-templates').click(function(){
                     }
                 });
             });
-			
-			
-						console.log("aspetto 1000 ms e chiamo l'engine")
-                        sleep(1000);
-                        $.ajax({
-                            method: "POST",
-                            url: sessionStorage.eng3Link,
-                            data:{aged_id: sessionStorage.profile_id},
-                            success: function( msgEngine ) {
-                                console.log(msgEngine);
-								console.log("OK DALL'ENGINE 3");
-                                updatePrescriptionStatus("active");
-                                sessionStorage.cur_int="null";
-                                sessionStorage.cur_pres="null";
-                                location.reload();
-                            },
-                            error: function(e) {
-                                console.log(e);
-								console.log("KO DALL'ENGINE 3");
-                            },
-						timeout: 10000
-                        });
-            
+            console.log("aspetto 1000 ms e chiamo l'engine")
+            sleep(1000);
+            $.ajax({
+                method: "POST",
+                url: sessionStorage.eng3Link,
+                data:{aged_id: sessionStorage.profile_id},
+                success: function( msgEngine ) {
+                    console.log(msgEngine);
+                    console.log("OK DALL'ENGINE 3");
+                    updatePrescriptionStatus("active");
+                    sessionStorage.cur_int="null";
+                    sessionStorage.cur_pres="null";
+                    location.reload();
+                },
+                error: function(e) {
+                    console.log(e);
+                    console.log("KO DALL'ENGINE 3");
+                },
+                timeout: 10000
+            });
         });
 
         $('#myModal .modal-body').html(modal_body.join(''));
