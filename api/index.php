@@ -4544,13 +4544,17 @@ function keyValuePairs($column_names, $column_types, $fields) {
     for ($i = 0; $i < count($fields); $i++) {
         $field = $fields[$i];
         if (isset($column_types[$column_names[$i]])) {
-            if (($column_names[$i] == "password" && DB_HASH_PASSWORD)) {
-                $field = password_hash($field, PASSWORD_BCRYPT);
-            }
             $type = $column_types[$column_names[$i]];
             if (($type == "character varying") || ($type == "USER-DEFINED") || ($type == "date") ||
                 (substr($type, 0, 4) == "time") || ($type == "boolean")) {
-                if (strlen($field) > 0) $field = dbString($field);
+                if (strlen($field) > 0) {
+                    if (($column_names[$i] == "password") && DB_HASH_PASSWORD) {
+                        $field = password_hash($field, PASSWORD_BCRYPT);
+                    }
+                    else {
+                        $field = dbString($field);
+                    }
+                }
             }
             $results[$column_names[$i]] = $field;
         }
@@ -4980,7 +4984,8 @@ function exportGeneric($table_name, $options){
                 $output = array();
                 while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
                     foreach ($ordered_column_names as $column_name) {
-                        $output[] = $table_row[$column_name];
+                        // Don't export passwords - they're probably hashed anyway
+                        $output[] = ($column_name == "password" ? "" : $table_row[$column_name]);
                     }
                     fputcsv($fh, $output, CSV_DELIMITER);
                     unset($output);
