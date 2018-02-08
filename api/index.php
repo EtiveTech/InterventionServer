@@ -4622,7 +4622,6 @@ function importGeneric($table_name, $key_name){
                 $header_ok = $header_ok && isset($column_types[$header_column_names[$i]]);
             }
 
-            logger("header_ok = " . $header_ok);
             if ($header_ok && isset($column_types[$key_name])) {
                 // The header row contains column names that correspond with the table
 
@@ -4690,12 +4689,10 @@ function importGeneric($table_name, $key_name){
 
                     // Try and update an existing record, if that fails try and insert a record.
                     $sql = $update_statement . $update_values . " WHERE " . $key_name . "=" . $kvp[$key_name];
-                    logger($sql);
                     if (strlen($kvp[$key_name]) > 0) {
                         $rowCount = $pdo->exec($sql);
                         if (!$rowCount) {
                             $sql = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
-                            logger($sql);
                             // Must have inserted one row
                             $all_good = ($pdo->exec($sql) == 1);
                         }
@@ -4703,7 +4700,6 @@ function importGeneric($table_name, $key_name){
                     else {
                         $all_good = FALSE;
                     }
-                    logger("all_good = " . $all_good);
                 }
 
                 // The transaction is finished
