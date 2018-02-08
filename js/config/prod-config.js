@@ -1,5 +1,5 @@
 var _serverConfig = {
-    protocol: "http",
+    protocol: "https",
     address: "c4a.etive.org",
     path: "is",
     apiDir: "api",

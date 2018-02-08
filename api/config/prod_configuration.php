@@ -14,7 +14,7 @@ define('DB_NAME', 'c4aintervention');
 define('DB_HASH_PASSWORD', false);
 
 //SITE ADDRESS
-define('SITE_PROTOCOL', 'http');
+define('SITE_PROTOCOL', 'https');
 define('SITE_ADDRESS', 'c4a.etive.org');
 define('SITE_PATH', 'is');
 
