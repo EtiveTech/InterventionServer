@@ -154,7 +154,7 @@ if (isset($_SESSION['login'])) {
                         <div class="panel-body">
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object img-circle" src="http://placehold.it/50//fff">
+                                    <img class="media-object img-circle" src="https://placehold.it/50//fff">
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: To be done</h4>
@@ -163,7 +163,7 @@ if (isset($_SESSION['login'])) {
                             </div>
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object img-circle" src="http://placehold.it/50/FF8000/fff">
+                                    <img class="media-object img-circle" src="https://placehold.it/50/FF8000/fff">
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: Working</h4>
@@ -172,7 +172,7 @@ if (isset($_SESSION['login'])) {
                             </div>
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object img-circle" src="http://placehold.it/50/CC0000/fff">
+                                    <img class="media-object img-circle" src="https://placehold.it/50/CC0000/fff">
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: Active</h4>
@@ -181,7 +181,7 @@ if (isset($_SESSION['login'])) {
                             </div>
                             <div class="media">
                                 <div class="media-left">
-                                    <img class="media-object img-circle" src="http://placehold.it/50/00CC00/fff">
+                                    <img class="media-object img-circle" src="https://placehold.it/50/00CC00/fff">
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: Completed</h4>
@@ -390,8 +390,8 @@ if (isset($_SESSION['login'])) {
     <script type="text/javascript" src="../dist/js/bootstrap-table-filter-control.js"></script>
     
     
-    <script src="//handsontable.com/dist/handsontable.full.js"></script>
-    <link rel="stylesheet" media="screen" href="//handsontable.com/dist/handsontable.full.css">
+    <script src="https://handsontable.com/dist/handsontable.full.js"></script>
+    <link rel="stylesheet" media="screen" href="https://handsontable.com/dist/handsontable.full.css">
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="../dist/js/mygantt.js"></script>
