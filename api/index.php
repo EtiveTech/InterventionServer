@@ -4551,9 +4551,7 @@ function keyValuePairs($column_names, $column_types, $fields) {
                     if (($column_names[$i] == "password") && DB_HASH_PASSWORD) {
                         $field = password_hash($field, PASSWORD_BCRYPT);
                     }
-                    else {
-                        $field = dbString($field);
-                    }
+                    $field = dbString($field);
                 }
             }
             $results[$column_names[$i]] = $field;

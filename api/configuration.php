@@ -11,7 +11,7 @@ define('DB_PASSWORD', 'some_password');
 define('DB_HOST', 'localhost');
 define('DB_PORT','5432');
 define('DB_NAME', 'c4aintervention');
-define('DB_HASH_PASSWORD', false);
+define('DB_HASH_PASSWORD', true);
 
 //SITE ADDRESS
 define('SITE_PROTOCOL', 'http');
