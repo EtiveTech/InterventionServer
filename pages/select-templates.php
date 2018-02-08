@@ -287,8 +287,8 @@ if (isset($_SESSION['login'])) {
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
-    <script src="https://handsontable.com/dist/handsontable.full.js"></script>
-    <link rel="stylesheet" media="screen" href="https://handsontable.com/dist/handsontable.full.css">
+    <script src="../hansontable-dist/handsontable.full.min.js"></script>
+    <link rel="stylesheet" media="screen" href="../hansontable-dist/handsontable.full.min.css">
     
     
      <!-- Custom Theme JavaScript -->

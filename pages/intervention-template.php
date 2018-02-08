@@ -324,8 +324,8 @@ if (isset($_SESSION['login'])) {
     <script type="text/javascript" src="../dist/js/bootstrap-table-filter-control.js"></script>
     
     
-    <script src="https://handsontable.com/dist/handsontable.full.js"></script>
-    <link rel="stylesheet" media="screen" href="https://handsontable.com/dist/handsontable.full.css">
+    <script src="../hansontable-dist/handsontable.full.min.js"></script>
+    <link rel="stylesheet" media="screen" href="../hansontable-dist/handsontable.full.min.css">
     
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="../dist/js/mygantt.js"></script>
