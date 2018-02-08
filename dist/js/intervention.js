@@ -228,7 +228,7 @@ function prescriptionsPanel(){
         console.log(all_prescriptions[i].State);
         if(all_prescriptions[i].State!="Suspended"){
             pres_items.push('<ul class="chat"><li id="pres-history-item_'+all_prescriptions[i].ID+'" class="left clearfix"><span class="chat-img pull-left">');
-        var imgCircleLink="http://placehold.it/50/";
+        var imgCircleLink="https://placehold.it/50/";
         imgCircleLink= imgCircleLink+getColorPrescriptionState(all_prescriptions[i].State);
         imgCircleLink=imgCircleLink+"/fff";
         pres_items.push('<img src="'+imgCircleLink+'"  title="Open prescription details" class="pres-info-detail img-circle" id="'+all_prescriptions[i].ID+'" onClick="openPrescriptionDetail('+all_prescriptions[i].ID+')" /></span>');
