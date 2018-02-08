@@ -3,7 +3,7 @@ var _serverConfig = {
     address: "c4a.etive.org",
     path: "is",
     apiDir: "api",
-    engineDir: "engine"
+    engineDir: "engines"
 }
 
 var _serverConfigBaseURL = _serverConfig.protocol + "://" + _serverConfig.address + "/" + _serverConfig.path + "/";
