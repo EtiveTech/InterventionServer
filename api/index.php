@@ -189,6 +189,8 @@ if (isset($args)) {
         getAllUsers();
     elseif ($object == "getUserOfIntervention")
         getUserOfIntervention($subject_1);
+    elseif ($object == "verifyToken")
+        verifyToken($subject_1);
     //PRE-DELIVERY MESSAGE
     elseif ($object == "getPreDeliveryMessagesToSend")
         getPreDeliveryMessagesToSend($subject_1);
@@ -2303,6 +2305,16 @@ function getUserOfIntervention($intervention_id = null){
     } else {
         generate400("The method is not a GET");
     } //end if/else to verify that the method is a GET
+}
+
+function verifyToken($token) {
+    $token = new Token($token);
+    if ($token->getUserId()) {
+        // Success but not returning anything
+        generate204();
+    } else {
+        generate401("User not authorised");
+    }
 }
 //endregion
 
