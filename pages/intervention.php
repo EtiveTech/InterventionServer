@@ -442,7 +442,7 @@ if (isset($_SESSION['login'])) {
     <script src="../locals/it.js"></script>
     <script src="../locals/en.js"></script>
     <script type="text/javascript">
-        var userToken = "<?php echo $token->getToken();?>";
+        var userToken = "<?php echo (isset($token) ? $token->getToken() : '');?>";
     </script>
     <script src="../dist/js/intervention-db.js"></script>
 </body>
