@@ -301,8 +301,6 @@ if (isset($_SESSION['login'])) {
                                         <!-- /.panel-body -->
                                     </div>      
                                 </div>
-                    
-                    
                         </div>
                     </div>
                     <div class="row">
@@ -444,8 +442,7 @@ if (isset($_SESSION['login'])) {
     <script src="../locals/it.js"></script>
     <script src="../locals/en.js"></script>
     <script type="text/javascript">
-        // Global variable for use by intervention-db.js
-        userToken = "<?php echo $token;?>";
+        var userToken = "<?php echo $token->getToken();?>";
     </script>
     <script src="../dist/js/intervention-db.js"></script>
 </body>

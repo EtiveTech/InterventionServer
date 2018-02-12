@@ -2303,17 +2303,22 @@ function getUserOfIntervention($intervention_id = null){
             generate400("The intervention_id is not specified");
         } //end if/else for verify if aged_id is set
     } else {
-        generate400("The method is not a GET");
+        generate400("Wrong request type");
     } //end if/else to verify that the method is a GET
 }
 
 function verifyToken($token) {
-    $token = new Token($token);
-    if ($token->getUserId()) {
-        // Success but not returning anything
-        generate204();
+    if (REQUEST_METHOD == 'GET') {
+        // API call so the engines can check the user's login token
+        $token = new Token($token);
+        if ($token->getUserId()) {
+            // Success but not returning anything
+            generate204();
+        } else {
+            generate401("User not authorised");
+        }
     } else {
-        generate401("User not authorised");
+        generate400("Wrong request type");
     }
 }
 //endregion

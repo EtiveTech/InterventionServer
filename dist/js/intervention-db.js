@@ -1,6 +1,3 @@
-// sessionStorage.dbLink="http://c4a.etive.org/is/api";
-// sessionStorage.eng1Link="http://c4a.etive.org/is/engines/engine_one";
-// sessionStorage.eng3Link="http://c4a.etive.org/is/engines/engine_three";
 sessionStorage.dbLink = _serverConfig.apiURL;
 sessionStorage.eng1Link = _serverConfig.engineURL + "/engine_one";
 sessionStorage.eng3Link = _serverConfig.engineURL + "/engine_three";
@@ -12,26 +9,9 @@ getCurrentProfile();
 getAllResources();
 getAllTemplates();
 
-
-//sessionStorage.cur_pres=null;
-
-/*per contorno
-console.log(sessionStorage);
-sessionStorage.CurrentUser="Anna Lobono";
-var all_templates=JSON.parse(sessionStorage.all_templates);
-var all_users=JSON.parse(sessionStorage.all_users);
-var all_prescriptions=JSON.parse(sessionStorage.all_prescriptions);
-var all_resources=JSON.parse(sessionStorage.all_resources);
-var all_interventions=JSON.parse(sessionStorage.all_interventions);
-console.log("INTERVENTIONS after parse: ");
-console.log(all_interventions);*/
-
 var selectedTemplates={};
 var all_selectedTemplates={};
 var selectedResources=[];
-
-//userPanel();
-//prescriptionsPanel();
 
 $("#installation_text").html(Lang.INSTALLATION + ': Lecce');
 $("#all_annotations_btn").text(Lang.ALLANNOT);
@@ -51,33 +31,6 @@ $("#int_title").val("Titolo di default");
 var all_miniplans={};
 var all_interventionMiniplans={};
 
-/*if(sessionStorage.all_interventionMiniplans){
-    all_interventionMiniplans=JSON.parse(sessionStorage.all_interventionMiniplans);
-}
-
-var all_selectedResources={};
-if(sessionStorage.all_selectedResources){
-    all_selectedResources=JSON.parse(sessionStorage.all_selectedResources);
-}  
-
-var all_interventionsPrescription={};
-if(sessionStorage.all_interventionsPrescription){
-    all_interventionsPrescription=JSON.parse(sessionStorage.all_interventionsPrescription);
-}  
-
-if(sessionStorage.all_selectedTemplates){
-    all_selectedTemplates=JSON.parse(sessionStorage.all_selectedTemplates);
-}
-
-if(sessionStorage.cur_pres && sessionStorage.cur_pres!="null"){
-    updateCurrentPrescription(sessionStorage.cur_pres);
-}
-
-if(sessionStorage.cur_int && getIntervention(sessionStorage.cur_int) && getIntervention(sessionStorage.cur_int).State=="Active"){
-}else
-{
-    updateSelectedResources();
-}*/
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -254,8 +207,8 @@ $("#collapse-write-intervention").on("show.bs.collapse", function(){
 function getCaregiver(){
     if(sessionStorage.user_id.length>0){
         $.ajax({
-        method: "GET",
-        url: sessionStorage.dbLink + "/getUser/"+sessionStorage.user_id
+            method: "GET",
+            url: sessionStorage.dbLink + "/getUser/"+sessionStorage.user_id
         })
         .done(function( msg ) {
             var resp=msg;
@@ -290,7 +243,7 @@ function getCurrentProfile(){
     if(!sessionStorage.currentProfile || sessionStorage.currentProfile.length<1){
         $.ajax({
         method: "GET",
-        url: sessionStorage.dbLink + "/getProfile/"+sessionStorage.profile_id
+            url: sessionStorage.dbLink + "/getProfile/"+sessionStorage.profile_id
         })
         .done(function( resp ) {
             if(resp[0]["Message"].includes("Error")){
@@ -1877,7 +1830,8 @@ function generateMiniPlan(resID, miniPlanIDlocal){
     console.log("aged_id: " + aged_id);
     console.log("from date: "+miniplan.valid_from);
     console.log("to date: "+miniplan.valid_to);
-    
+    console.log("token: "+userToken);
+
     $.ajax({
         method: "POST",
         //dataType: "json", //type of data
@@ -1889,7 +1843,7 @@ function generateMiniPlan(resID, miniPlanIDlocal){
             resource_id: resID,
             miniplan_local_id: miniPlanIDlocal,
             template_id: miniplan.template_id,
-            aged_id:aged_id.toString(),
+            aged_id: aged_id.toString(),
             from_date: miniplan.valid_from.toString(),
             to_date: miniplan.valid_to.toString(),
             token: userToken

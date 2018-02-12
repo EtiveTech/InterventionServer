@@ -97,6 +97,10 @@ class Token {
         return $this->setToken();
     }
 
+    function getToken() {
+        return $this->token;
+    }
+
     function getUserId() {
         return $this->userId;
     }
