@@ -1,8 +1,8 @@
 <?php
-session_start();
-if (isset($_SESSION['referrer'])) {
-    $nextPage = $_SESSION['referrer'];
-    unset($_SESSION['referrer']);
+if (isset($_COOKIE['referrer'])) {
+    $nextPage = $_COOKIE['referrer'];
+    unset($_COOKIE['referrer']);
+    setcookie('referrer', '', time() - 3600);
 } else {
     $nextPage = "users.php";
 }

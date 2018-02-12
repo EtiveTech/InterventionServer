@@ -66,13 +66,12 @@ function checkPostDataQuoted($postData = null){
 
 // Check if the user is logged in
 // If not logged in they cannot use the API UNLESS they are running on the same server as this code
-session_start();
-if (isset($_SESSION['login'])) {
+if (isset($_COOKIE['token'])) {
     // Doesn't matter what the user_id is
     // All users have the same privileges
-    $token = new Token($_SESSION['login']);
+    $token = new Token($_COOKIE['token']);
     if ($token->getUserId()) {
-        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+        if ($token->inUpdateWindow()) setcookie("token", $token->updateToken());
     } else {
         generate401();
     }
