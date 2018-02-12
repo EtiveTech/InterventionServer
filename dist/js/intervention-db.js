@@ -178,10 +178,10 @@ function getAllResources(){
 }
 
 function getAllTemplates(){
-    if(!sessionStorage.all_templates || sessionStorage.all_templates.length<1){
+    if(!sessionStorage.all_templates || sessionStorage.all_templates.length < 1){
         $.ajax({
-        method: "GET",
-        url: sessionStorage.dbLink + "/getAllTemplates"
+            method: "GET",
+            url: sessionStorage.dbLink + "/getAllTemplates"
         })
         .done(function( resp ) {
             if(resp[0]["Message"].includes("Error")){
@@ -1283,7 +1283,10 @@ $('#button-save-templates').click(function(){
             $.ajax({
                 method: "POST",
                 url: sessionStorage.eng3Link,
-                data:{aged_id: sessionStorage.profile_id},
+                data: {
+                    aged_id: sessionStorage.profile_id,
+                    token: userToken
+                },
                 success: function( msgEngine ) {
                     console.log(msgEngine);
                     console.log("OK DALL'ENGINE 3");
@@ -1515,78 +1518,44 @@ function setIntervention(){
             method: "POST",
             url: sessionStorage.dbLink + "/setIntervention/",
             data: {
-                    intervention_session_id: sessionStorage.cur_int, 
-                    aged_id: aged_id,
-                   intervention_status: intervention_status, 
-                   prescription_id: prescription_id, 
-                   intervention_title: int_title,
-                    from_date: from_date,
-                    to_date: to_date
-                  },
-            success:function( msg ) {
-                        console.log("set new intervention response success:");
-                        console.log(msg);
-                        var resp=msg;
-                        if(resp[0]["Message"].includes("Error")){
-                            alert("Error intervention");
-                            return;
-                        }
-                        sessionStorage.cur_int=resp[0].intervention_id;
-                        $('#id_intervention_title_id strong').html(" #"+sessionStorage.cur_int);
-                        $.each(all_interventions,function(key,value){
-                           if(value.intervention_session_id==sessionStorage.cur_int){
-                               all_interventions[key].intervention_status=intervention_status;
-                                all_interventions[key].prescription_id=prescription_id;
-                                all_interventions[key].title=int_title;
-                                all_interventions[key].from_date=from_date;
-                                all_interventions[key].to_date=to_date;
-                           } 
-                        });
-                        sessionStorage.all_interventions=JSON.stringify(all_interventions);
-                        openIntervention();
-                        setTemporaryIntervention();
-                        //getAllInterventions();
-                    },
-            error:function(error) {
-                        console.log("set new intervention response error:");
-                        console.log(error);
+                intervention_session_id: sessionStorage.cur_int,
+                aged_id: aged_id,
+                intervention_status: intervention_status,
+                prescription_id: prescription_id,
+                intervention_title: int_title,
+                from_date: from_date,
+                to_date: to_date
+            },
+            success: function( msg ) {
+                console.log("set new intervention response success:");
+                console.log(msg);
+                var resp=msg;
+                if(resp[0]["Message"].includes("Error")){
+                    alert("Error intervention");
+                    return;
+                }
+                sessionStorage.cur_int=resp[0].intervention_id;
+                $('#id_intervention_title_id strong').html(" #"+sessionStorage.cur_int);
+                $.each(all_interventions,function(key,value){
+                    if(value.intervention_session_id==sessionStorage.cur_int){
+                        all_interventions[key].intervention_status=intervention_status;
+                        all_interventions[key].prescription_id=prescription_id;
+                        all_interventions[key].title=int_title;
+                        all_interventions[key].from_date=from_date;
+                        all_interventions[key].to_date=to_date;
                     }
+                });
+                sessionStorage.all_interventions=JSON.stringify(all_interventions);
+                openIntervention();
+                setTemporaryIntervention();
+                //getAllInterventions();
+            },
+            error: function(error) {
+                console.log("set new intervention response error:");
+                console.log(error);
+            }
     });
 }
-
-/*function setNewIntervention(intervention){
-    intervention.User_ID=sessionStorage.cur_user;
-    intervention.Timestamp=dateFrom;
-    intervention.Title=$("#int_title").val();
-    intervention.Caregiver=$("#int_caregiver").val();
-    intervention["From date"]=$('#datepickerFromInt input').val();
-    intervention["To date"]=$('#datepickerToInt input').val();
-
-    if(sessionStorage.cur_pres && sessionStorage.cur_pres!="null"){
-        intervention.Prescription=getPrescription(sessionStorage.cur_pres).Body;
-    }
-    if(selectedResources.length>0){
-        intervention.Resources=[];
-        $.each(selectedResources,function(key,data){
-            var value=getResource(data);
-            var res=new Object;
-            res["Category"]=value.Category;
-            res["Resource"]=value.Description;
-            res["Subjects"]=value.Subjects;
-            res["From date"]=value["From date"];
-            res["To date"]=value["To date"];
-
-            if(selectedTemplates[value.ID]){
-                res["Template"]=getTemplate(selectedTemplates[value.ID]).Description;
-            }
-
-            intervention.Resources.push(res);
-        });
-        
-    }
-
-    return intervention;
-}*/
 
 function getIntervention(interventionID){
     all_interventions=JSON.parse(sessionStorage.all_interventions);
@@ -1777,8 +1746,6 @@ function updateSelectedResourcePanel(){
                     items.push("<td class='miniplan-col miniplan_res_edit_"+res.resource_id+"'' data-value='"+res.resource_id+"'>"+"</td>");
 
                     items.push("</tr>");
-                    
-                    
                 }   
             }
 
@@ -1812,7 +1779,6 @@ function showMiniplanColumns(){
         }
     });
 }
-
 
 function updateMiniPlanColumns(){
     for(var i=0; i<selectedResources.length;i++){
@@ -1917,7 +1883,17 @@ function generateMiniPlan(resID, miniPlanIDlocal){
         //dataType: "json", //type of data
         crossDomain: true, //localhost purposes
         url: sessionStorage.eng1Link, //Relative or absolute path to file.php file
-        data: {pilot_id: pilot_id.toString(), intervention_session_id: sessionStorage.cur_int.toString(), resource_id:resID, miniplan_local_id:miniPlanIDlocal,template_id:miniplan.template_id,aged_id:aged_id.toString(), from_date: miniplan.valid_from.toString(), to_date: miniplan.valid_to.toString()},
+        data: {
+            pilot_id: pilot_id.toString(),
+            intervention_session_id: sessionStorage.cur_int.toString(),
+            resource_id: resID,
+            miniplan_local_id: miniPlanIDlocal,
+            template_id: miniplan.template_id,
+            aged_id:aged_id.toString(),
+            from_date: miniplan.valid_from.toString(),
+            to_date: miniplan.valid_to.toString(),
+            token: userToken
+        },
         success: function(response) {
             console.log(response);
             var obj=JSON.parse(response);
@@ -1935,66 +1911,33 @@ function generateMiniPlan(resID, miniPlanIDlocal){
             console.log(miniplan);
             sessionStorage.cur_miniplan=JSON.stringify(all_miniplans[resID]);
             miniplanButton();
-            /*$.ajax({
-                method: "GET",
-                //dataType: "json", //type of data
-                crossDomain: true, //localhost purposes
-                url: sessionStorage.dbLink + "/getMiniplanTemporary/"+miniplan.miniplan_id,
-                //data: {temporary_miniplan_id:miniplan.miniplan_id},
-                success: function(resp) {
-                    console.log(resp)
-                    miniplanButton();
-                },
-                error: function(req,e) 
-                {
-                    console.log(e);
-                }
-            });*/
-            
         },
-        error: function(request,error) 
-        {
+        error: function(request,error) {
             console.log(error);
 			alert(error);
         }
     });
-    
-    /*setTimeout(function(){
-        if(all_miniplans[resID]){
-            var miniplan=all_miniplans[resID];
-            miniplan.generated=true;
-            miniplan.timestamp=dateFrom;
-            //miniplan.Template_ID=getTemplate(selectedTemplates[resID]).ID;
-            miniplanButton();
-        }
-    }, 3000);*/
 }
 
 function openMiniPlan(miniplan_id){
     $.ajax({
         method: "GET",
-                //dataType: "json", //type of data
-            crossDomain: true, //localhost purposes
-            url: sessionStorage.dbLink + "/getMiniplanTemporaryMessages/"+miniplan_id,
-                //data: {temporary_miniplan_id:miniplan.miniplan_id},
+        //dataType: "json", //type of data
+        crossDomain: true, //localhost purposes
+        url: sessionStorage.dbLink + "/getMiniplanTemporaryMessages/"+miniplan_id,
+        //data: {temporary_miniplan_id:miniplan.miniplan_id},
         success: function(resp) {
             console.log(resp);
-            
             console.log(sessionStorage.cur_miniplan);
             var miniplan=JSON.parse(sessionStorage.cur_miniplan);
-            
             console.log(miniplan);
             console.log("MESSAGES");
             var miniplan_messages=resp[0]["Messages"];
             console.log(miniplan_messages);
             all_miniplans[miniplan.resource_id].messages=miniplan_messages;
-            
             $('#myModal .modal-title').html("Miniplan #"+miniplan.miniplan_id+" - Resource: "+ miniplan.resource_id+" - Template: "+miniplan.template_id);
-
             $('#myModal .modal-footer .btn-primary').css('display','none');
-
             $('#myModal .modal-dialog').css('width','70%');
-
             resetModalBox();
 
             var items=[];
@@ -2021,9 +1964,7 @@ function openMiniPlan(miniplan_id){
             items.push("</div></div>");
 
             $('#myModal .modal-body').html(items.join(''));
-
             $('#myModal').modal();
-
             $('#miniplan_detail_table').DataTable({
               "info": false,
               "paging": false,
@@ -2031,59 +1972,11 @@ function openMiniPlan(miniplan_id){
               "order": [[6,"asc"]]
             });           
         },
-        error: function(req,e) 
-        {
+        error: function(req,e) {
             console.log(e);
         }
     });    
 }
-
-/*
-function openMiniPlan(resID,tempID){
-    var miniplan=all_miniplans[resID];
-    console.log(miniplan);
-    $('#myModal .modal-title').html("Miniplan #"+miniplan.miniplan_id+" - Resource: "+ miniplan.resource_id+" - Template: "+miniplan.template_id);
-    
-    $('#myModal .modal-footer .btn-primary').css('display','none');
-    
-    $('#myModal .modal-dialog').css('width','70%');
-    
-    resetModalBox();
-
-    var items=[];
-    items.push("<div class='row'><div class='col-lg-12'>");
-    items.push('<button id="edit_mex_btn" class="btn btn-info" disabled><i class="glyphicon fa fa-pencil" ></i> Edit</button>');
-    items.push("<div id='miniplan-messages-table' class='table-responsive'><table id='miniplan_detail_table' class='table table-hover'><thead><tr><th></th><th>Message Text</th><th>URL</th><th>Attached media</th><th>Attached Audio/Video</th><th>Channel</th><th>Date</th><th>Time</th></tr></thead><tbody>");
-    $.each(miniplan.messages,function(key,value){
-      items.push("<tr>");
-      items.push("<td>");
-      items.push('<input type="radio" name="miniplan_message_selection" id=mex_miniplan_opt_"'+value.message_id+'" value="'+value.message_id+'" data-res="'+resID+'" onChange="messageMiniplanOptionChange(this)" ');
-      items.push("</td>");
-      items.push("<td>"+value.message_text+"</td>");
-      items.push("<td>"+value.URL+"</td>");
-      items.push("<td>"+value.attached_audio+"</td>");
-      items.push("<td>"+value.attached_media+"</td>");
-      items.push("<td>"+value.channel+"</td>");
-      items.push("<td>"+value.date+"</td>");
-      items.push("<td>"+value.time+"</td>");
-      items.push("</tr>");
-    });
-    
-    items.push("</tbody></table></div>");
-    items.push("</div></div>");
-    
-    $('#myModal .modal-body').html(items.join(''));
-    
-    $('#myModal').modal();
-    
-    $('#miniplan_detail_table').DataTable({
-      "info": false,
-      "paging": false,
-      "searching": false,
-      "order": [[6,"asc"]]
-    });
-}
-*/
 
 function messageMiniplanOptionChange(mex_miniplan){
     console.log(mex_miniplan);

@@ -17,9 +17,7 @@ if (isset($_SESSION['login'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,8 +41,6 @@ if (isset($_SESSION['login'])) {
     
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,13 +48,9 @@ if (isset($_SESSION['login'])) {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
-
 <body>
-
     <div id="wrapper">
-
         <!-- Navigation -->
        
         <!-- Navigation -->
@@ -418,8 +410,6 @@ if (isset($_SESSION['login'])) {
     <!-- Bootstrap Core JavaScript -->
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    
-    
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
@@ -432,7 +422,6 @@ if (isset($_SESSION['login'])) {
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
-    
     <!-- Table -->
     <link rel="stylesheet" href="../dist/css/bootstrap-table.css"/>
     <script type="text/javascript" src="../dist/js/bootstrap-table.js"></script>
@@ -443,7 +432,6 @@ if (isset($_SESSION['login'])) {
     
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.13/type-detection/date-uk.js"></script>
     <script type="text/javascript" src="https:////cdn.datatables.net/plug-ins/1.10.13/sorting/date-eu.js"></script>
-   
 
     <script src="../hansontable-dist/handsontable.full.min.js"></script>
     <link rel="stylesheet" media="screen" href="../hansontable-dist/handsontable.full.min.css">
@@ -455,9 +443,11 @@ if (isset($_SESSION['login'])) {
     <script src="../dist/js/sb-admin-2.js"></script>
     <script src="../locals/it.js"></script>
     <script src="../locals/en.js"></script>
+    <script type="text/javascript">
+        // Global variable for use by intervention-db.js
+        userToken = "<?php echo $token;?>";
+    </script>
     <script src="../dist/js/intervention-db.js"></script>
-    
-
 </body>
 
 </html>
