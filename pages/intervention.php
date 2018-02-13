@@ -440,9 +440,6 @@ if (isset($_COOKIE['token'])) {
     <script src="../dist/js/sb-admin-2.js"></script>
     <script src="../locals/it.js"></script>
     <script src="../locals/en.js"></script>
-    <script type="text/javascript">
-        var userToken = "<?php echo (isset($token) ? $token->getToken() : '');?>";
-    </script>
     <script src="../dist/js/intervention-db.js"></script>
 </body>
 

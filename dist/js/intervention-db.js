@@ -1237,8 +1237,7 @@ $('#button-save-templates').click(function(){
                 method: "POST",
                 url: sessionStorage.eng3Link,
                 data: {
-                    aged_id: sessionStorage.profile_id,
-                    token: userToken
+                    aged_id: sessionStorage.profile_id
                 },
                 success: function( msgEngine ) {
                     console.log(msgEngine);
@@ -1830,7 +1829,6 @@ function generateMiniPlan(resID, miniPlanIDlocal){
     console.log("aged_id: " + aged_id);
     console.log("from date: "+miniplan.valid_from);
     console.log("to date: "+miniplan.valid_to);
-    console.log("token: "+userToken);
 
     $.ajax({
         method: "POST",
@@ -1845,8 +1843,7 @@ function generateMiniPlan(resID, miniPlanIDlocal){
             template_id: miniplan.template_id,
             aged_id: aged_id.toString(),
             from_date: miniplan.valid_from.toString(),
-            to_date: miniplan.valid_to.toString(),
-            token: userToken
+            to_date: miniplan.valid_to.toString()
         },
         success: function(response) {
             console.log(response);
