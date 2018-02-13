@@ -5,7 +5,7 @@ require_once("../api/lib/token.php");
 if (isset($_COOKIE['token'])) {
     $token = new Token($_COOKIE['token']);
     if ($token->getUserId()) {
-        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken());
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
     } else {
         setcookie('referrer', 'admin');
         header("location:../");

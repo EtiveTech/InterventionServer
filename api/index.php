@@ -71,7 +71,7 @@ if (isset($_COOKIE['token'])) {
     // All users have the same privileges
     $token = new Token($_COOKIE['token']);
     if ($token->getUserId()) {
-        if ($token->inUpdateWindow()) setcookie("token", $token->updateToken());
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
     } else {
         generate401();
     }

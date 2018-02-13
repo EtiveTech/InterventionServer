@@ -38,7 +38,7 @@ if (!$query_results) {
         $authenticated = (DB_HASH_PASSWORD ? password_verify($password, $row['password']) : $password == $row['password']);
         if ($authenticated) {
             $token = new Token();
-            setcookie('token', $token->setToken($row['user_id']));
+            setcookie('token', $token->setToken($row['user_id']), 0, "/");
             echo "OK";
         } else {
             echo "There is no user with the specified data";

@@ -8,7 +8,7 @@ if (isset($_COOKIE['token'])) {
     $token = new Token($_COOKIE['token']);
     $user_id = $token->getUserId();
     if ($user_id) {
-        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken());
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
     } else {
         header("location:./");
     }
