@@ -2,7 +2,7 @@
 if (isset($_COOKIE['referrer'])) {
     $nextPage = $_COOKIE['referrer'];
     unset($_COOKIE['referrer']);
-    setcookie('referrer', '', time() - 3600);
+    setcookie('referrer', '', time() - 3600, '/');
 } else {
     $nextPage = "users.php";
 }
