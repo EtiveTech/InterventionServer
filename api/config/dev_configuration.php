@@ -24,3 +24,4 @@ define('END_POINT', '/'.SITE_PATH.'/'.API_DIR.'/');
 define('API_URL', SITE_PROTOCOL.'://'.SITE_ADDRESS.END_POINT);
 
 define('LOG_DIR', 'C:/Users/phil/Development/_logs/is_log.txt');
+define('DEFAULT_PASSWORD', 'admin');

@@ -2,11 +2,10 @@
 require_once("../api/configuration.php");
 require_once("../api/lib/token.php");
 
-session_start();
-if (isset($_SESSION['login'])) {
-    $token = new Token($_SESSION['login']);
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
     if ($token->getUserId()) {
-        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
     } else {
         header("location:../");
     }
@@ -301,8 +300,6 @@ if (isset($_SESSION['login'])) {
                                         <!-- /.panel-body -->
                                     </div>      
                                 </div>
-                    
-                    
                         </div>
                     </div>
                     <div class="row">
@@ -443,10 +440,6 @@ if (isset($_SESSION['login'])) {
     <script src="../dist/js/sb-admin-2.js"></script>
     <script src="../locals/it.js"></script>
     <script src="../locals/en.js"></script>
-    <script type="text/javascript">
-        // Global variable for use by intervention-db.js
-        userToken = "<?php echo $token;?>";
-    </script>
     <script src="../dist/js/intervention-db.js"></script>
 </body>
 

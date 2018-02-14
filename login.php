@@ -8,8 +8,6 @@ if ($referrer == "") {
     header('Location: ./');
 };
 
-session_start();
-
 if (isset($_POST["username"]) && !empty($_POST['username'])) {
     $username = $_POST['username'];
 } else {
@@ -40,7 +38,7 @@ if (!$query_results) {
         $authenticated = (DB_HASH_PASSWORD ? password_verify($password, $row['password']) : $password == $row['password']);
         if ($authenticated) {
             $token = new Token();
-            $_SESSION['login'] = $token->setToken($row['user_id']);
+            setcookie('token', $token->setToken($row['user_id']), 0, "/");
             echo "OK";
         } else {
             echo "There is no user with the specified data";

@@ -4,12 +4,11 @@ require_once("api/lib/token.php");
 
 $api_url = API_URL."getAllProfiles";
 
-session_start();
-if (isset($_SESSION['login'])) {
-    $token = new Token($_SESSION['login']);
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
     $user_id = $token->getUserId();
     if ($user_id) {
-        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
     } else {
         header("location:./");
     }

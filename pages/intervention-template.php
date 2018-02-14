@@ -2,11 +2,10 @@
 require_once("../api/configuration.php");
 require_once("../api/lib/token.php");
 
-session_start();
-if (isset($_SESSION['login'])) {
-    $token = new Token($_SESSION['login']);
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
     if ($token->getUserId()) {
-        if ($token->inUpdateWindow()) $_SESSION['login'] = $token->updateToken();
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
     } else {
         header("location:../");
     }
