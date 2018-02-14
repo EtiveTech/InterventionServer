@@ -9,7 +9,7 @@ SET client_min_messages = warning;
 -- Name: import_messages(character varying); Type: FUNCTION; Schema: c4a_i_schema; Owner: postgres
 --
 
-DROP FUNCTION c4a_i_schema.import_messages CASCADE;
+DROP FUNCTION c4a_i_schema.import_messages(file_path character varying) CASCADE;
 
 CREATE FUNCTION c4a_i_schema.import_messages(file_path character varying) RETURNS void
     LANGUAGE plpgsql
@@ -127,7 +127,7 @@ ALTER FUNCTION c4a_i_schema.import_messages(file_path character varying) SECURIT
 -- Name: import_prescriptions(character varying); Type: FUNCTION; Schema: c4a_i_schema; Owner: postgres
 --
 
-DROP FUNCTION c4a_i_schema.import_prescriptions CASCADE;
+DROP FUNCTION c4a_i_schema.import_prescriptions(file_path character varying) CASCADE;
 
 CREATE FUNCTION c4a_i_schema.import_prescriptions(file_path character varying) RETURNS void
     LANGUAGE plpgsql
@@ -217,7 +217,7 @@ ALTER FUNCTION c4a_i_schema.import_prescriptions(file_path character varying) SE
 -- Name: import_profile_communicative_details(character varying); Type: FUNCTION; Schema: c4a_i_schema; Owner: postgres
 --
 
-DROP FUNCTION c4a_i_schema.import_profile_communicative_details CASCADE;
+DROP FUNCTION c4a_i_schema.import_profile_communicative_details(file_path character varying) CASCADE;
 
 CREATE FUNCTION c4a_i_schema.import_profile_communicative_details(file_path character varying) RETURNS void
     LANGUAGE plpgsql
@@ -315,7 +315,7 @@ ALTER FUNCTION c4a_i_schema.import_profile_communicative_details(file_path chara
 --
 -- Name: import_resources(character varying); Type: FUNCTION; Schema: c4a_i_schema; Owner: postgres
 --
-DROP FUNCTION c4a_i_schema.import_resources CASCADE;
+DROP FUNCTION c4a_i_schema.import_resources(file_path character varying) CASCADE;
 
 CREATE FUNCTION c4a_i_schema.import_resources(file_path character varying) RETURNS void
     LANGUAGE plpgsql
@@ -476,7 +476,7 @@ ALTER FUNCTION c4a_i_schema.import_resources(file_path character varying) SECURI
 --
 -- Name: import_templates(character varying); Type: FUNCTION; Schema: c4a_i_schema; Owner: postgres
 --
-DROP FUNCTION c4a_i_schema.import_templates CASCADE;
+DROP FUNCTION c4a_i_schema.import_templates(file_path character varying) CASCADE;
 
 CREATE FUNCTION c4a_i_schema.import_templates(file_path character varying) RETURNS void
     LANGUAGE plpgsql
