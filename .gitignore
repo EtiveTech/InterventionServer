@@ -1,6 +1,6 @@
-node_modules
-bower_components
 .idea
 api/configuration.php
-api/configuration_local.php
 api/config/prod_configuration.php
+api/tmp/
+js/server-config.js
+js/config/prod-config.js
