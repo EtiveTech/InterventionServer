@@ -3,3 +3,5 @@ bower_components
 .idea
 api/configuration.php
 api/config/prod_configuration.php
+js/server-config.js
+js/config/prod-config.js
