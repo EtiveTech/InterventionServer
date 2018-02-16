@@ -14,16 +14,11 @@ include_once ("lib/db.php");
 include_once ("lib/request.php");
 include_once ("lib/echo.php");
 
-session_start(); // launch the session
+session_start(); // lunch the session
 
 // memorize the request method type and the uri
 define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
 define('REQUEST_URI', $_SERVER['REQUEST_URI']); //for example: http://localhost/c4a-DBmanager/getProfile/13
-
-define('AGED_ID', 'aged_id');
-define('AGED_NAME', 'aged_name');
-define('AGED_ID_PRETTY', 'aged_id_pretty');
-define('CSV_DELIMITER', ',');
 
 // instantiate the object for the connection to the database
 global $DB;
@@ -34,10 +29,6 @@ $args = parse_uri(REQUEST_URI); // explain the uri and identify the different pa
 //endregion
 
 //region Functions
-
-function logger($text) {
-    file_put_contents("tmp/log.txt",  $text . PHP_EOL, FILE_APPEND);
-}
 
 function checkPostDataUnquoted($postData = null){
     if (isset($postData)){
@@ -321,7 +312,7 @@ function getProfile($aged_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -365,7 +356,7 @@ function getCareRecipientData ($aged_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -411,7 +402,7 @@ function getAllProfiles(){
     $profiles = array();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
 
             $query = "SELECT aged_id, name, surname FROM c4a_i_schema.profile ORDER BY surname, name ASC";
             $query_results = $pdo->query($query);
@@ -450,7 +441,7 @@ function getProfileTechnicalDetails($aged_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -493,7 +484,7 @@ function getProfileCommunicativeDetails($aged_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -536,7 +527,7 @@ function getProfileSocioeconomicDetails($aged_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -579,7 +570,7 @@ function getProfileFrailtyStatus($aged_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -623,7 +614,7 @@ function getProfileHourPreferences($aged_id = null){
     $preferences = array();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -673,7 +664,7 @@ function getPrescription($prescription_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($prescription_id)) {
 
@@ -715,7 +706,7 @@ function getAllPrescriptions($aged_id = null){
     $prescriptions = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)){
 
@@ -763,7 +754,7 @@ function getIntervention($intervention_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($intervention_id)) {
 
@@ -807,7 +798,7 @@ function getAllInterventions($aged_id = null){
     $interventions = array();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)){
 
@@ -851,7 +842,7 @@ function getInterventionTemporary($intervention_temporary_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($intervention_temporary_id)) {
 
@@ -894,7 +885,7 @@ function getInterventionFromPrescription($prescription_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($prescription_id)) {
 
@@ -937,7 +928,7 @@ function getInterventionWithoutPrescription($aged_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -986,7 +977,7 @@ function getResource($resource_id = null){
     $subjects_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if (isset($resource_id)) {
 
@@ -1059,7 +1050,7 @@ function getAllResources(){
     $subjects_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
 
             $query = "SELECT * FROM c4a_i_schema.resource WHERE has_messages = TRUE";
@@ -1114,7 +1105,7 @@ function getAllResources(){
                     echo $sjes->encode("Resources");
 
                 } else {
-                    generate404("There are no resources");
+                    generate404("There are no resources ");
                 } //end if-else to check if at least one resource exists
 
             } else {
@@ -1140,7 +1131,7 @@ function getAllResourcesOfIntervention($intervention_id = null){
     $subjects_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($intervention_id)) {
 
@@ -1201,7 +1192,7 @@ function getAllResourcesOfIntervention($intervention_id = null){
                     echo $sjes->encode("Resources");
 
                 } else {
-                    generate404("There are no resources");
+                    generate404("There are no resources ");
                 } //end if-else to check if at least one resource exists
 
             } else {
@@ -1230,7 +1221,7 @@ function getResourceMessages($resource_id = null){
     $channels_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
 
         $query = "SELECT m.* FROM c4a_i_schema.resource AS r, c4a_i_schema.message AS m, 
@@ -1316,7 +1307,7 @@ function getTemplate($template_id = null){
     $channel_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($template_id)) {
 
@@ -1394,7 +1385,7 @@ function getAllTemplates(){
     $channels_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
 
         $query = "SELECT * FROM c4a_i_schema.template";
@@ -1452,7 +1443,7 @@ function getAllTemplates(){
                 echo $sjes->encode("Templates");
 
             } else {
-                generate404("There are no templates");
+                generate404("There are no templates ");
             } //end if-else to check if at least one resource exists
 
         } else {
@@ -1477,7 +1468,7 @@ function getTemplatesForResource($resource_id = null){
     $channels_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
 
         $query = "SELECT t.* FROM c4a_i_schema.resource AS r, 
@@ -1540,7 +1531,7 @@ function getTemplatesForResource($resource_id = null){
                 echo $sjes->encode("Templates");
 
             } else {
-                generate404("There are no templates");
+                generate404("There are no templates ");
             } //end if-else to check if at least one resource exists
 
         } else {
@@ -1568,7 +1559,7 @@ function getMiniplanFinalFromData($aged_id = null, $intervention_id = null, $res
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameters of the URI are set. If the parameters are not set, it generates a 400 error.
         if(isset($aged_id)){
             if(isset($intervention_id)){
@@ -1622,7 +1613,7 @@ function getMiniplanGenerated($miniplan_generated_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_generated_id)) {
 
@@ -1664,7 +1655,7 @@ function getMiniplanTemporary($miniplan_temporary_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_temporary_id)) {
 
@@ -1706,7 +1697,7 @@ function getMiniplanFinal($miniplan_final_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_final_id)) {
 
@@ -1749,7 +1740,7 @@ function getMiniplanGeneratedMessages($miniplan_generated_id = null){
     $miniplan_messages = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_generated_id)){
 
@@ -1795,7 +1786,7 @@ function getMiniplanTemporaryMessages($miniplan_temporary_id = null){
     $miniplan_messages = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_temporary_id)){
 
@@ -1841,7 +1832,7 @@ function getMiniplanFinalMessages($miniplan_final_id = null){
     $miniplan_messages = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_final_id)){
 
@@ -1887,7 +1878,7 @@ function getAllProfileMiniplanFinalMessages($aged_id = null){
     $messages = array();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($aged_id)) {
 
@@ -1937,7 +1928,7 @@ function getMiniplanGeneratedMessagesNotSent($miniplan_generated_id = null){
     $miniplan_messages = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_generated_id)){
 
@@ -1984,7 +1975,7 @@ function getMiniplanTemporaryMessagesNotSent($miniplan_temporary_id = null){
     $miniplan_messages = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_temporary_id)){
 
@@ -2031,7 +2022,7 @@ function getMiniplanCommitted($aged_id = null){
     $miniplan_temporary = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if (isset($aged_id)) {
 
@@ -2086,7 +2077,7 @@ function getMiniplanFinalMessagesNotSent($miniplan_final_id = null){
     $miniplan_messages = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($miniplan_final_id)){
 
@@ -2132,7 +2123,7 @@ function getAllMiniplanFromIntervention($intervention_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($intervention_id)) {
 
@@ -2178,7 +2169,7 @@ function getUser($user_id = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($user_id)) {
 
@@ -2221,38 +2212,38 @@ function checkUserPwd($name = null, $user_pwd = null){
     global $pdo;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("GET"))){
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($name)) {
 			if(isset($user_pwd)){
-			    $ch = curl_init();
-                $name = curl_unescape($ch, $name);
-                $user_pwd = curl_unescape($ch, $user_pwd);
+		
 
-//                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
-                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
-                $query_results = $pdo->query($query);
+            $query = "SELECT * FROM c4a_i_schema.user WHERE name = '$name' AND password = '$user_pwd'";
 
-                // Check if the query has been correctly performed.
-                // If the variable is true it returns the data in JSON format
-                if (!$query_results) {
-                    generate500("Error performing the query" . $query);
-                } else {
-                    //if the query has retrieved at least a result
-                    if($query_results->rowCount() > 0) {
-                        //it fetches each single row and encode in JSON format the results
-                        while ($row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-                            $sjes = new Jecho($row);
-                            $sjes->message = "User retrieved";
-                            echo $sjes->encode("User");
-                        } // end if to set results into JSON
-                    } else {
-                        generate404("There is no user with the specified data");
-                    }
-                } // end if/else for the check of results
+            $query_results = $pdo->query($query);
+
+            // Check if the query has been correctly performed.
+            // If the variable is true it returns the data in JSON format
+            if (!$query_results) {
+                generate500("Error performing the query" . $query);
             } else {
-                generate400("The password is not specified");
-            } //end if/else for verify if intervention_id is set
+
+                //if the query has retrieved at least a result
+                if($query_results->rowCount() > 0) {
+                    //it fetches each single row and encode in JSON format the results
+                    while ($row = $query_results->fetch(PDO::FETCH_ASSOC)) {
+                        $sjes = new Jecho($row);
+                        $sjes->message = "User retrieved";
+                        echo $sjes->encode("User");
+                    } // end if to set results into JSON
+                } else {
+                    generate404("There is no user with the specified data");
+                }
+            } // end if/else for the check of results
+			} else {
+            generate400("The password is not specified");
+        } //end if/else for verify if intervention_id is set
+			
         } else {
             generate400("The user_id is not specified");
         } //end if/else for verify if intervention_id is set
@@ -2269,7 +2260,7 @@ function getAllUsers(){
     $users = array();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
 
         $query = "SELECT user_id, name, surname, role FROM c4a_i_schema.user";
         $query_results = $pdo->query($query);
@@ -2308,7 +2299,7 @@ function getUserOfIntervention($intervention_id = null){
     $users = array ();
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
         if(isset($intervention_id)){
 
@@ -2361,7 +2352,7 @@ function getPreDeliveryMessagesToSend($aged_id = null ){
     $to_send_updated = "to send - updated";
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
 
         if (isset($aged_id)) {
             $query = "SELECT * FROM c4a_i_schema.predelivery_messages WHERE 
@@ -2408,7 +2399,7 @@ function getPreDeliveryMessagesUpdatedOnly($aged_id = null){
     $to_send_updated = "to send - updated";
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
 
         if (isset($aged_id)) {
             $query = "SELECT * FROM c4a_i_schema.predelivery_messages WHERE 
@@ -2463,7 +2454,7 @@ function setUserAttention() {
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
         // Check for required data
         if (isset($_POST["aged_id"]) && isset($_POST["frailty_attention"])){
 
@@ -2506,7 +2497,7 @@ function setUserFrailtyStatus() {
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
         // Check for required data
         if (isset($_POST["aged_id"])){
             $aged_id = $_POST["aged_id"];
@@ -2569,7 +2560,7 @@ function setUserFrailtyStatusOverall(){
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         // Check for required data
         if (isset($_POST["status_overall"]) && isset($_POST["aged_id"])) {
@@ -2608,7 +2599,7 @@ function setUserFrailtyStatusLastperiod(){
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         // Check for required data
         if (isset($_POST["status_lastperiod"]) && isset($_POST["aged_id"])) {
@@ -2647,7 +2638,7 @@ function updateSocioEconomicProfile(){
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         // Check for required data
         if (isset($_POST["aged_id"])) {
@@ -2760,7 +2751,7 @@ function setNewPrescription() {
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
         // Check for required data
         if (isset($_POST["aged_id"]) && isset($_POST["prescription_title"])){
             $aged_id = $_POST["aged_id"];
@@ -2879,7 +2870,7 @@ function editPrescription(){
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         //Check if the required data have been set
         if (isset($_POST["prescription_id"]) && isset($_POST["aged_id"]) && isset($_POST["prescription_title"])) {
@@ -3003,7 +2994,7 @@ function updatePrescriptionStatus(){
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         if (isset($_POST["prescription_id"])) { //Check if the prescription id has been set
             $prescription_id = $_POST["prescription_id"];
@@ -3048,7 +3039,7 @@ function updatePrescriptionUrgency(){
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         if (isset($_POST["prescription_id"])) { //Check if the prescription id has been set
             $prescription_id = $_POST["prescription_id"];
@@ -3099,7 +3090,7 @@ function setIntervention(){
     $updateDB = FALSE;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         // Check for required data
         if (isset($_POST["aged_id"]) && isset($_POST["intervention_title"])) {
@@ -3225,7 +3216,7 @@ function editIntervention() {
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         // Check for required data
         if (isset($_POST["intervention_session_id"]) && isset($_POST["aged_id"]) && isset($_POST["intervention_title"])){
@@ -3320,7 +3311,7 @@ function setTemporaryIntervention() {
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         // Check for required data
         if (isset($_POST["intervention_id"])) {
@@ -3424,7 +3415,7 @@ function updateInterventionStatus() {
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         if (isset($_POST["intervention_id"])) { //Check if the prescription id has been set
             $intervention_id = $_POST["intervention_id"];
@@ -3469,7 +3460,7 @@ function updateInterventionConfirmedCaregiver() {
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         if (isset($_POST["intervention_id"])) { //Check if the prescription id has been set
             $intervention_id = $_POST["intervention_id"];
@@ -3514,7 +3505,7 @@ function updateInterventionPrescription() {
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         if (isset($_POST["intervention_id"])) { //Check if the prescription id has been set
             $intervention_id = $_POST["intervention_id"];
@@ -3561,7 +3552,7 @@ function updateInterventionDates(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         // Check for required data
         if (isset($_POST["intervention_id"])) { //Check if the prescription id has been set
@@ -3631,7 +3622,7 @@ function setNewMiniplanGenerated()
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         // Check for required data
         if (isset($_POST["generation_date"]) && isset($_POST["from_date"]) && isset($_POST["to_date"]) &&
@@ -3734,7 +3725,7 @@ function setNewMiniplanGeneratedMessage(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         /* All the parameters are checked to verify that they are set.
             The variable will have the value of the parameter if it is set,
@@ -3870,7 +3861,7 @@ function setNewMiniplanTemporary(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         // Check for required data
         if (isset($_POST["save_date"]) && isset($_POST["from_date"]) && isset($_POST["to_date"]) &&
@@ -3952,7 +3943,7 @@ function editMiniplanTemporaryMessage(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         /* All the parameters are checked to verify that they are set.
             The variable will have the value of the parameter if it is set,
@@ -4095,7 +4086,7 @@ function setNewMiniplanFinal(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         // Check for required data
         if (isset($_POST["commit_date"]) && isset($_POST["from_date"]) && isset($_POST["to_date"]) &&
@@ -4157,7 +4148,7 @@ function setNewMiniplanFinalMessage(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         /* All the parameters are checked to verify that they are set.
             The variable will have the value of the parameter if it is set,
@@ -4284,7 +4275,7 @@ function commitMiniplan(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
         // Check for required data
         if (isset($_POST["miniplan_temporary_id"])){
 
@@ -4326,7 +4317,7 @@ function setNewPostDeliveryMessages(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         // Check for required data
         if (isset($_POST["pilot_id"]) && isset($_POST["miniplan_message_id"]) && isset($_POST["message_id"]) && isset($_POST["predelivery_message_id"])){
@@ -4386,7 +4377,7 @@ function updatePreDeliveryMessageStatus(){
 
     global $pdo;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         if (isset($_POST["predelivery_id"]) && isset($_POST["status"])) { //Check if the prescription id has been set
             $predelivery_id = $_POST["predelivery_id"];
@@ -4434,7 +4425,7 @@ function getResourcesWithoutMessages(){
     $subjects_exist = FALSE;
 
     // Check if the method is GET
-    if (REQUEST_METHOD == 'GET') {
+    if (in_array(REQUEST_METHOD, array("GET"))) {
         // Check if the parameter of the URI is set. If the parameter is not set, it generates a 400 error.
 
         $query = "SELECT * FROM c4a_i_schema.resource WHERE has_messages = FALSE";
@@ -4490,7 +4481,7 @@ function getResourcesWithoutMessages(){
                 echo $sjes->encode("Resources");
 
             } else {
-                generate404("There are no resources");
+                generate404("There are no resources ");
             } //end if-else to check if at least one resource exists
 
         } else {
@@ -4511,7 +4502,7 @@ function setNewSubject(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
         // Check for required data
         if (isset($_POST["subject_name"])){
             $subject_name = "'".$_POST["subject_name"]."'";
@@ -4570,149 +4561,25 @@ function setNewSubject(){
 //TODO Check methods on the database and save them in notepad++
 //region IMPORT METHODS
 
-function dbString($text) {
-    $text = str_replace("'", "''", $text);
-    $text = "'" . $text . "'";
-    return $text;
-}
-
-function keyValuePairs($column_names, $column_types, $fields) {
-    $results = array();
-    for ($i = 0; $i < count($fields); $i++) {
-        $field = $fields[$i];
-        if (isset($column_types[$column_names[$i]])) {
-            $type = $column_types[$column_names[$i]];
-            if (($type == "character varying") || ($type == "USER-DEFINED") || ($type == "date") ||
-                (substr($type, 0, 4) == "time") || ($type == "boolean")) {
-                if (strlen($field) > 0) $field = dbString($field);
-            }
-            $results[$column_names[$i]] = $field;
-        }
-    }
-    return $results;
-}
-
-function importGeneric($table_name, $key_name){
+/**
+ * DESCRIPTION : It retrieves all the resources available
+ * METHOD : GET
+ */
+function importChannels(){
 
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = "tmp/import.csv";
+        $filepath = getcwd() . "/tmp/import.csv";;
 
-        // *** Establish the columns that will be output ***
-        $query = "SELECT column_name, data_type FROM information_schema.columns "
-            ."WHERE table_schema='c4a_i_schema' AND table_name = '" . $table_name . "'";
-        $query_results = $pdo->query($query);
-        $all_good = FALSE;
-        $row_number = 0;
-        $sql = "";
-
-        if ($query_results) {
-            $column_types = array();
-            $fh = fopen($filepath, "r");
-            while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-                $column_types[$table_row["column_name"]] = $table_row["data_type"];
-            }
-            $header_ok = TRUE;
-            $header_column_names = fgetcsv($fh, 0,CSV_DELIMITER);
-            $row_number += 1;
-            for ($i = 0; $i < count($header_column_names); $i++) {
-                $header_ok = $header_ok && isset($column_types[$header_column_names[$i]]);
-            }
-
-            if ($header_ok && isset($column_types[$key_name])) {
-                // The header row contains column names that correspond with the table
-
-                $options = array();
-                // The aged_id and aged_names field are not exported so cannot be imported but are needed
-                // If we are not importing the profile table then we may have to get some data from the
-                // profile table to complete this import
-                $options[AGED_ID] = (($table_name != "profile") && isset($column_types[AGED_ID]) &&
-                    array_search(AGED_ID, $header_column_names) == FALSE);
-                $options[AGED_NAME] = (($table_name != "profile") && isset($column_types[AGED_NAME]) &&
-                    array_search(AGED_NAME, $header_column_names) == FALSE);
-
-                // Need an Update statement as well as an Insert statement in case the key already exists
-                $insert_statement = "INSERT INTO c4a_i_schema." . $table_name . " ";
-                $update_statement = "UPDATE c4a_i_schema." . $table_name . " SET ";
-                // Select statement only used if $options[AGED_ID] or $options[AGED_NAME] are set
-                $select_statement = "SELECT name, surname, aged_id FROM c4a_i_schema.profile WHERE " . AGED_ID_PRETTY . "=";
-
-                // Start a tramsaction block
-                $all_good = ($pdo->query("BEGIN") == TRUE);
-
-                //  Now read in the rest of the CSV file
-                while ($all_good && (($fields = fgetcsv($fh, 0, CSV_DELIMITER)) !== FALSE)) {
-                    $row_number += 1;
-                    $insert_names = "";
-                    $insert_values = "";
-                    $update_values = "";
-
-                    // Now create the INSERT and UPDATE commands
-                    $kvp = keyValuePairs($header_column_names, $column_types, $fields);
-                    foreach ($kvp as $key => $value) {
-                        if (strlen($value) > 0) {
-                            $insert_names .= $key . ", ";
-                            $insert_values .= $value . ", ";
-                            $update_values .= $key . "=" . $value . ", ";
-                        }
-                    }
-
-                    // Add in the optional values if needed
-                    if ($options[AGED_ID] || $options[AGED_NAME]) {
-                        $id_pretty = $fields[array_search(AGED_ID_PRETTY, $header_column_names)];
-                        if (strlen($id_pretty) > 0) {
-                            $select = $select_statement . "'" . $id_pretty . "'";
-                            $query_results = $pdo->query($select);
-                            $aged_info = ($query_results) ? $query_results->fetch(PDO::FETCH_ASSOC) : array();
-                            if ($options[AGED_ID] && strlen($aged_info['aged_id']) > 0) {
-                                $insert_names .= AGED_ID . ", ";
-                                $insert_values .= $aged_info['aged_id'] . ", ";
-                                $update_values .= AGED_ID . "=" . $aged_info['aged_id'] . ", ";
-
-                            }
-                            $aged_name = $aged_info['surname'] . " " . $aged_info['name'];
-                            if ($options[AGED_NAME] && $aged_name != " ") {
-                                $aged_name = dbString( $aged_name);
-                                $insert_names .= AGED_NAME . ", ";
-                                $insert_values .= $aged_name . ", ";
-                                $update_values .= AGED_NAME . "=" . $aged_name . ", ";
-                            }
-                        }
-                    }
-
-                    $insert_names = substr($insert_names, 0, -2);
-                    $insert_values = substr($insert_values, 0, -2);
-                    $update_values = substr($update_values, 0, -2);
-
-                    // Try and update an existing record, if that fails try and insert a record.
-                    $sql = $update_statement . $update_values . " WHERE " . $key_name . "=" . $kvp[$key_name];
-                    if (strlen($kvp[$key_name]) > 0) {
-                        $rowCount = $pdo->exec($sql);
-                        if (!$rowCount) {
-                            $sql = $insert_statement . "(" . $insert_names . ") VALUES (" . $insert_values . ")";
-                            // Must have inserted one row
-                            $all_good = ($pdo->exec($sql) == 1);
-                        }
-                    }
-                    else {
-                        $all_good = FALSE;
-                    }
-                }
-
-                // The transaction is finished
-                $end_transaction = ($all_good ? "COMMIT" : "ROLLBACK");
-                $pdo->query($end_transaction);
-            }
-            fclose($fh);
-        }
-        unlink($filepath);
+        $queryUpdate = "SELECT c4a_i_schema.import_channels('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($all_good) {
+        if($queryUpdate_results == TRUE) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "Updated DB - You have just imported the file";
@@ -4721,7 +4588,7 @@ function importGeneric($table_name, $key_name){
             $errors = $pdo -> errorInfo();
             $sjes = new Jecho($errors);
             $sjes -> server_code = 500;
-            $sjes -> message = "WARNING! An ERROR occurred on line " . $row_number . ($sql != "" ? "<br>Failing sql: " . $sql : "");
+            $sjes -> message = "WARNING! An ERROR has occurred";
             echo $sjes -> encode("Error");           }
     } else {
         generate400("The method is not a POST");
@@ -4732,17 +4599,35 @@ function importGeneric($table_name, $key_name){
  * DESCRIPTION : It retrieves all the resources available
  * METHOD : GET
  */
-
-function importChannels(){
-    importGeneric("channel", "channel_id");
-}
-
-/**
- * DESCRIPTION : It retrieves all the resources available
- * METHOD : GET
- */
 function importHourperiods(){
-    importGeneric("hour_period", "hour_period_name");
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/import.csv";;
+
+        $queryUpdate = "SELECT c4a_i_schema.import_hourperiods('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "Updated DB - You have just imported the file";
+            echo $sjes -> encode("filepath");
+        } else {
+            $errors = $pdo -> errorInfo();
+            $sjes = new Jecho($errors);
+            $sjes -> server_code = 500;
+            $sjes -> message = "WARNING! An ERROR has occurred";
+            echo $sjes -> encode("Error");           }
+    } else {
+        generate400("The method is not a POST");
+    }
+
 }
 
 /**
@@ -4754,7 +4639,7 @@ function importMessages(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         $filepath = getcwd() . "/tmp/import.csv";;
 
@@ -4789,7 +4674,7 @@ function importPrescriptions(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         $filepath = getcwd() . "/tmp/import.csv";;
 
@@ -4820,7 +4705,34 @@ function importPrescriptions(){
  * METHOD : GET
  */
 function importProfile(){
-    importGeneric("profile", "aged_id_pretty");
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/import.csv";;
+
+        $queryUpdate = "SELECT c4a_i_schema.import_profile('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "Updated DB - You have just imported the file";
+            echo $sjes -> encode("filepath");
+        } else {
+            $errors = $pdo -> errorInfo();
+            $sjes = new Jecho($errors);
+            $sjes -> server_code = 500;
+            $sjes -> message = "WARNING! An ERROR has occurred";
+            echo $sjes -> encode("Error");           }
+    } else {
+        generate400("The method is not a POST");
+    }
+
 }
 
 /**
@@ -4832,7 +4744,7 @@ function importProfileCommunicative(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
         $filepath = getcwd() . "/tmp/import.csv";;
 
@@ -4862,7 +4774,34 @@ function importProfileCommunicative(){
  * METHOD : GET
  */
 function importProfileSocio(){
-    importGeneric("profile_socioeconomic_details", "aged_id_pretty");
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/import.csv";;
+
+        $queryUpdate = "SELECT c4a_i_schema.import_profile_socioeconomic('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "Updated DB - You have just imported the file";
+            echo $sjes -> encode("filepath");
+        } else {
+            $errors = $pdo -> errorInfo();
+            $sjes = new Jecho($errors);
+            $sjes -> server_code = 500;
+            $sjes -> message = "WARNING! An ERROR has occurred";
+            echo $sjes -> encode("Error");           }
+    } else {
+        generate400("The method is not a POST");
+    }
+
 }
 
 /**
@@ -4870,7 +4809,33 @@ function importProfileSocio(){
  * METHOD : GET
  */
 function importProfileFrailty(){
-    importGeneric("profile_frailty_status", "aged_id_pretty");
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/import.csv";;
+
+        $queryUpdate = "SELECT c4a_i_schema.import_profile_frailty('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "Updated DB - You have just imported the file";
+            echo $sjes -> encode("filepath");
+        } else {
+            $errors = $pdo -> errorInfo();
+            $sjes = new Jecho($errors);
+            $sjes -> server_code = 500;
+            $sjes -> message = "WARNING! An ERROR has occurred";
+            echo $sjes -> encode("Error");           }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 /**
@@ -4878,8 +4843,36 @@ function importProfileFrailty(){
  * METHOD : GET
  */
 function importProfileTechnical(){
-    importGeneric("profile_technical_details", "aged_id_pretty");
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/import.csv";;
+
+        $queryUpdate = "SELECT c4a_i_schema.import_profile_tech_details('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "Updated DB - You have just imported the file";
+            echo $sjes -> encode("filepath");
+        } else {
+            $errors = $pdo -> errorInfo();
+            $sjes = new Jecho($errors);
+            $sjes -> server_code = 500;
+            $sjes -> message = "WARNING! An ERROR has occurred";
+            echo $sjes -> encode("Error");           }
+    } else {
+        generate400("The method is not a POST");
+    }
+
 }
+
 
 /**
  * DESCRIPTION : It retrieves all the resources available
@@ -4890,7 +4883,7 @@ function importResources(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
         // Check for required data
 
         //$filepath_local = $_POST["filepath"];
@@ -4927,7 +4920,7 @@ function importTemplates(){
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'POST'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
         // Check for required data
 
         $filepath = getcwd() . "/tmp/import.csv";;
@@ -4958,74 +4951,64 @@ function importTemplates(){
  * METHOD : GET
  */
 function importUsers(){
-    importGeneric("user", "user_id_pretty");
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+        // Check for required data
+
+        $filepath = getcwd() . "/tmp/import.csv";;
+
+        $queryUpdate = "SELECT c4a_i_schema.import_users('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+        unlink($filepath);
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "Updated DB - You have just imported the file";
+            echo $sjes -> encode("filepath");
+        } else {
+            $errors = $pdo -> errorInfo();
+            $sjes = new Jecho($errors);
+            $sjes -> server_code = 500;
+            $sjes -> message = "WARNING! An ERROR has occurred";
+            echo $sjes -> encode("Error");           }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 //endregion
 
-//TODO: Change the $filepath to all the export method to reflect the onw that will be used on the database
-//TODO: All export functions should really be GET requests. Only import functions should be POST requests.
+//TODO Change the $filepath to all the export method to reflect the onw that will be used on the database
 //region EXPORT METHODS
 
-function exportGeneric($table_name, $options){
+/**
+ * DESCRIPTION : It creates a CSV file of the Channel table
+ * METHOD : POST
+ */
+function exportChannels(){
+
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'GET') {
-        // *** Initialise ***
-        $filepath = 'tmp/export_' . $table_name. '.csv';
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/export_channels.csv";
         unlink($filepath);
-        $includes = (isset($options["include"]) ? $options["include"] : array());
-        $excludes = (isset($options["exclude"]) ? $options["exclude"] : array());
-        $export_ready = FALSE;
 
-        // *** Establish the columns that will be output ***
-        $query = "SELECT column_name FROM information_schema.columns WHERE table_schema='c4a_i_schema' AND table_name = '" . $table_name . "'";
-        $query_results = $pdo->query($query);
-        if ($query_results) {
-            $column_names = array();
-            $fh = fopen($filepath, "w");
-            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                if (!in_array($table_row[0], $excludes)) {
-                    $column_names[] = $table_row[0];
-                };
-            }
-            if (count($includes) > 0) {
-                $ordered_column_names = array();
-                foreach ($includes as $included_column) {
-                    if (in_array($included_column, $column_names)) {
-                        $ordered_column_names[] = $included_column;
-                    }
-                }
-            }
-            else {
-                $ordered_column_names = $column_names;
-            }
-            fputcsv($fh, $ordered_column_names, CSV_DELIMITER);
-
-            // *** Output the columns ***
-            $query = "SELECT * FROM c4a_i_schema." . $table_name;
-            $query_results = $pdo->query($query);
-            if ($query_results) {
-                $output = array();
-                while ($table_row = $query_results->fetch(PDO::FETCH_ASSOC)) {
-                    foreach ($ordered_column_names as $column_name) {
-                        $output[] = $table_row[$column_name];
-                    }
-                    fputcsv($fh, $output, CSV_DELIMITER);
-                    unset($output);
-                }
-                $export_ready = TRUE;
-            }
-            fclose($fh);
-        }
+        $queryUpdate = "SELECT c4a_i_schema.export_channels('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($export_ready) {
+        if($queryUpdate_results == TRUE) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
-            $sjes -> message = 'You  have just downloaded the ' . $table_name . ' file';
+            $sjes -> message = "You  have just downloaded the channels file";
             echo $sjes -> encode("filepath");
         } else {
             generate500("It has not been possible to create a file.");
@@ -5036,19 +5019,35 @@ function exportGeneric($table_name, $options){
 }
 
 /**
- * DESCRIPTION : It creates a CSV file of the Channel table
- * METHOD : POST
- */
-function exportChannels(){
-    exportGeneric("channel", ["include" => ["channel_id", "channel_name"]]);
-}
-
-/**
  * DESCRIPTION : It creates a CSV file of the Hour_period table
  * METHOD : POST
  */
 function exportHourperiods(){
-    exportGeneric("hour_period", ["include" => ["hour_period_name", "hour_period_start", "hour_period_end"]]);
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/export_hourperiods.csv";
+        unlink($filepath);
+
+        $queryUpdate = "SELECT c4a_i_schema.export_hourperiods('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "You  have just downloaded the hour_period file";
+            echo $sjes -> encode("filepath");
+        } else {
+            generate500("It has not been possible to create a file.");
+        }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 /**
@@ -5056,41 +5055,21 @@ function exportHourperiods(){
  * METHOD : POST
  */
 function exportMessages(){
+
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = "tmp/export_messages.csv";
+        $filepath = getcwd() . "/tmp/export_messages.csv";
         unlink($filepath);
 
-        $query =
-            "SELECT r.resource_id, r.category, r.resource_name, r.description, m.message_id, m.text, m.url, "
-                ."m.media, m.audio, m.video, c.channels, m.semantic_type, m.communication_style, m.is_compulsory "
-            ."FROM c4a_i_schema.message m "
-            ."JOIN c4a_i_schema.resource_has_messages rhm ON m.message_id = rhm.message_id "
-            ."JOIN c4a_i_schema.resource r ON rhm.resource_id = r.resource_id "
-            ."JOIN ( SELECT msg.message_id, string_agg(ch.channel_name, ', ') AS channels "
-                ."FROM c4a_i_schema.message msg "
-                ."JOIN c4a_i_schema.message_has_channel mhc ON msg.message_id = mhc.message_id "
-                ."JOIN c4a_i_schema.channel ch ON mhc.channel_id = ch.channel_id "
-                ."GROUP BY msg.message_id ) AS c ON m.message_id = c.message_id ";
-
-        $query_results = $pdo->query($query);
-        if ($query_results) {
-            $fh = fopen($filepath, "w");
-            fputcsv($fh, array("resource_id", "category", "resource_name", "description", "message_id", "text", "url",
-                "media", "audio", "video", "channels", "semantic_type", "communication_style", "is_compulsory"), CSV_DELIMITER);
-            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row, CSV_DELIMITER);
-            }
-            $export_ready = TRUE;
-            fclose($fh);
-        }
+        $queryUpdate = "SELECT c4a_i_schema.export_messages('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($export_ready) {
+        if($queryUpdate_results == TRUE) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the messages file";
@@ -5108,36 +5087,21 @@ function exportMessages(){
  * METHOD : POST
  */
 function exportPrescriptions(){
+
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = "tmp/export_prescriptions.csv";
+        $filepath = getcwd() . "/tmp/export_prescriptions.csv";
         unlink($filepath);
 
-        $query =
-            "SELECT pf.aged_id_pretty, p.valid_from, p.valid_to, p.text, p.prescription_id_pretty, p.urgency, "
-                ."u.user_id_pretty AS geriatrician_id_pretty, p.additional_notes, p.title, p.prescription_status "
-            ."FROM c4a_i_schema.prescription p "
-            ."JOIN c4a_i_schema.profile pf ON p.aged_id = pf.aged_id "
-            ."JOIN c4a_i_schema.user u ON p.geriatrician_id = u.user_id";
-
-        $query_results = $pdo->query($query);
-        if ($query_results) {
-            $fh = fopen($filepath, "w");
-            fputcsv($fh, array("aged_id_pretty", "valid_from", "valid_to", "text", "prescription_id_pretty", "urgency",
-                "geriatrician_id_pretty", "additional_notes", "title", "prescription_status"), CSV_DELIMITER);
-            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row, CSV_DELIMITER);
-            }
-            $export_ready = TRUE;
-            fclose($fh);
-        }
+        $queryUpdate = "SELECT c4a_i_schema.export_prescriptions('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($export_ready) {
+        if($queryUpdate_results == TRUE) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the prescriptions file";
@@ -5155,7 +5119,31 @@ function exportPrescriptions(){
  * METHOD : POST
  */
 function exportProfiles(){
-    exportGeneric("profile", ["include" => ["aged_id_pretty", "name", "surname", "date_of_birth", "profile_type", "age", "sex"]]);
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/export_profiles.csv";
+        unlink($filepath);
+
+        $queryUpdate = "SELECT c4a_i_schema.export_profiles('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "You  have just downloaded the profile file";
+            echo $sjes -> encode("filepath");
+        } else {
+            generate500("It has not been possible to create a file.");
+        }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 /**
@@ -5163,36 +5151,21 @@ function exportProfiles(){
  * METHOD : POST
  */
 function exportProfilesCommunicative(){
+
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = "tmp/export_profiles_communicative.csv";
+        $filepath = getcwd() . "/tmp/export_profiles_communicative.csv";
         unlink($filepath);
 
-        $query =
-            "SELECT cd.aged_id_pretty, cd.communication_style, cd.message_frequency, cd.topics, "
-                ."cd.available_channels, hp.hour_period_name AS hour_preferences "
-            ."FROM c4a_i_schema.profile_communicative_details cd "
-            ."JOIN c4a_i_schema.profile_hour_preferences php ON cd.aged_id = php.aged_id "
-            ."JOIN c4a_i_schema.hour_period hp ON php.hour_period_id = hp.hour_period_id";
-
-        $query_results = $pdo->query($query);
-        if ($query_results) {
-            $fh = fopen($filepath, "w");
-            fputcsv($fh, array("aged_id_pretty", "communication_style", "message_frequency", "topics",
-                "available_channels", "hour_preferences"), CSV_DELIMITER);
-            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row, CSV_DELIMITER);
-            }
-            $export_ready = TRUE;
-            fclose($fh);
-        }
+        $queryUpdate = "SELECT c4a_i_schema.export_profiles_communicative('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($export_ready) {
+        if($queryUpdate_results == TRUE) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the profile_communicative file";
@@ -5210,10 +5183,31 @@ function exportProfilesCommunicative(){
  * METHOD : POST
  */
 function exportProfilesFrailty(){
-   exportGeneric("profile_frailty_status", ["include" => ["aged_id_pretty", "frailty_status_overall",
-					"frailty_status_lastperiod", "frailty_notice", "frailty_textline", "frailty_attention",
-					"last_detection_date", "last_intervention_date", "detection_status", "intervention_status",
-					"frailty_status_text", "frailty_status_number"]]);
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/export_profiles_frailty.csv";
+        unlink($filepath);
+
+        $queryUpdate = "SELECT c4a_i_schema.export_profiles_frailty('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "You  have just downloaded the Profiles_frailty file";
+            echo $sjes -> encode("filepath");
+        } else {
+            generate500("It has not been possible to create a file.");
+        }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 /**
@@ -5221,8 +5215,31 @@ function exportProfilesFrailty(){
  * METHOD : POST
  */
 function exportProfilesSocio(){
-    exportGeneric("profile_socioeconomic_details",
-        ["include" => ["aged_id_pretty", "financial_situation", "married", "education_level", "languages", "personal_interests"]]);
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/export_profiles_socioeconomic.csv";
+        unlink($filepath);
+
+        $queryUpdate = "SELECT c4a_i_schema.export_profiles_socioeconomic('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "You  have just downloaded the Profiles_socioeconomic file";
+            echo $sjes -> encode("filepath");
+        } else {
+            generate500("It has not been possible to create a file.");
+        }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 /**
@@ -5230,8 +5247,31 @@ function exportProfilesSocio(){
  * METHOD : POST
  */
 function exportProfilesTechnical(){
-    exportGeneric("profile_technical_details",
-        ["include" => ["aged_id_pretty", "address", "telephone_home_number", "mobile_phone_number", "email", "facebook_account", "telegram_account"]]);
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/export_profiles_tech.csv";
+        unlink($filepath);
+
+        $queryUpdate = "SELECT c4a_i_schema.export_profiles_tech('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "You  have just downloaded the Profiles_tech file";
+            echo $sjes -> encode("filepath");
+        } else {
+            generate500("It has not been possible to create a file.");
+        }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 /**
@@ -5239,40 +5279,21 @@ function exportProfilesTechnical(){
  * METHOD : POST
  */
 function exportResources(){
+
     global $pdo;
 
-   // Check if the method is POST
-    if (REQUEST_METHOD == 'GET'){
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = "tmp/export_resources.csv";
+        $filepath = getcwd() . "/tmp/export_resources.csv";
         unlink($filepath);
 
-        $query =
-            "SELECT r.resource_id, partner, language, category, resource_name, s.subjects, url, description, from_date, "
-                ."to_date, media, has_messages, translated, periodic, repeating_time, repeating_every, repeating_on_day "
-            ."FROM c4a_i_schema.resource r "
-            ."JOIN ( SELECT rhs.resource_id, string_agg(sub.subject_name, ', ') AS subjects "
-	                ."FROM c4a_i_schema.subject sub "
-	                ."JOIN c4a_i_schema.resource_has_subjects rhs ON sub.subject_id = rhs.subject_id "
-	                ."GROUP BY rhs.resource_id ) AS s ON r.resource_id = s.resource_id";
-
-        $query_results = $pdo->query($query);
-
-        if ($query_results) {
-            $fh = fopen($filepath, "w");
-            fputcsv($fh, array("resource_id", "partner", "language", "category", "resource_name", "subjects", "url",
-                "description", "from_date", "to_date", "media", "has_messages", "translated", "periodic",
-                "repeating_time", "repeating_every", "repeating_on_day"), CSV_DELIMITER);
-            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row, CSV_DELIMITER);
-            }
-            $export_ready = TRUE;
-            fclose($fh);
-        }
+        $queryUpdate = "SELECT c4a_i_schema.export_resources('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($export_ready) {
+        if($queryUpdate_results == TRUE) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the resources file";
@@ -5290,38 +5311,21 @@ function exportResources(){
  * METHOD : POST
  */
 function exportTemplates(){
+
     global $pdo;
 
     // Check if the method is POST
-    if (REQUEST_METHOD == 'GET'){
+    if (in_array(REQUEST_METHOD, array("POST"))){
 
-        $filepath = "tmp/export_templates.csv";
+        $filepath = getcwd() . "/tmp/export_templates.csv";
         unlink($filepath);
 
-        $query =
-            "SELECT t.template_id, category, title, description, min_number_messages, max_number_messages, period, c.channels "
-            ."FROM c4a_i_schema.template t "
-            ."JOIN ( SELECT ths.template_id, string_agg(chn.channel_name, ', ') AS channels "
-	                ."FROM c4a_i_schema.channel chn "
-	                ."JOIN c4a_i_schema.template_has_channel ths ON chn.channel_id = ths.channel_id "
-	                ."GROUP BY ths.template_id) AS c ON t.template_id = c.template_id";
-
-        $query_results = $pdo->query($query);
-
-        if ($query_results) {
-            $fh = fopen($filepath, "w");
-            fputcsv($fh, array("template_id", "category", "title", "description", "min_number_messages",
-                "max_number_messages", "period", "channels"), CSV_DELIMITER);
-            while ($table_row = $query_results->fetch(PDO::FETCH_NUM)) {
-                fputcsv($fh, $table_row, CSV_DELIMITER);
-            }
-            $export_ready = TRUE;
-            fclose($fh);
-        }
+        $queryUpdate = "SELECT c4a_i_schema.export_templates('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
 
         // Retrieve the new tuple to return the result
         // Check if the query to update has been correctly executed
-        if($export_ready) {
+        if($queryUpdate_results == TRUE) {
             $sjes = new Jecho($filepath);
             $sjes -> server_code = 200;
             $sjes -> message = "You  have just downloaded the template file";
@@ -5339,8 +5343,31 @@ function exportTemplates(){
  * METHOD : POST
  */
 function exportUsers(){
-    exportGeneric("user",
-        ["include" => ["name", "surname", "password", "role", "permission_type", "email", "mobilephone_number", "user_id_pretty"]]);
+
+    global $pdo;
+
+    // Check if the method is POST
+    if (in_array(REQUEST_METHOD, array("POST"))){
+
+        $filepath = getcwd() . "/tmp/export_users.csv";
+        unlink($filepath);
+
+        $queryUpdate = "SELECT c4a_i_schema.export_users('".$filepath."'); ";
+        $queryUpdate_results = $pdo -> query($queryUpdate);
+
+        // Retrieve the new tuple to return the result
+        // Check if the query to update has been correctly executed
+        if($queryUpdate_results == TRUE) {
+            $sjes = new Jecho($filepath);
+            $sjes -> server_code = 200;
+            $sjes -> message = "You  have just downloaded the Users file";
+            echo $sjes -> encode("filepath");
+        } else {
+            generate500("It has not been possible to create a file.");
+        }
+    } else {
+        generate400("The method is not a POST");
+    }
 }
 
 //endregion
@@ -5368,7 +5395,7 @@ function cleanMiniplanTemporary(){
     $miniplans = array();
     $total_rows = 0;
 
-    if (REQUEST_METHOD == 'POST') {
+    if (in_array(REQUEST_METHOD, array("POST"))) {
 
         // region Retrieve intervention ids
 

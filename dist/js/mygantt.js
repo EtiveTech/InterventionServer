@@ -1,6 +1,4 @@
-// sessionStorage.dbLink="http://hoc3.elet.polimi.it:8080/c4aAPI";
-sessionStorage.dbLink = _serverConfig.apiURL;
-
+sessionStorage.dbLink="http://hoc3.elet.polimi.it:8080/c4aAPI";
 getCurrentProfile();
 
 function getUser(){

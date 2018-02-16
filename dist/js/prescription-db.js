@@ -1,5 +1,4 @@
-// sessionStorage.dbLink="http://c4a.etive.org/is/api";
-sessionStorage.dbLink = _serverConfig.apiURL;
+sessionStorage.dbLink="http://xxx/c4aAPI";
 
 var cur_caregiver={};
 
@@ -317,7 +316,7 @@ function prescriptionsPanel(){
     pres_items=[];
     for(var i=(all_prescriptions.length-1); i>=0;i--){
         pres_items.push('<ul class="chat"><li class="left clearfix"><span class="chat-img pull-left">');
-        var imgCircleLink="https://placehold.it/50/";
+        var imgCircleLink="http://placehold.it/50/";
         imgCircleLink= imgCircleLink+getColorPrescriptionState(all_prescriptions[i].prescription_status);
         imgCircleLink=imgCircleLink+"/fff";
         pres_items.push('<img src="'+imgCircleLink+'" title="Open prescription details" class="pres-info-detail img-circle" id="'+all_prescriptions[i].prescription_id+'" onClick="openPrescriptionDetail('+all_prescriptions[i].prescription_id+')" />');
