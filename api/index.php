@@ -22,7 +22,7 @@ define('REQUEST_URI', $_SERVER['REQUEST_URI']); //for example: http://localhost/
 define('AGED_ID', 'aged_id');
 define('AGED_NAME', 'aged_name');
 define('AGED_ID_PRETTY', 'aged_id_pretty');
-define('CSV_DELIMITER', ';');
+define('CSV_DELIMITER', ',');
 
 // instantiate the object for the connection to the database
 global $DB;
