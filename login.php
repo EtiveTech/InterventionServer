@@ -23,7 +23,8 @@ if (isset($_POST["password"]) && !empty($_POST['password'])) {
 
 $connection = (new Db()) -> connect();
 
-$query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$username')";
+$username = trim($username);
+$query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(BTRIM(email)) = LOWER('$username')";
 $query_results = $connection->query($query);
 
 // Check if the query has been correctly performed.
