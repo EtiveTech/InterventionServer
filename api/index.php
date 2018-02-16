@@ -2226,11 +2226,11 @@ function checkUserPwd($name = null, $user_pwd = null){
         if(isset($name)) {
 			if(isset($user_pwd)){
 			    $ch = curl_init();
-                $name = curl_unescape($ch, $name);
+                $name = trim(curl_unescape($ch, $name));
                 $user_pwd = curl_unescape($ch, $user_pwd);
 
 //                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
-                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(email) = LOWER('$name') AND password = '$user_pwd'";
+                $query = "SELECT * FROM c4a_i_schema.user WHERE LOWER(BTRIM(email)) = LOWER('$name') AND password = '$user_pwd'";
                 $query_results = $pdo->query($query);
 
                 // Check if the query has been correctly performed.
