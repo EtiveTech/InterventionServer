@@ -75,6 +75,28 @@ function generate400($message = null){
 }
 
 /**
+ * DESCRIPTION: It generates an error with status 401.
+ * @param null $message The error message
+ */
+function generate401($message = null){
+    include_once 'echo.php';
+
+    header($_SERVER["SERVER_PROTOCOL"] . " 401 Unauthorized");
+    header("Status: 401 Unauthorized");
+    $_SERVER['REDIRECT_STATUS'] = 401;
+
+    $jecho = new Jecho();
+    $jecho -> server_code = 401;
+    if(isset($message)) {
+        $jecho->message = "Error 401 - Unauthorized" . " - " . "$message";
+    } else {
+        $jecho->message = "Error 401 - Unauthorized";
+    }
+    echo $jecho -> encodeError();
+    exit();
+}
+
+/**
  * DESCRIPTION: It generates an error with status 500.
  * @param null $message The error message
  */

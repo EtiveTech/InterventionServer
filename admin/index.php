@@ -1,3 +1,21 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        setcookie('referrer', 'admin');
+        header("location:../");
+    }
+} else {
+    setcookie('referrer', 'admin');
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,12 +38,12 @@
     <div class="row text-center">
         <div class="col-md-offset-3 col-md-1 text-left" >
             <input type="button" value="Import Files"
-                   onclick="window.location.href='importInterface.html'"
+                   onclick="window.location.href='importInterface.php'"
                    class="btn btn-lg btn-success"/>
         </div>
         <div class="col-md-offset-3 col-md-1 text-right">
             <input type="button" value="Export Files"
-                   onclick="window.location.href='exportInterface.html'"
+                   onclick="window.location.href='exportInterface.php'"
                    class="btn btn-lg btn-success"/>
 
         </div>

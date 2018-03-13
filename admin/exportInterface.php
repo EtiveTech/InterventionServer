@@ -1,3 +1,21 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        setcookie('referrer', 'admin');
+        header("location:../");
+    }
+} else {
+    setcookie('referrer', 'admin');
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +87,7 @@
     </div>
     <div class="row goBack">
         <form>
-            <input type="button" value="Back to Homepage" onclick="window.location.href='index.html'"
+            <input type="button" value="Back to Homepage" onclick="window.location.href='./'"
                    class="btn btn-md btn-default" />
         </form>
     </div>

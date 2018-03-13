@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,18 +69,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand" href="intervention_index.html"><span id="installation_text">City4Age - Installation: Lecce </span>|<strong id="user_role"> User role: </strong> | <strong id="user_name">User name: </strong> </span>
+                <a class="navbar-brand" href="intervention-index.php">City4Age - Installation: Lecce | User role: <strong id="user_role">CARE GIVER</strong> | User name: <strong id="user_name">ANNA LOBONO</strong> </a>
             </div>
             <!-- /.navbar-header -->
             
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown" style="margin-top:0.5em;">
-                    <form class="form-inline">
-                    <button id="all_annotations_btn" type="button" class="btn btn-outline btn-primary">
-                        ALL ANNOTATIONS
-                    </button>  
-                    <button id="detection_btn" type="button" class="btn btn-outline btn-primary" onclick="window.open('http://www.francescoclasadonte.com/City4Age/pages/detection.html', 'Detection', 'location=yes,height=600,width=800,scrollbars=yes,status=yes');">
+                    <form class="form-inline">  
+                    <button type="button" class="btn btn-outline btn-primary" onclick="window.open('href://www.google.com', 'Annotations', 'location=yes,height=570,width=600,scrollbars=yes,status=yes');">
                         DETECTION
+                    </button>
+                    <button type="button" class="btn btn-outline btn-primary" onclick="window.open('href://www.google.com', 'Annotations', 'location=yes,height=570,width=600,scrollbars=yes,status=yes');">
+                        INTERVENTION ANNOTATIONS
                     </button>
                 </form>
                     <!-- /.dropdown-user -->
@@ -109,36 +125,6 @@
                   </div>
                 </div>
             </div>
-            <div class="panel">
-                <!-- Modal -->
-                <div id="myModal_2" class="modal fade" data-focus-on="input:first" role="dialog">
-                  <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
-                      </div>
-                      <div class="modal-body">
-                        <p>Some text in the modal.</p>
-                      </div>
-                      <div class="modal-footer">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <button type="submit" class="btn btn-default btn-primary">Save</button>
-                            </div>
-                            <div class="col-lg-6">
-                                <button type="button" class="btn btn-default btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>  
-                        
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div id="user-panel" class="panel panel-primary">
@@ -151,7 +137,7 @@
                     </div>
                     <div id="prescription-history-panel" class="chat-panel panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-file-text-o fa-fw"></i> <span id="precriptionhyst"> Prescriptions History</span>
+                            <i class="fa fa-file-text-o fa-fw"></i> Prescriptions History
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -159,10 +145,9 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel .chat-panel -->
                     <div id="prescription-legend-panel" class="panel panel-info">
                         <div class="panel-heading">
-                            <i class="fa fa-file-text-o fa-fw"></i><span id="prescrlegend"> Prescriptions Legend</span>
+                            <i class="fa fa-file-text-o fa-fw"></i> Prescriptions Legend
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -172,7 +157,7 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: To be done</h4>
-                                    The geriatrician has completed the prescription, but the caregiver has not yet started working on it.
+                                    The geratrician finished the prescription, but the caregiver didn't start working on it.
                                 </div>
                             </div>
                             <div class="media">
@@ -181,7 +166,7 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: Working</h4>
-                                    The geriatrician has completed the prescription and the caregiver is working on it.
+                                    The geratrician finished the prescription and the caregiver is working on it.
                                 </div>
                             </div>
                             <div class="media">
@@ -190,7 +175,7 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: Active</h4>
-                                    The state of the prescription, at temporal level, is "active", meaning that the caregiver has finished working on it and the related intervention is on-going.
+                                    The state of the prescritpion, at temporal level is "active", it means that the caregiver finished working on it and it is on going.
                                 </div>
                             </div>
                             <div class="media">
@@ -199,19 +184,20 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">State: Completed</h4>
-                                    The state of the prescription, at temporal level is "completed", meaning that the intervention related to it is completed.
+                                    The state of the prescritpion, at temporal level is "completed", it means that the prescription is ended.
                                 </div>
                             </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
+                    <!-- /.panel .chat-panel -->
                 </div>
                 <div class="col-lg-9">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <i class="fa fa-bar-chart-o fa-fw"></i> <span id="inthyst"> Interventions History </span>
+                                    <i class="fa fa-bar-chart-o fa-fw"></i> Interventions History
                                     <div class="pull-right">
                                             <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-gantt">
                                                 <i class="fa fa-angle-down fa-fw"></i>
@@ -222,7 +208,16 @@
                                 <div id="collapse-gantt" class="panel-collapse">
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div id="gantt_interventions">
+                                            <div class="col-lg-12">
+                                                <div class="pull-right">
+                                                    <button class="btn btn-default disabled">MACRO</button>
+                                                    <button class="btn btn-default">DETAIL</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel"></div>
+                                        <div class="row">
+                                           <div id="gantt_interventions">
                                             </div>
                                         </div>
                                         <!-- /.row -->
@@ -232,70 +227,60 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div id="new-intervention_panel" class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-pencil fa-fw"></i> <span id="id_intervention_title">New Intervention</span> <span id="id_intervention_title_id"><strong></strong></span>
-                                        <div class="pull-right">
-                                            <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-write-intervention">
-                                                <i class="fa fa-angle-down fa-fw"></i>
-                                            </button>
-                                        </div>
+                    <div id="new-intervention_panel" class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-pencil fa-fw"></i> <span>Write an Intervention</span>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-write-intervention">
+                                            <i class="fa fa-angle-down fa-fw"></i>
+                                        </button>
                                     </div>
-                                    <!-- /.panel-heading -->
-                                    <div id="collapse-write-intervention" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <form id="form_intervention" role="form">
-                                                <div class="row">
-                                                    <div class="col-lg-9">
-                                                        <div class="row">
-                                                            <div class="col-lg-3">
-                                                                <div class="form-group">
-                                                                    <label>Title:</label>
-                                                                    <input id="int_title" class="form-control" placeholder="Enter title here">
-                                                                </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div id="collapse-write-intervention" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <form id="form_intervention" role="form">
+                                            <div class="row">
+                                                <div class="col-lg-9">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                <label>Title:</label>
+                                                                <input id="pres_title" class="form-control" placeholder="Enter title here">
                                                             </div>
-                                                            <div class="col-lg-3">
-                                                                <div class="form-group">
-                                                                    <label>Caregiver:</label>
-                                                                    <input id="int_caregiver" class="form-control" placeholder="Enter title here">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <div class="form-group">
-                                                                    <label>From Date:</label>
-                                                                    <div class='input-group date' id='datepickerFromInt'>
-                                                                        <input type='text' class="form-control" placeholder="From" />
-                                                                        <span class="input-group-addon">
-                                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-3">
-                                                                <div class="form-group">
-                                                                    <label>To Date:</label>
-                                                                    <div class='input-group date' id='datepickerToInt'>
-                                                                        <input type='text' class="form-control" placeholder="To" />
-                                                                        <span class="input-group-addon">
-                                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                                        </span>
-                                                                    </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label>From Date:</label>
+                                                                <div class='input-group date' id='datepickerFromInt'>
+                                                                    <input type='text' class="form-control" placeholder="From" />
+                                                                    <span class="input-group-addon">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>               
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <!-- /.panel-body -->
-                                    </div>      
-                                </div>
-                    
-                    
-                        </div>
-                    </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group">
+                                                                <label>To Date:</label>
+                                                                <div class='input-group date' id='datepickerToInt'>
+                                                                    <input type='text' class="form-control" placeholder="To" />
+                                                                    <span class="input-group-addon">
+                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>               
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.panel-body -->
+                                </div>      
+                            </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div id="sel-res" class="row">
@@ -306,79 +291,64 @@
                                     </div>
                                     <!-- /.panel-heading -->
                                     <div class="panel-body">
-                                        <h4 class="text-info">No resources selected yet</h4>
+
                                         <!-- /.row -->
                                     </div>
 
                                     <!-- /.panel-body -->
-                                    </div>
-                                    <div id="buttons_control" class="row">
-                                        <div class="col-lg-12">
-                                            <button title="you are saving the operations you have done so far in this session" id="button-suspend-templates" type="button" class="btn btn-warning"> SAVE</button>
-                                            <button title="you are closing this page" type="button" class="btn btn-outline btn-default" onClick="closePage()">Exit</button>
-                                            <button title="you are confirming that the intervention’s plan for this patient is completed and it will be sent to the scheduler" id="button-save-templates" type="button" class="btn btn-success"> COMMIT</button>
-                                        </div>
-                                        
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
+                            <div id="buttons_control" class="row">
+                                <div class="col-lg-12">
+                                    <button id="button-save-resources" type="button" class="btn btn-success" onClick="saveResourcesClick()"> APPLY</button>
+                                    <button id="button-suspend-resources" type="button" class="btn btn-info" onClick="suspendResourcesClick()"> SUSPEND</button>
+                                    <button id="button-cancel-resources" type="button" class="btn btn-danger" onClick="cancelResourcesClick()"> CANCEL</button>
+                                </div>      
+                            </div>
                             <div class="panel"></div>
+                            <div id="all_resources_panel" class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-archive fa-fw"></i> Resources
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-allresources">
+                                        <i class="fa fa-angle-down fa-fw"></i>
+                                    </button>
+                                    </div>
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div id="collapse-allresources" class="panel-collapse">
+                                    <div class="panel-body">
+                                    <div id="resources-body" class="row">
+                                        <div class="col-lg-12">
+                                        </div>
+                                    </div>
+                                    <!-- /.row -->
+                                </div>
+                                </div>
+                                    <!-- /.panel-body -->
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div id="templates-panel" class="panel panel-default">
                                 <div class="panel-heading">
+                                    <i class="fa fa-folder-open-o fa-fw"></i> Templates
                                     <div class="pull-right">
-                                        <button title="close" onclick="closeTemplatePanel();" type="button" class="btn btn-default btn-xs">
-                                            <i class="fa fa-times-circle"></i>
-                                        </button>
+                                            <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-templates">
+                                                <i class="fa fa-angle-down fa-fw"></i>
+                                            </button>
                                     </div>
-                                    <i class="fa fa-folder-open-o fa-fw"></i> <span>Templates</span>      
                                 </div>
                                 <!-- /.panel-heading -->
-                                <div id="collapse-templates" class="panel-collapse">
+                                <div id="collapse-templates" class="panel-collapse collapse">
                                     <div class="panel-body">
                                     
                                 </div>
                                 </div>
                                 <!-- /.template-section -->
                             </div>
-                        </div>
-                    </div>
-                    <div class="panel"></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                                    <div id="all_resources_panel" class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <i class="fa fa-archive fa-fw"></i> All available Resources
-                                            <div class="pull-right">
-                                                <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-allresources">
-                                                <i class="fa fa-angle-down fa-fw"></i>
-                                            </button>
-                                            </div>
-                                        </div>
-                                        <!-- /.panel-heading -->
-                                        <div id="collapse-allresources" class="panel-collapse">
-                                            <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="form-inline">
-                                                        <label>Filter:</label>
-                                                        <input id="filter_res" class="form-control" placeholder="Not available">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="resources-body" class="row">
-                                                <div class="col-lg-12">
-                                                    
-                                                </div>
-                                            </div>
-                                            <!-- /.row -->
-                                        </div>
-                                        </div>
-                                            <!-- /.panel-body -->
-                                    </div>
                         </div>
                     </div>
                     <!-- /.panel -->
@@ -391,9 +361,6 @@
 
     </div>
     <!-- /#wrapper -->
-
-    <!-- Server Configuration -->
-    <script src="../js/server-config.js"></script>
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -421,13 +388,7 @@
     <script type="text/javascript" src="../dist/js/bootstrap-table.js"></script>
     <script type="text/javascript" src="../dist/js/bootstrap-table-filter-control.js"></script>
     
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
     
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.13/type-detection/date-uk.js"></script>
-    <script type="text/javascript" src="https:////cdn.datatables.net/plug-ins/1.10.13/sorting/date-eu.js"></script>
-   
-
     <script src="../hansontable-dist/handsontable.full.min.js"></script>
     <link rel="stylesheet" media="screen" href="../hansontable-dist/handsontable.full.min.css">
     
@@ -436,9 +397,7 @@
     
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-    <script src="../locals/it.js"></script>
-    <script src="../locals/en.js"></script>
-    <script src="../dist/js/intervention-db.js"></script>
+    <script src="../dist/js/select-resources.js"></script>
     
     
     

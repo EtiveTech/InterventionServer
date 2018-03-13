@@ -1,6 +1,25 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        setcookie('referrer', 'admin');
+        header("location:../");
+    }
+} else {
+    setcookie('referrer', 'admin');
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
+<html>
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title> Upload results </title>
     <link rel="stylesheet" type="text/css" href="css/managerInterfaceStyle.css">
     <!-- Bootstrap core CSS -->
@@ -8,18 +27,17 @@
     <!-- Bootstrap theme -->
     <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 </head>
-
-
-<div class="divSuperiore row">
-    <img src="css/City4AgeLogo_noBackground.png" id="logoImage"/>
-    <h2>City4Age - Intervention Database Manager - Upload File </h2>
-</div>
-<br><br><br>
+<body>
+    <div class="divSuperiore row">
+        <img src="css/City4AgeLogo_noBackground.png" id="logoImage"/>
+        <h2>City4Age - Intervention Database Manager - Upload File </h2>
+    </div>
+    <br><br><br>
 
 <?php
 
 //region Setting some useful data
-require_once("../api/configuration_local.php");
+require_once("../api/configuration.php");
 
 // Declaring that no PHP error need to be printed
 error_reporting(0);
@@ -192,12 +210,12 @@ if ($decoded[0] -> server_code === 200) {
 <div class="uploadBackButtons btn-toolbar">
     <form>
         <input type="button" value="Back to Homepage"
-               onclick="window.location.href=\'index.html\'"
+               onclick="window.location.href=\'index.php\'"
                class="btn btn-md btn-default" />
     </form>
     <form>
         <input type="button" value="Back to Import"
-               onclick="window.location.href=\'importInterface.html\'"
+               onclick="window.location.href=\'importInterface.php\'"
                class="btn btn-md btn-default secondButton" />
     </form>
 </div>';
@@ -207,19 +225,18 @@ if ($decoded[0] -> server_code === 200) {
 
 ?>
 
-<br><br><br><br>
-<div class="uploadBackButtons btn-toolbar">
-    <form>
-        <input type="button" value="Back to Homepage"
-               onclick="window.location.href='index.html'"
-               class="btn btn-md btn-default" />
-    </form>
-    <form>
-        <input type="button" value="Back to Import"
-               onclick="window.location.href='importInterface.html'"
-               class="btn btn-md btn-default secondButton" />
-    </form>
-</div>
-
+    <br><br><br><br>
+    <div class="uploadBackButtons btn-toolbar">
+        <form>
+            <input type="button" value="Back to Homepage"
+                   onclick="window.location.href='index.php'"
+                   class="btn btn-md btn-default" />
+        </form>
+        <form>
+            <input type="button" value="Back to Import"
+                   onclick="window.location.href='importInterface.php'"
+                   class="btn btn-md btn-default secondButton" />
+        </form>
+    </div>
 </body>
 </html>

@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>

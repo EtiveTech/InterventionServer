@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +25,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>City4Age - Detection</title>
+    <title>City4Age</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +35,6 @@
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="../dist/css/style.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
@@ -49,29 +64,36 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand">City4Age - Installation: Lecce - Detection Data</span>
+                <span class="navbar-brand">City4Age - Installation: Lecce - Care receiver: <strong id="name_user"></strong></span>
             </div>
             <!-- /.navbar-header -->
             <!-- /.navbar-top-links -->
 
-            
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="new-prescription.php"><i class="fa fa-dashboard fa-fw"></i> Prescription</a>
+                        </li>
+                        <li>
+                            <a href="intervention.php"><i class="fa fa-bar-chart-o fa-fw"></i> Intervention</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-heart-o fa-fw"></i> Intervention for the care receiver</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-envelope fa-fw"></i> Intervention delivery</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="background-image: url('http://www.francescoclasadonte.com/City4Age/dist/images/City4AgeLogo_noBackground.png'); background-size:75%; background-repeat:no-repeat; background-position:center;">
+           
             <div class="panel"></div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-info">
-                        <div id="detection-data-name" class="panel-heading">
-                            
-                        </div>
-                        <div id="detection-data-body" class="panel-body">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
         </div>
         <!-- /#page-wrapper -->
 
@@ -94,27 +116,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-    <script>
-        var images={
-            "0":"../dist/images/Detection-Ferreri.png",
-            "1":"../dist/images/Detection-DePaoli.png",
-            "2":"../dist/images/Detection-Baldinucci.png",
-            "3":"../dist/images/Detection-Costa.png"
-        };
-        var names={
-            "0":"Ferreri Silvana",
-            "1":"Gioia De Paoli",
-            "2":"Giuseppe Baldinucci",
-            "3":"Bruno Costa"
-        };
-        
-        if(sessionStorage.cur_user){
-            $("#detection-data-body").html('<img src="'+images[sessionStorage.cur_user]+'">');
-            $("#detection-data-name").html('<h4> '+names[sessionStorage.cur_user]+'</h4>');
-        }else{
+    <script src="../dist/js/base_script.js"></script>
 
-        }
-    </script>
 </body>
 
 </html>

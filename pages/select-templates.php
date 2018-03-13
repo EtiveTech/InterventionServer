@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,20 +69,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="intervention_index.html">City4Age - Installation: Lecce | User role: <strong id="user_role">CARE GIVER</strong> | User name: <strong id="user_name">ANNA LOBONO</strong> </a>
+                <a class="navbar-brand" href="menu.php">City4Age - [Lecce] Installation (Select Templates Interface)</a>
             </div>
             <!-- /.navbar-header -->
             
             <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown" style="margin-top:0.5em;">
-                    <form class="form-inline">  
-                    <button type="button" class="btn btn-outline btn-primary" onclick="window.open('href://www.google.com', 'Annotations', 'location=yes,height=570,width=600,scrollbars=yes,status=yes');">
-                        DETECTION
-                    </button>
-                    <button type="button" class="btn btn-outline btn-primary" onclick="window.open('href://www.google.com', 'Annotations', 'location=yes,height=570,width=600,scrollbars=yes,status=yes');">
-                        INTERVENTION ANNOTATIONS
-                    </button>
-                </form>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> Caregiver xx <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
                     <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->
@@ -77,7 +95,6 @@
             
             <!-- /.navbar-static-side -->
         </nav>
-
         <div id="page-wrapper">
             <div class="panel">
                 <!-- Modal -->
@@ -115,7 +132,7 @@
                         <div class="panel-heading"> 
                         </div>                     
                     </div>
-                    <div id="prescription-panel" class="panel panel-yellow">
+                    <div id="prescription-panel" class="panel panel-green">
                         <div class="panel-heading">
                         </div>
                     </div>
@@ -129,52 +146,25 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel .chat-panel -->
-                    <div id="prescription-legend-panel" class="panel panel-info">
-                        <div class="panel-heading">
-                            <i class="fa fa-file-text-o fa-fw"></i> Prescriptions Legend
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="media">
-                                <div class="media-left">
-                                    <img class="media-object img-circle" src="https://placehold.it/50//fff">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">State: To be done</h4>
-                                    The geratrician finished the prescription, but the caregiver didn't start working on it.
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                    <img class="media-object img-circle" src="https://placehold.it/50/FF8000/fff">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">State: Working</h4>
-                                    The geratrician finished the prescription and the caregiver is working on it.
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                    <img class="media-object img-circle" src="https://placehold.it/50/CC0000/fff">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">State: Active</h4>
-                                    The state of the prescritpion, at temporal level is "active", it means that the caregiver finished working on it and it is on going.
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left">
-                                    <img class="media-object img-circle" src="https://placehold.it/50/00CC00/fff">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">State: Completed</h4>
-                                    The state of the prescritpion, at temporal level is "completed", it means that the prescription is ended.
-                                </div>
+                    <div class="panel">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                <button type="button" class="btn btn-outline btn-primary btn-lg center-block" onclick="window.open('href://www.google.com', 'Detection Data', 'location=yes,height=570,width=600,scrollbars=yes,status=yes');">
+                                DETECTION DATA
+                                </button>
                             </div>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
+                    <div class="panel">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-outline btn-primary btn-lg center-block" onclick="window.open('href://www.google.com', 'Annotations', 'location=yes,height=570,width=600,scrollbars=yes,status=yes');">
+                                ANNOTATIONS
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.panel .chat-panel -->
                 </div>
                 <div class="col-lg-9">
                     <div class="row">
@@ -189,7 +179,7 @@
                                     </div>
                                 </div>
                                 <!-- /.panel-heading -->
-                                <div id="collapse-gantt" class="panel-collapse">
+                                <div id="collapse-gantt" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -201,8 +191,13 @@
                                         </div>
                                         <div class="panel"></div>
                                         <div class="row">
-                                            <div id="gantt_interventions">
+                                            <div class="col-lg-12">
+                                            <div id="gantt_interventions" style="overflow-x:scroll; overflow-y:hidden;">
+                                                <img src="../dist/images/gantt-intervention.png">    
                                             </div>
+                                            </div>
+                                            <div class="panel"></div>
+                                            <!-- /.col-lg-8 (nested) -->
                                         </div>
                                         <!-- /.row -->
                                     </div>
@@ -213,65 +208,58 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <div id="sel-res" class="row">
-                                <div class="col-lg-12">
-                                    <div id="sel-res" class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-archive fa-fw"></i> Selected Resources
-                                    </div>
-                                    <!-- /.panel-heading -->
-                                    <div class="panel-body">
-
-                                        <!-- /.row -->
-                                    </div>
-
-                                    <!-- /.panel-body -->
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <button id="button-save-templates" type="button" class="btn btn-success"> COMMIT</button>
-                                            <button id="button-suspend-templates" type="button" class="btn btn-info"> SUSPEND</button>
-                                            <button id="button-cancel-templates" type="button" class="btn btn-danger"> CANCEL</button>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel"></div>
+                            <div id="sel-res" class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-archive fa-fw"></i> Selected Resources
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>    
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div id="panel-info-template" class="panel panel-info">
-                                <div class="panel-heading">
-                                    Info
-                                </div>
-                                <div class="panel-body">
-                                    <h4>Select the resource you want to choose the template for</h4>
-                                </div>
-                            </div>
-                            <div id="templates-panel" class="panel panel-default">
-                                <div class="panel-heading">
-                                    <i class="fa fa-folder-open-o fa-fw"></i> <span>Templates</span>
-                                    <div class="pull-right">
-                                            <!--<button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapse-templates">
-                                                <i class="fa fa-angle-down fa-fw"></i>
-                                            </button>-->
-                                    </div>
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div id="collapse-templates" class="panel-collapse">
-                                    <div class="panel-body">
-                                    
-                                </div>
-                                </div>
-                                <!-- /.template-section -->
-                            </div>
+                        <div class="panel-heading">
+                            Info
+                        </div>
+                        <div class="panel-body">
+                            <h4>Select the resource you want to choose the template for</h4>
                         </div>
                     </div>
-                    <!-- /.panel -->
+                            <div id="template-section" class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-folder-open-o fa-fw"></i> Template
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="template-section-body"></div>
+                    </div>
+                <!-- /.template-section -->
                 </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="messages-section" class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-folder-open-o fa-fw"></i> Messages
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">
+                                    <div id="messages-section-body"></div>
+                                </div>
+                    <!-- /.template-body -->
+                            </div>
+                        </div>    
+                    </div>
                 
+                
+            <!-- /.col template -->
             </div>
             <!-- /.row -->
         </div>
@@ -286,8 +274,6 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    
-    
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
@@ -295,34 +281,19 @@
     <script src="../vendor/raphael/raphael.min.js"></script>
     <script src="../vendor/morrisjs/morris.min.js"></script>
     <script src="../data/morris-data.js"></script>
-
+    
     <!-- Include Date Range Picker -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
-    
-    <!-- Table -->
-    <link rel="stylesheet" href="../dist/css/bootstrap-table.css"/>
-    <script type="text/javascript" src="../dist/js/bootstrap-table.js"></script>
-    <script type="text/javascript" src="../dist/js/bootstrap-table-filter-control.js"></script>
-    
-    
     <script src="../hansontable-dist/handsontable.full.min.js"></script>
     <link rel="stylesheet" media="screen" href="../hansontable-dist/handsontable.full.min.css">
     
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="../dist/js/mygantt.js"></script>
     
-    <!-- Custom Theme JavaScript -->
+     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-    <script src="../dist/js/intervention-template.js"></script>
     
-    
-    
-    
-    
-    
-    
+    <script src="../dist/js/select-templates.js"></script>
     
 </body>
 

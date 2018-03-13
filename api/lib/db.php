@@ -17,10 +17,10 @@ class Db {
     }
 
     function connect(){
-        if (file_exists('configuration_local.php'))
-            include_once 'configuration_local.php';
-        elseif (file_exists('../configuration_local.php'))
-            include_once '../configuration_local.php';
+        if (file_exists('configuration.php'))
+            include_once 'configuration.php';
+        elseif (file_exists('../configuration.php'))
+            include_once '../configuration.php';
         if (file_exists('echo.php'))
             include_once 'echo.php';
         elseif (file_exists('../echo.php'))

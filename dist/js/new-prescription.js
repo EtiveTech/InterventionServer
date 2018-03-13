@@ -52,7 +52,7 @@ console.log($(window).height());
 
 function getUser(userID){
     for(var i=0; i<all_users.length;i++){
-        if(userID==all_users[i].ID){
+        if(userID === all_users[i].ID){
             return all_users[i];
         }
     }
@@ -61,7 +61,7 @@ function getUser(userID){
 
 function getPrescription(prescriptionID){
     for(var i=0; i<all_prescriptions.length;i++){
-        if(prescriptionID==all_prescriptions[i].ID){
+        if(prescriptionID === all_prescriptions[i].ID){
             return all_prescriptions[i];
         }
     }
@@ -122,7 +122,7 @@ function closePage(){
     modal_body.push("</div></div></div></form>");
 
     $('#myModal .modal-footer .btn-primary').click(function(){
-        window.open("../index.html", "_self");
+        window.open("../index.php", "_self");
     });
 
     $('#myModal .modal-body').html(modal_body.join(''));
@@ -166,7 +166,7 @@ function prescriptionsPanel(){
         pres_items.push('<p>');
         pres_items.push("To date: "+all_prescriptions[i].To);
         pres_items.push('</p>');
-        if(all_prescriptions[i].State=='Suspended'){
+        if(all_prescriptions[i].State === 'Suspended'){
             pres_items.push('<button type="button" class="pres-history btn btn-default pull-right" onClick="openPrescriptionToEdit('+all_prescriptions[i].ID+')">EDIT</button>');
         }
         pres_items.push('</div></li></ul>');
@@ -178,27 +178,27 @@ function prescriptionsPanel(){
 
 function getColorPrescriptionState(state){
     var state_color="";
-    if (state=='Suspended'){ //Quando il geriatra fa suspended
-                state_color='55C1E7'; //azzurro
-            }else{
-                if(state=='Completed'){ //Quando la prescription è temporalmente completata
-                    state_color='00CC00'; //verde
-                }else{
-                    if(state=='To be done'){ //Quando il geriatra fa il commit: rosso per lui e grigio per il caregiver
+    if (state === 'Suspended'){ //Quando il geriatra fa suspended
+        state_color='55C1E7'; //azzurro
+    } else {
+        if (state === 'Completed'){ //Quando la prescription è temporalmente completata
+            state_color='00CC00'; //verde
+        } else {
+            if (state === 'To be done'){ //Quando il geriatra fa il commit: rosso per lui e grigio per il caregiver
+                state_color=''; //grigio
+            } else {
+                if(state === 'Working'){ //Quando il caregiver fa suspend
+                    state_color='FF8000'; //azzurro
+                } else {
+                    if (state === 'Active'){
+                        state_color='CC0000'; //rosso
+                    } else {
                         state_color=''; //grigio
-                    }else{
-                        if(state=='Working'){ //Quando il caregiver fa suspend
-                            state_color='FF8000'; //azzurro
-                        }else{
-                            if(state=='Active'){
-                                state_color='CC0000'; //rosso
-                            }else{
-                                state_color=''; //grigio
-                                }
-                            }
-                        }
                     }
+                }
             }
+        }
+    }
     return state_color;
 }
 
@@ -275,7 +275,7 @@ function openPrescriptionToEdit(prescriptionID){
     urg.push('<select class="form-control">');
     $.each(all_urgency,function(key,value){                                                     
         urg.push('<option ');
-        if(value==pres.Urgency){
+        if(value === pres.Urgency){
             urg.push('selected');
         }
         urg.push('>');
@@ -535,7 +535,7 @@ function openUserDetail(){
 
 $('#myModal .modal-footer .btn-primary').click(function(){
     $.each(all_users,function(key,value){
-       if(value.ID==sessionStorage.cur_user){
+       if(value.ID === sessionStorage.cur_user){
            all_users[key]["Frailty status"]=$("#myModal select[name='Frailty status'] option:selected").val();
            
            all_users[key]["Attention"]=$("#myModal select[name='user_attention'] option:selected").val();
@@ -627,7 +627,7 @@ $('#pres_btn-commit').click(function(){
     var pres={};
     pres.ID=parseInt(all_prescriptions[0].ID)+1;
 
-    if(sessionStorage.cur_pres && sessionStorage.cur_pres!="null"){
+    if(sessionStorage.cur_pres && sessionStorage.cur_pres !== "null"){
         pres.ID=sessionStorage.cur_pres;
     }
 
@@ -637,7 +637,7 @@ $('#pres_btn-commit').click(function(){
     
     var trovato=false;
     $.each(all_prescriptions,function(key,value){
-       if(value.ID==pres.ID){
+       if(value.ID === pres.ID){
            trovato=true;
            all_prescriptions[key]=pres;
        }   
@@ -653,9 +653,9 @@ $('#pres_btn-commit').click(function(){
 });
 
 $('#pres_btn-suspend').click(function(){
-    var pres=new Object;
+    var pres = new Object;
     pres.ID=all_prescriptions[0].ID+1;
-    if(sessionStorage.cur_pres && sessionStorage.cur_pres!="null"){
+    if(sessionStorage.cur_pres && sessionStorage.cur_pres !== "null"){
         pres.ID=sessionStorage.cur_pres;
     }
     
@@ -664,7 +664,7 @@ $('#pres_btn-suspend').click(function(){
     
     var trovato=false;
     $.each(all_prescriptions,function(key,value){
-       if(value.ID==pres.ID){
+       if(value.ID === pres.ID){
            trovato=true;
            all_prescriptions[key]=pres;
        }   

@@ -516,7 +516,7 @@ function saveResourcesClick(){
         sessionStorage.all_selectedResources=JSON.stringify(all_selectedResources);
     }
     sessionStorage.all_prescriptions=JSON.stringify(all_prescriptions);
-    window.location.href="../pages/intervention-template.html";
+    window.location.href="../../pages/intervention-template.php";
 }
 
 function suspendResourcesClick(){

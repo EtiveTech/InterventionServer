@@ -1,7 +1,7 @@
 var _serverConfig = {
     protocol: "http",
     address: "localhost",
-    path: "is",
+    path: "IS",
     apiDir: "api",
     engineDir: "engines"
 }

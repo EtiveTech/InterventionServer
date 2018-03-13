@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +25,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>City4Age</title>
+    <title>City4Age - Detection</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -19,6 +35,7 @@
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../dist/css/style.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
@@ -48,42 +65,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="menu.html">City4Age</a>
+                <span class="navbar-brand">City4Age - Installation: Lecce - Detection Data</span>
             </div>
             <!-- /.navbar-header -->
             <!-- /.navbar-top-links -->
 
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
-                        <li>
-                            <a href="new-prescription.html"><i class="fa fa-dashboard fa-fw"></i> New Prescription</a>
-                        </li>
-                        <li>
-                            <a href="select-resources.html"><i class="fa fa-bar-chart-o fa-fw"></i> Select Resources</a>
-                        </li>
-                        <li>
-                            <a href="intervention-template.html"><i class="fa fa-table fa-fw"></i> Select Templates</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
+            
         </nav>
 
         <div id="page-wrapper">
+            <div class="panel"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                        <div id="detection-data-name" class="panel-heading">
+                            
+                        </div>
+                        <div id="detection-data-body" class="panel-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
         <!-- /#page-wrapper -->
@@ -107,8 +110,27 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-    <script src="../dist/js/base_script.js"></script>
+    <script>
+        var images={
+            "0":"../dist/images/Detection-Ferreri.png",
+            "1":"../dist/images/Detection-DePaoli.png",
+            "2":"../dist/images/Detection-Baldinucci.png",
+            "3":"../dist/images/Detection-Costa.png"
+        };
+        var names={
+            "0":"Ferreri Silvana",
+            "1":"Gioia De Paoli",
+            "2":"Giuseppe Baldinucci",
+            "3":"Bruno Costa"
+        };
+        
+        if(sessionStorage.cur_user){
+            $("#detection-data-body").html('<img src="'+images[sessionStorage.cur_user]+'">');
+            $("#detection-data-name").html('<h4> '+names[sessionStorage.cur_user]+'</h4>');
+        }else{
 
+        }
+    </script>
 </body>
 
 </html>

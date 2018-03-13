@@ -1,16 +1,19 @@
 <?php
-require_once("api/configuration_local.php");
+require_once("api/configuration.php");
+require_once("api/lib/token.php");
+
 $api_url = API_URL."getAllProfiles";
 
-function checkPOST($field){
-    return (isset($_POST[$field]));
-}
-
-if (checkPOST("user_id") && !empty($_POST['user_id'])) {
-    $user_id = $_POST['user_id'];
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    $user_id = $token->getUserId();
+    if ($user_id) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        header("location:./");
+    }
 } else {
-    echo "Warning, no user_id";
-    die();
+    header("location:./");
 }
 ?>
 
@@ -75,7 +78,7 @@ if (checkPOST("user_id") && !empty($_POST['user_id'])) {
                         element.onclick = function() { // Note this is a function
                             sessionStorage.profile_id=aged_id[i];
                             sessionStorage.user_id="<?php echo $user_id;?>";
-                            window.open("pages/new-prescription.html", "_self");
+                            window.open("pages/new-prescription.php", "_self");
                         };
  
                         innerDiv.appendChild(element);
@@ -84,7 +87,7 @@ if (checkPOST("user_id") && !empty($_POST['user_id'])) {
 
                         // The variable iDiv is still good... Just append to it.
                         iDiv.appendChild(innerDiv2);
-                        var element = document.createElement("input");
+                        element = document.createElement("input");
                         //Assign different attributes to the element.
                         element.type = "BUTTON";
                         element.value = "INTERVENTION"; // Really? You want the default value to be the type string?
@@ -93,7 +96,7 @@ if (checkPOST("user_id") && !empty($_POST['user_id'])) {
                         element.onclick = function() { // Note this is a function
                             sessionStorage.profile_id=aged_id[i];
                             sessionStorage.user_id="<?php echo $user_id;?>";
-                            window.open("pages/intervention.html", "_self");
+                            window.open("pages/intervention.php", "_self");
                         };
                         innerDiv2.appendChild(element);
                     }

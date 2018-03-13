@@ -1,5 +1,19 @@
 <?php
-require_once("../api/configuration_local.php");
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        setcookie('referrer', 'admin');
+        header("location:../");
+    }
+} else {
+    setcookie('referrer', 'admin');
+    header("location:../");
+}
 
 //region Selection of the method to call to handle the export
 

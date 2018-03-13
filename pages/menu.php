@@ -1,3 +1,19 @@
+<?php
+require_once("../api/configuration.php");
+require_once("../api/lib/token.php");
+
+if (isset($_COOKIE['token'])) {
+    $token = new Token($_COOKIE['token']);
+    if ($token->getUserId()) {
+        if ($token->inUpdateWindow()) setcookie('token', $token->updateToken(), 0, "/");
+    } else {
+        header("location:../");
+    }
+} else {
+    header("location:../");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand">City4Age - Installation: Lecce - Care receiver: <strong id="name_user"></strong></span>
+                <a class="navbar-brand" href="menu.php">City4Age</a>
             </div>
             <!-- /.navbar-header -->
             <!-- /.navbar-top-links -->
@@ -56,17 +72,25 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="new-prescription.html"><i class="fa fa-dashboard fa-fw"></i> Prescription</a>
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="intervention.html"><i class="fa fa-bar-chart-o fa-fw"></i> Intervention</a>
+                            <a href="new-prescription.php"><i class="fa fa-dashboard fa-fw"></i> New Prescription</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-heart-o fa-fw"></i> Intervention for the care receiver</a>
+                            <a href="select-resources.php"><i class="fa fa-bar-chart-o fa-fw"></i> Select Resources</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-envelope fa-fw"></i> Intervention delivery</a>
+                            <a href="intervention-template.php"><i class="fa fa-table fa-fw"></i> Select Templates</a>
                         </li>
                     </ul>
                 </div>
@@ -75,9 +99,8 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper" style="background-image: url('http://www.francescoclasadonte.com/City4Age/dist/images/City4AgeLogo_noBackground.png'); background-size:75%; background-repeat:no-repeat; background-position:center;">
-           
-            <div class="panel"></div>
+        <div id="page-wrapper">
+            
         </div>
         <!-- /#page-wrapper -->
 

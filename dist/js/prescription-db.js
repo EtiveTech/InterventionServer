@@ -719,7 +719,7 @@ function closePage(){
     modal_body.push("</div></div></div></form>");
 
     $('#myModal .modal-footer .btn-primary').click(function(){
-        window.open("../index.html", "_self");
+        window.open("../index.php", "_self");
     });
 
     $('#myModal .modal-body').html(modal_body.join(''));
